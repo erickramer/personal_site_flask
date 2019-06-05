@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Ceci n'est pas un site{% endblock %}
+
+{% block head %} 
+  {{ super() }}
+  <script src="static/js/home.js"></script>
+{% endblock %}
+
+{% block content %}
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div id="elm"></div>
+
+  <script>
+    app = Elm.Home.init({
+        node: document.getElementById('elm')
+    });
+
+    var newWS = {"width": window.innerWidth, "height": window.innerHeight}
+    app.ports.newWindowSize.send(newWS)
+
+    window.onresize = function(event){
+      var newWS = {"width": window.innerWidth, "height": window.innerHeight}
+      app.ports.newWindowSize.send(newWS)
+    }
+  </script>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}

@@ -1,0 +1,5 @@
+data
+elm-stuff/
+venv/
+.vscode
+*pyc
