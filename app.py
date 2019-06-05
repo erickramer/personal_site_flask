@@ -10,8 +10,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 db.engine.raw_connection().text_factory = str
 
-#from sentiment import app as sentiment_blueprint
-#app.register_blueprint(sentiment_blueprint, url_prefix="/sentiment")
+from sentiment import app as sentiment_blueprint
+app.register_blueprint(sentiment_blueprint, url_prefix="/sentiment")
 
 # from image_recog import app as image_blueprint
 # app.register_blueprint(image_blueprint, url_prefix="/image")
