@@ -54,7 +54,8 @@ minimize_ f x dx yi iter =
         x + dx
 
     else if iter > maxIter then
-        Debug.log "Reached maximum iterations: " (x + dx)
+        --Debug.log "Reached maximum iterations: " (x + dx)
+        (x + dx)
 
     else if yo > yi then
         minimize_ f (x + dx) (-dx / 3) yo (iter + 1)

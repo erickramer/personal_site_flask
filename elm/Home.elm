@@ -75,12 +75,15 @@ update msg model =
                         Particle.resolveCollisions
 
                 particles =
-                    model.particles
-                        |> List.map (Particle.updatePosition dt)
-                        |> List.map (Box.bounce model.box)
-                        |> collisionHandler
-                        |> Particle.updateAcceleration model.g
-                        |> List.map (Particle.updateVelocity dt)
+                    if dt < 150 then
+                        model.particles
+                            |> List.map (Particle.updatePosition dt)
+                            |> List.map (Box.bounce model.box)
+                            |> collisionHandler
+                            |> Particle.updateAcceleration model.g
+                            |> List.map (Particle.updateVelocity dt)
+                    else
+                        model.particles
             in
             ( { model | particles = particles }, Cmd.none )
 

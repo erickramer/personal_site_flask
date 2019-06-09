@@ -77,7 +77,7 @@ function A9(fun, a, b, c, d, e, f, g, h, i) {
   return fun.a === 9 ? fun.f(a, b, c, d, e, f, g, h, i) : fun(a)(b)(c)(d)(e)(f)(g)(h)(i);
 }
 
-console.warn('Compiled in DEV mode. Follow the advice at https://elm-lang.org/0.19.0/optimize for better performance and smaller assets.');
+
 
 
 var _JsArray_empty = [];
@@ -234,12 +234,12 @@ var _JsArray_appendN = F3(function(n, dest, source)
 
 // LOG
 
-var _Debug_log_UNUSED = F2(function(tag, value)
+var _Debug_log = F2(function(tag, value)
 {
 	return value;
 });
 
-var _Debug_log = F2(function(tag, value)
+var _Debug_log_UNUSED = F2(function(tag, value)
 {
 	console.log(tag + ': ' + _Debug_toString(value));
 	return value;
@@ -265,12 +265,12 @@ function _Debug_todoCase(moduleName, region, value)
 
 // TO STRING
 
-function _Debug_toString_UNUSED(value)
+function _Debug_toString(value)
 {
 	return '<internals>';
 }
 
-function _Debug_toString(value)
+function _Debug_toString_UNUSED(value)
 {
 	return _Debug_toAnsiString(false, value);
 }
@@ -455,13 +455,13 @@ function _Debug_toHexDigit(n)
 // CRASH
 
 
-function _Debug_crash_UNUSED(identifier)
+function _Debug_crash(identifier)
 {
 	throw new Error('https://github.com/elm/core/blob/1.0.0/hints/' + identifier + '.md');
 }
 
 
-function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
+function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 {
 	switch(identifier)
 	{
@@ -519,11 +519,11 @@ function _Debug_crash(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.start.line === region.end.line)
+	if (region.R.E === region.W.E)
 	{
-		return 'on line ' + region.start.line;
+		return 'on line ' + region.R.E;
 	}
-	return 'on lines ' + region.start.line + ' through ' + region.end.line;
+	return 'on lines ' + region.R.E + ' through ' + region.W.E;
 }
 
 
@@ -561,7 +561,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 		return false;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x.$ === 'Set_elm_builtin')
 	{
 		x = elm$core$Set$toList(x);
@@ -574,7 +574,7 @@ function _Utils_eqHelp(x, y, depth, stack)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (x.$ < 0)
 	{
 		x = elm$core$Dict$toList(x);
@@ -609,7 +609,7 @@ function _Utils_cmp(x, y, ord)
 		return x === y ? /*EQ*/ 0 : x < y ? /*LT*/ -1 : /*GT*/ 1;
 	}
 
-	/**/
+	/**_UNUSED/
 	if (x instanceof String)
 	{
 		var a = x.valueOf();
@@ -618,10 +618,10 @@ function _Utils_cmp(x, y, ord)
 	}
 	//*/
 
-	/**_UNUSED/
+	/**/
 	if (typeof x.$ === 'undefined')
 	//*/
-	/**/
+	/**_UNUSED/
 	if (x.$[0] === '#')
 	//*/
 	{
@@ -651,17 +651,17 @@ var _Utils_compare = F2(function(x, y)
 
 // COMMON VALUES
 
-var _Utils_Tuple0_UNUSED = 0;
-var _Utils_Tuple0 = { $: '#0' };
+var _Utils_Tuple0 = 0;
+var _Utils_Tuple0_UNUSED = { $: '#0' };
 
-function _Utils_Tuple2_UNUSED(a, b) { return { a: a, b: b }; }
-function _Utils_Tuple2(a, b) { return { $: '#2', a: a, b: b }; }
+function _Utils_Tuple2(a, b) { return { a: a, b: b }; }
+function _Utils_Tuple2_UNUSED(a, b) { return { $: '#2', a: a, b: b }; }
 
-function _Utils_Tuple3_UNUSED(a, b, c) { return { a: a, b: b, c: c }; }
-function _Utils_Tuple3(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
+function _Utils_Tuple3(a, b, c) { return { a: a, b: b, c: c }; }
+function _Utils_Tuple3_UNUSED(a, b, c) { return { $: '#3', a: a, b: b, c: c }; }
 
-function _Utils_chr_UNUSED(c) { return c; }
-function _Utils_chr(c) { return new String(c); }
+function _Utils_chr(c) { return c; }
+function _Utils_chr_UNUSED(c) { return new String(c); }
 
 
 // RECORDS
@@ -712,11 +712,11 @@ function _Utils_ap(xs, ys)
 
 
 
-var _List_Nil_UNUSED = { $: 0 };
-var _List_Nil = { $: '[]' };
+var _List_Nil = { $: 0 };
+var _List_Nil_UNUSED = { $: '[]' };
 
-function _List_Cons_UNUSED(hd, tl) { return { $: 1, a: hd, b: tl }; }
-function _List_Cons(hd, tl) { return { $: '::', a: hd, b: tl }; }
+function _List_Cons(hd, tl) { return { $: 1, a: hd, b: tl }; }
+function _List_Cons_UNUSED(hd, tl) { return { $: '::', a: hd, b: tl }; }
 
 
 var _List_cons = F2(_List_Cons);
@@ -1212,7 +1212,7 @@ function _String_fromList(chars)
 
 
 
-/**/
+/**_UNUSED/
 function _Json_errorToString(error)
 {
 	return elm$json$Json$Decode$errorToString(error);
@@ -1616,11 +1616,11 @@ var _Json_encode = F2(function(indentLevel, value)
 	return JSON.stringify(_Json_unwrap(value), null, indentLevel) + '';
 });
 
-function _Json_wrap(value) { return { $: 0, a: value }; }
-function _Json_unwrap(value) { return value.a; }
+function _Json_wrap_UNUSED(value) { return { $: 0, a: value }; }
+function _Json_unwrap_UNUSED(value) { return value.a; }
 
-function _Json_wrap_UNUSED(value) { return value; }
-function _Json_unwrap_UNUSED(value) { return value; }
+function _Json_wrap(value) { return value; }
+function _Json_unwrap(value) { return value; }
 
 function _Json_emptyArray() { return []; }
 function _Json_emptyObject() { return {}; }
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.ay,
+		impl.aG,
+		impl.aE,
 		function() { return function() {} }
 	);
 });
@@ -1872,7 +1872,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 function _Platform_initialize(flagDecoder, args, init, update, subscriptions, stepperBuilder)
 {
 	var result = A2(_Json_run, flagDecoder, _Json_wrap(args ? args['flags'] : undefined));
-	elm$core$Result$isOk(result) || _Debug_crash(2 /**/, _Json_errorToString(result.a) /**/);
+	elm$core$Result$isOk(result) || _Debug_crash(2 /**_UNUSED/, _Json_errorToString(result.a) /**/);
 	var managers = {};
 	result = init(result.a);
 	var model = result.a;
@@ -2271,7 +2271,7 @@ function _Platform_setupIncomingPort(name, sendToApp)
 //
 
 
-function _Platform_export_UNUSED(exports)
+function _Platform_export(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsProd(scope['Elm'], exports)
@@ -2292,7 +2292,7 @@ function _Platform_mergeExportsProd(obj, exports)
 }
 
 
-function _Platform_export(exports)
+function _Platform_export_UNUSED(exports)
 {
 	scope['Elm']
 		? _Platform_mergeExportsDebug('Elm', scope['Elm'], exports)
@@ -2332,10 +2332,10 @@ var _VirtualDom_init = F4(function(virtualNode, flagDecoder, debugMetadata, args
 {
 	// NOTE: this function needs _Platform_export available to work
 
-	/**_UNUSED/
+	/**/
 	var node = args['node'];
 	//*/
-	/**/
+	/**_UNUSED/
 	var node = args && args['node'] ? args['node'] : _Debug_crash(0);
 	//*/
 
@@ -2590,24 +2590,24 @@ function _VirtualDom_noInnerHtmlOrFormAction(key)
 	return key == 'innerHTML' || key == 'formAction' ? 'data-' + key : key;
 }
 
-function _VirtualDom_noJavaScriptUri_UNUSED(value)
+function _VirtualDom_noJavaScriptUri(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,'')) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptUri(value)
+function _VirtualDom_noJavaScriptUri_UNUSED(value)
 {
 	return /^javascript:/i.test(value.replace(/\s/g,''))
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
 		: value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
+function _VirtualDom_noJavaScriptOrHtmlUri(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value) ? '' : value;
 }
 
-function _VirtualDom_noJavaScriptOrHtmlUri(value)
+function _VirtualDom_noJavaScriptOrHtmlUri_UNUSED(value)
 {
 	return /^\s*(javascript:|data:text\/html)/i.test(value)
 		? 'javascript:alert("This is an XSS vector. Please use ports or web components instead.")'
@@ -2659,9 +2659,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		message: func(record.message),
-		stopPropagation: record.stopPropagation,
-		preventDefault: record.preventDefault
+		q: func(record.q),
+		S: record.S,
+		Q: record.Q
 	}
 });
 
@@ -2929,11 +2929,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.message;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.stopPropagation;
+		var message = !tag ? value : tag < 3 ? value.a : value.q;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.S;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.preventDefault) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.Q) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,15 +3883,15 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.ay,
+		impl.aG,
+		impl.aE,
 		function(sendToApp, initialModel) {
-			var view = impl.view;
-			/**_UNUSED/
+			var view = impl.aI;
+			/**/
 			var domNode = args['node'];
 			//*/
-			/**/
+			/**_UNUSED/
 			var domNode = args && args['node'] ? args['node'] : _Debug_crash(0);
 			//*/
 			var currNode = _VirtualDom_virtualize(domNode);
@@ -3919,12 +3919,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.init,
-		impl.update,
-		impl.subscriptions,
+		impl.ay,
+		impl.aG,
+		impl.aE,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.setup && impl.setup(sendToApp)
-			var view = impl.view;
+			var divertHrefToApp = impl.F && impl.F(sendToApp)
+			var view = impl.aI;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3932,12 +3932,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.body);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ar);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.title) && (_VirtualDom_doc.title = title = doc.title);
+				(title !== doc.aF) && (_VirtualDom_doc.title = title = doc.aF);
 			});
 		}
 	);
@@ -3993,12 +3993,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.onUrlChange;
-	var onUrlRequest = impl.onUrlRequest;
+	var onUrlChange = impl.aA;
+	var onUrlRequest = impl.aB;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		setup: function(sendToApp)
+		F: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.protocol === next.protocol
-							&& curr.host === next.host
-							&& curr.port_.a === next.port_.a
+							&& curr.ah === next.ah
+							&& curr.Z === next.Z
+							&& curr.ae.a === next.ae.a
 						)
 							? elm$browser$Browser$Internal(next)
 							: elm$browser$Browser$External(href)
@@ -4024,13 +4024,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		init: function(flags)
+		ay: function(flags)
 		{
-			return A3(impl.init, flags, _Browser_getUrl(), key);
+			return A3(impl.ay, flags, _Browser_getUrl(), key);
 		},
-		view: impl.view,
-		update: impl.update,
-		subscriptions: impl.subscriptions
+		aI: impl.aI,
+		aG: impl.aG,
+		aE: impl.aE
 	});
 }
 
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { hidden: 'hidden', change: 'visibilitychange' }
+		? { aw: 'hidden', as: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { hidden: 'mozHidden', change: 'mozvisibilitychange' }
+		? { aw: 'mozHidden', as: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { hidden: 'msHidden', change: 'msvisibilitychange' }
+		? { aw: 'msHidden', as: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { hidden: 'webkitHidden', change: 'webkitvisibilitychange' }
-		: { hidden: 'hidden', change: 'visibilitychange' };
+		? { aw: 'webkitHidden', as: 'webkitvisibilitychange' }
+		: { aw: 'hidden', as: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		scene: _Browser_getScene(),
-		viewport: {
-			x: _Browser_window.pageXOffset,
-			y: _Browser_window.pageYOffset,
-			width: _Browser_doc.documentElement.clientWidth,
-			height: _Browser_doc.documentElement.clientHeight
+		al: _Browser_getScene(),
+		ao: {
+			K: _Browser_window.pageXOffset,
+			L: _Browser_window.pageYOffset,
+			l: _Browser_doc.documentElement.clientWidth,
+			p: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		width: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		height: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		l: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		p: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			scene: {
-				width: node.scrollWidth,
-				height: node.scrollHeight
+			al: {
+				l: node.scrollWidth,
+				p: node.scrollHeight
 			},
-			viewport: {
-				x: node.scrollLeft,
-				y: node.scrollTop,
-				width: node.clientWidth,
-				height: node.clientHeight
+			ao: {
+				K: node.scrollLeft,
+				L: node.scrollTop,
+				l: node.clientWidth,
+				p: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			scene: _Browser_getScene(),
-			viewport: {
-				x: x,
-				y: y,
-				width: _Browser_doc.documentElement.clientWidth,
-				height: _Browser_doc.documentElement.clientHeight
+			al: _Browser_getScene(),
+			ao: {
+				K: x,
+				L: y,
+				l: _Browser_doc.documentElement.clientWidth,
+				p: _Browser_doc.documentElement.clientHeight
 			},
-			element: {
-				x: x + rect.left,
-				y: y + rect.top,
-				width: rect.width,
-				height: rect.height
+			at: {
+				K: x + rect.left,
+				L: y + rect.top,
+				l: rect.width,
+				p: rect.height
 			}
 		};
 	});
@@ -4395,17 +4395,17 @@ function _Time_getZoneName()
 }
 var author$project$Box$Box = F2(
 	function (height, width) {
-		return {height: height, width: width};
+		return {p: height, l: width};
 	});
 var author$project$Home$Model = F3(
 	function (box, particles, g) {
-		return {box: box, g: g, particles: particles};
+		return {e: box, N: g, s: particles};
 	});
 var elm$core$Basics$negate = function (n) {
 	return -n;
 };
-var elm$core$Basics$EQ = {$: 'EQ'};
-var elm$core$Basics$LT = {$: 'LT'};
+var elm$core$Basics$EQ = 1;
+var elm$core$Basics$LT = 0;
 var elm$core$Elm$JsArray$foldr = _JsArray_foldr;
 var elm$core$Array$foldr = F3(
 	function (func, baseCase, _n0) {
@@ -4413,7 +4413,7 @@ var elm$core$Array$foldr = F3(
 		var tail = _n0.d;
 		var helper = F2(
 			function (node, acc) {
-				if (node.$ === 'SubTree') {
+				if (!node.$) {
 					var subTree = node.a;
 					return A3(elm$core$Elm$JsArray$foldr, helper, acc, subTree);
 				} else {
@@ -4431,12 +4431,12 @@ var elm$core$List$cons = _List_cons;
 var elm$core$Array$toList = function (array) {
 	return A3(elm$core$Array$foldr, elm$core$List$cons, _List_Nil, array);
 };
-var elm$core$Basics$GT = {$: 'GT'};
+var elm$core$Basics$GT = 2;
 var elm$core$Dict$foldr = F3(
 	function (func, acc, t) {
 		foldr:
 		while (true) {
-			if (t.$ === 'RBEmpty_elm_builtin') {
+			if (t.$ === -2) {
 				return acc;
 			} else {
 				var key = t.b;
@@ -4481,7 +4481,7 @@ var elm$core$Dict$keys = function (dict) {
 		dict);
 };
 var elm$core$Set$toList = function (_n0) {
-	var dict = _n0.a;
+	var dict = _n0;
 	return elm$core$Dict$keys(dict);
 };
 var author$project$Home$initModel = A3(
@@ -4492,10 +4492,10 @@ var author$project$Home$initModel = A3(
 		_Utils_Tuple2(0, 100)),
 	_List_Nil,
 	-5.0e-3);
-var elm$core$Basics$False = {$: 'False'};
-var elm$core$Basics$True = {$: 'True'};
+var elm$core$Basics$False = 1;
+var elm$core$Basics$True = 0;
 var elm$core$Result$isOk = function (result) {
-	if (result.$ === 'Ok') {
+	if (!result.$) {
 		return true;
 	} else {
 		return false;
@@ -4504,7 +4504,7 @@ var elm$core$Result$isOk = function (result) {
 var elm$core$Array$branchFactor = 32;
 var elm$core$Array$Array_elm_builtin = F4(
 	function (a, b, c, d) {
-		return {$: 'Array_elm_builtin', a: a, b: b, c: c, d: d};
+		return {$: 0, a: a, b: b, c: c, d: d};
 	});
 var elm$core$Basics$ceiling = _Basics_ceiling;
 var elm$core$Basics$fdiv = _Basics_fdiv;
@@ -4518,10 +4518,10 @@ var elm$core$Array$shiftStep = elm$core$Basics$ceiling(
 var elm$core$Elm$JsArray$empty = _JsArray_empty;
 var elm$core$Array$empty = A4(elm$core$Array$Array_elm_builtin, 0, elm$core$Array$shiftStep, elm$core$Elm$JsArray$empty, elm$core$Elm$JsArray$empty);
 var elm$core$Array$Leaf = function (a) {
-	return {$: 'Leaf', a: a};
+	return {$: 1, a: a};
 };
 var elm$core$Array$SubTree = function (a) {
-	return {$: 'SubTree', a: a};
+	return {$: 0, a: a};
 };
 var elm$core$Elm$JsArray$initializeFromList = _JsArray_initializeFromList;
 var elm$core$List$foldl = F3(
@@ -4609,25 +4609,25 @@ var elm$core$Basics$sub = _Basics_sub;
 var elm$core$Elm$JsArray$length = _JsArray_length;
 var elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.nodeListSize) {
+		if (!builder.a) {
 			return A4(
 				elm$core$Array$Array_elm_builtin,
-				elm$core$Elm$JsArray$length(builder.tail),
+				elm$core$Elm$JsArray$length(builder.c),
 				elm$core$Array$shiftStep,
 				elm$core$Elm$JsArray$empty,
-				builder.tail);
+				builder.c);
 		} else {
-			var treeLen = builder.nodeListSize * elm$core$Array$branchFactor;
+			var treeLen = builder.a * elm$core$Array$branchFactor;
 			var depth = elm$core$Basics$floor(
 				A2(elm$core$Basics$logBase, elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.nodeList) : builder.nodeList;
-			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.nodeListSize);
+			var correctNodeList = reverseNodeList ? elm$core$List$reverse(builder.d) : builder.d;
+			var tree = A2(elm$core$Array$treeFromBuilder, correctNodeList, builder.a);
 			return A4(
 				elm$core$Array$Array_elm_builtin,
-				elm$core$Elm$JsArray$length(builder.tail) + treeLen,
+				elm$core$Elm$JsArray$length(builder.c) + treeLen,
 				A2(elm$core$Basics$max, 5, depth * elm$core$Array$shiftStep),
 				tree,
-				builder.tail);
+				builder.c);
 		}
 	});
 var elm$core$Basics$idiv = _Basics_idiv;
@@ -4641,7 +4641,7 @@ var elm$core$Array$initializeHelp = F5(
 				return A2(
 					elm$core$Array$builderToArray,
 					false,
-					{nodeList: nodeList, nodeListSize: (len / elm$core$Array$branchFactor) | 0, tail: tail});
+					{d: nodeList, a: (len / elm$core$Array$branchFactor) | 0, c: tail});
 			} else {
 				var leaf = elm$core$Array$Leaf(
 					A3(elm$core$Elm$JsArray$initialize, elm$core$Array$branchFactor, fromIndex, fn));
@@ -4673,29 +4673,29 @@ var elm$core$Array$initialize = F2(
 		}
 	});
 var elm$core$Maybe$Just = function (a) {
-	return {$: 'Just', a: a};
+	return {$: 0, a: a};
 };
-var elm$core$Maybe$Nothing = {$: 'Nothing'};
+var elm$core$Maybe$Nothing = {$: 1};
 var elm$core$Result$Err = function (a) {
-	return {$: 'Err', a: a};
+	return {$: 1, a: a};
 };
 var elm$core$Result$Ok = function (a) {
-	return {$: 'Ok', a: a};
+	return {$: 0, a: a};
 };
 var elm$json$Json$Decode$Failure = F2(
 	function (a, b) {
-		return {$: 'Failure', a: a, b: b};
+		return {$: 3, a: a, b: b};
 	});
 var elm$json$Json$Decode$Field = F2(
 	function (a, b) {
-		return {$: 'Field', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var elm$json$Json$Decode$Index = F2(
 	function (a, b) {
-		return {$: 'Index', a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var elm$json$Json$Decode$OneOf = function (a) {
-	return {$: 'OneOf', a: a};
+	return {$: 2, a: a};
 };
 var elm$core$Basics$and = _Basics_and;
 var elm$core$Basics$append = _Utils_append;
@@ -4797,12 +4797,12 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 		errorToStringHelp:
 		while (true) {
 			switch (error.$) {
-				case 'Field':
+				case 0:
 					var f = error.a;
 					var err = error.b;
 					var isSimple = function () {
 						var _n1 = elm$core$String$uncons(f);
-						if (_n1.$ === 'Nothing') {
+						if (_n1.$ === 1) {
 							return false;
 						} else {
 							var _n2 = _n1.a;
@@ -4817,7 +4817,7 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'Index':
+				case 1:
 					var i = error.a;
 					var err = error.b;
 					var indexName = '[' + (elm$core$String$fromInt(i) + ']');
@@ -4826,7 +4826,7 @@ var elm$json$Json$Decode$errorToStringHelp = F2(
 					error = $temp$error;
 					context = $temp$context;
 					continue errorToStringHelp;
-				case 'OneOf':
+				case 2:
 					var errors = error.a;
 					if (!errors.b) {
 						return 'Ran into a Json.Decode.oneOf with no possibilities' + function () {
@@ -4893,10 +4893,10 @@ var author$project$Home$init = function (_n0) {
 	return _Utils_Tuple2(author$project$Home$initModel, elm$core$Platform$Cmd$none);
 };
 var author$project$Home$NewWindowSize = function (a) {
-	return {$: 'NewWindowSize', a: a};
+	return {$: 3, a: a};
 };
 var author$project$Home$OnAnimate = function (a) {
-	return {$: 'OnAnimate', a: a};
+	return {$: 0, a: a};
 };
 var elm$json$Json$Decode$andThen = _Json_andThen;
 var elm$json$Json$Decode$field = _Json_decodeField;
@@ -4911,34 +4911,32 @@ var author$project$Home$newWindowSize = _Platform_incomingPort(
 				elm$json$Json$Decode$andThen,
 				function (height) {
 					return elm$json$Json$Decode$succeed(
-						{height: height, width: width});
+						{p: height, l: width});
 				},
 				A2(elm$json$Json$Decode$field, 'height', elm$json$Json$Decode$float));
 		},
 		A2(elm$json$Json$Decode$field, 'width', elm$json$Json$Decode$float)));
 var elm$browser$Browser$AnimationManager$Delta = function (a) {
-	return {$: 'Delta', a: a};
+	return {$: 1, a: a};
 };
 var elm$browser$Browser$AnimationManager$State = F3(
 	function (subs, request, oldTime) {
-		return {oldTime: oldTime, request: request, subs: subs};
+		return {P: oldTime, ak: request, am: subs};
 	});
 var elm$core$Task$succeed = _Scheduler_succeed;
 var elm$browser$Browser$AnimationManager$init = elm$core$Task$succeed(
 	A3(elm$browser$Browser$AnimationManager$State, _List_Nil, elm$core$Maybe$Nothing, 0));
 var elm$browser$Browser$External = function (a) {
-	return {$: 'External', a: a};
+	return {$: 1, a: a};
 };
 var elm$browser$Browser$Internal = function (a) {
-	return {$: 'Internal', a: a};
+	return {$: 0, a: a};
 };
-var elm$browser$Browser$Dom$NotFound = function (a) {
-	return {$: 'NotFound', a: a};
-};
+var elm$browser$Browser$Dom$NotFound = elm$core$Basics$identity;
 var elm$core$Basics$never = function (_n0) {
 	never:
 	while (true) {
-		var nvr = _n0.a;
+		var nvr = _n0;
 		var $temp$_n0 = nvr;
 		_n0 = $temp$_n0;
 		continue never;
@@ -4947,10 +4945,8 @@ var elm$core$Basics$never = function (_n0) {
 var elm$core$Basics$identity = function (x) {
 	return x;
 };
-var elm$core$Task$Perform = function (a) {
-	return {$: 'Perform', a: a};
-};
-var elm$core$Task$init = elm$core$Task$succeed(_Utils_Tuple0);
+var elm$core$Task$Perform = elm$core$Basics$identity;
+var elm$core$Task$init = elm$core$Task$succeed(0);
 var elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -5056,7 +5052,7 @@ var elm$core$Task$sequence = function (tasks) {
 var elm$core$Platform$sendToApp = _Platform_sendToApp;
 var elm$core$Task$spawnCmd = F2(
 	function (router, _n0) {
-		var task = _n0.a;
+		var task = _n0;
 		return _Scheduler_spawn(
 			A2(
 				elm$core$Task$andThen,
@@ -5068,7 +5064,7 @@ var elm$core$Task$onEffects = F3(
 		return A2(
 			elm$core$Task$map,
 			function (_n0) {
-				return _Utils_Tuple0;
+				return 0;
 			},
 			elm$core$Task$sequence(
 				A2(
@@ -5078,31 +5074,29 @@ var elm$core$Task$onEffects = F3(
 	});
 var elm$core$Task$onSelfMsg = F3(
 	function (_n0, _n1, _n2) {
-		return elm$core$Task$succeed(_Utils_Tuple0);
+		return elm$core$Task$succeed(0);
 	});
 var elm$core$Task$cmdMap = F2(
 	function (tagger, _n0) {
-		var task = _n0.a;
-		return elm$core$Task$Perform(
-			A2(elm$core$Task$map, tagger, task));
+		var task = _n0;
+		return A2(elm$core$Task$map, tagger, task);
 	});
 _Platform_effectManagers['Task'] = _Platform_createManager(elm$core$Task$init, elm$core$Task$onEffects, elm$core$Task$onSelfMsg, elm$core$Task$cmdMap);
 var elm$core$Task$command = _Platform_leaf('Task');
 var elm$core$Task$perform = F2(
 	function (toMessage, task) {
 		return elm$core$Task$command(
-			elm$core$Task$Perform(
-				A2(elm$core$Task$map, toMessage, task)));
+			A2(elm$core$Task$map, toMessage, task));
 	});
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 	switch (handler.$) {
-		case 'Normal':
+		case 0:
 			return 0;
-		case 'MayStopPropagation':
+		case 1:
 			return 1;
-		case 'MayPreventDefault':
+		case 2:
 			return 2;
 		default:
 			return 3;
@@ -5119,8 +5113,8 @@ var elm$core$String$dropLeft = F2(
 			string);
 	});
 var elm$core$String$startsWith = _String_startsWith;
-var elm$url$Url$Http = {$: 'Http'};
-var elm$url$Url$Https = {$: 'Https'};
+var elm$url$Url$Http = 0;
+var elm$url$Url$Https = 1;
 var elm$core$String$indexes = _String_indexes;
 var elm$core$String$isEmpty = function (string) {
 	return string === '';
@@ -5133,7 +5127,7 @@ var elm$core$String$contains = _String_contains;
 var elm$core$String$toInt = _String_toInt;
 var elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {fragment: fragment, host: host, path: path, port_: port_, protocol: protocol, query: query};
+		return {Y: fragment, Z: host, ac: path, ae: port_, ah: protocol, ai: query};
 	});
 var elm$url$Url$chompBeforePath = F5(
 	function (protocol, path, params, frag, str) {
@@ -5149,7 +5143,7 @@ var elm$url$Url$chompBeforePath = F5(
 					var i = _n0.a;
 					var _n1 = elm$core$String$toInt(
 						A2(elm$core$String$dropLeft, i + 1, str));
-					if (_n1.$ === 'Nothing') {
+					if (_n1.$ === 1) {
 						return elm$core$Maybe$Nothing;
 					} else {
 						var port_ = _n1;
@@ -5231,23 +5225,23 @@ var elm$url$Url$chompAfterProtocol = F2(
 var elm$url$Url$fromString = function (str) {
 	return A2(elm$core$String$startsWith, 'http://', str) ? A2(
 		elm$url$Url$chompAfterProtocol,
-		elm$url$Url$Http,
+		0,
 		A2(elm$core$String$dropLeft, 7, str)) : (A2(elm$core$String$startsWith, 'https://', str) ? A2(
 		elm$url$Url$chompAfterProtocol,
-		elm$url$Url$Https,
+		1,
 		A2(elm$core$String$dropLeft, 8, str)) : elm$core$Maybe$Nothing);
 };
-var elm$browser$Browser$AnimationManager$now = _Browser_now(_Utils_Tuple0);
-var elm$browser$Browser$AnimationManager$rAF = _Browser_rAF(_Utils_Tuple0);
+var elm$browser$Browser$AnimationManager$now = _Browser_now(0);
+var elm$browser$Browser$AnimationManager$rAF = _Browser_rAF(0);
 var elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var elm$core$Process$kill = _Scheduler_kill;
 var elm$core$Process$spawn = _Scheduler_spawn;
 var elm$browser$Browser$AnimationManager$onEffects = F3(
 	function (router, subs, _n0) {
-		var request = _n0.request;
-		var oldTime = _n0.oldTime;
+		var request = _n0.ak;
+		var oldTime = _n0.P;
 		var _n1 = _Utils_Tuple2(request, subs);
-		if (_n1.a.$ === 'Nothing') {
+		if (_n1.a.$ === 1) {
 			if (!_n1.b.b) {
 				var _n2 = _n1.a;
 				return elm$browser$Browser$AnimationManager$init;
@@ -5289,16 +5283,14 @@ var elm$browser$Browser$AnimationManager$onEffects = F3(
 			}
 		}
 	});
-var elm$time$Time$Posix = function (a) {
-	return {$: 'Posix', a: a};
-};
-var elm$time$Time$millisToPosix = elm$time$Time$Posix;
+var elm$time$Time$Posix = elm$core$Basics$identity;
+var elm$time$Time$millisToPosix = elm$core$Basics$identity;
 var elm$browser$Browser$AnimationManager$onSelfMsg = F3(
 	function (router, newTime, _n0) {
-		var subs = _n0.subs;
-		var oldTime = _n0.oldTime;
+		var subs = _n0.am;
+		var oldTime = _n0.P;
 		var send = function (sub) {
-			if (sub.$ === 'Time') {
+			if (!sub.$) {
 				var tagger = sub.a;
 				return A2(
 					elm$core$Platform$sendToApp,
@@ -5336,7 +5328,7 @@ var elm$browser$Browser$AnimationManager$onSelfMsg = F3(
 					elm$browser$Browser$AnimationManager$rAF)));
 	});
 var elm$browser$Browser$AnimationManager$Time = function (a) {
-	return {$: 'Time', a: a};
+	return {$: 0, a: a};
 };
 var elm$core$Basics$composeL = F3(
 	function (g, f, x) {
@@ -5345,7 +5337,7 @@ var elm$core$Basics$composeL = F3(
 	});
 var elm$browser$Browser$AnimationManager$subMap = F2(
 	function (func, sub) {
-		if (sub.$ === 'Time') {
+		if (!sub.$) {
 			var tagger = sub.a;
 			return elm$browser$Browser$AnimationManager$Time(
 				A2(elm$core$Basics$composeL, func, tagger));
@@ -5379,7 +5371,7 @@ var author$project$Box$max = elm$core$Tuple$second;
 var author$project$Box$min = elm$core$Tuple$first;
 var elm$core$Basics$sqrt = _Basics_sqrt;
 var author$project$Particle$radius = function (p) {
-	return elm$core$Basics$sqrt(p.mass);
+	return elm$core$Basics$sqrt(p.f);
 };
 var author$project$Vector$x = elm$core$Tuple$first;
 var author$project$Vector$y = elm$core$Tuple$second;
@@ -5389,32 +5381,32 @@ var elm$core$Basics$abs = function (n) {
 var author$project$Box$bounceX = F2(
 	function (box, particle) {
 		if (_Utils_cmp(
-			author$project$Vector$x(particle.position) + author$project$Particle$radius(particle),
-			author$project$Box$max(box.width)) > 0) {
+			author$project$Vector$x(particle.i) + author$project$Particle$radius(particle),
+			author$project$Box$max(box.l)) > 0) {
 			var newVelocity = _Utils_Tuple2(
 				-elm$core$Basics$abs(
-					author$project$Vector$x(particle.velocity)),
-				author$project$Vector$y(particle.velocity));
+					author$project$Vector$x(particle.j)),
+				author$project$Vector$y(particle.j));
 			var newPosition = _Utils_Tuple2(
-				author$project$Box$max(box.width) - author$project$Particle$radius(particle),
-				author$project$Vector$y(particle.position));
+				author$project$Box$max(box.l) - author$project$Particle$radius(particle),
+				author$project$Vector$y(particle.i));
 			return _Utils_update(
 				particle,
-				{position: newPosition, velocity: newVelocity});
+				{i: newPosition, j: newVelocity});
 		} else {
 			if (_Utils_cmp(
-				author$project$Vector$x(particle.position) - author$project$Particle$radius(particle),
-				author$project$Box$min(box.width)) < 0) {
+				author$project$Vector$x(particle.i) - author$project$Particle$radius(particle),
+				author$project$Box$min(box.l)) < 0) {
 				var newVelocity = _Utils_Tuple2(
 					elm$core$Basics$abs(
-						author$project$Vector$x(particle.velocity)),
-					author$project$Vector$y(particle.velocity));
+						author$project$Vector$x(particle.j)),
+					author$project$Vector$y(particle.j));
 				var newPosition = _Utils_Tuple2(
-					author$project$Box$min(box.width) + author$project$Particle$radius(particle),
-					author$project$Vector$y(particle.position));
+					author$project$Box$min(box.l) + author$project$Particle$radius(particle),
+					author$project$Vector$y(particle.i));
 				return _Utils_update(
 					particle,
-					{position: newPosition, velocity: newVelocity});
+					{i: newPosition, j: newVelocity});
 			} else {
 				return particle;
 			}
@@ -5423,32 +5415,32 @@ var author$project$Box$bounceX = F2(
 var author$project$Box$bounceY = F2(
 	function (box, particle) {
 		if (_Utils_cmp(
-			author$project$Vector$y(particle.position) + author$project$Particle$radius(particle),
-			author$project$Box$max(box.height)) > 0) {
+			author$project$Vector$y(particle.i) + author$project$Particle$radius(particle),
+			author$project$Box$max(box.p)) > 0) {
 			var newVelocity = _Utils_Tuple2(
-				author$project$Vector$x(particle.velocity),
+				author$project$Vector$x(particle.j),
 				-elm$core$Basics$abs(
-					author$project$Vector$y(particle.velocity)));
+					author$project$Vector$y(particle.j)));
 			var newPosition = _Utils_Tuple2(
-				author$project$Vector$x(particle.position),
-				author$project$Box$max(box.height) - author$project$Particle$radius(particle));
+				author$project$Vector$x(particle.i),
+				author$project$Box$max(box.p) - author$project$Particle$radius(particle));
 			return _Utils_update(
 				particle,
-				{position: newPosition, velocity: newVelocity});
+				{i: newPosition, j: newVelocity});
 		} else {
 			if (_Utils_cmp(
-				author$project$Vector$y(particle.position) - author$project$Particle$radius(particle),
-				author$project$Box$min(box.height)) < 0) {
+				author$project$Vector$y(particle.i) - author$project$Particle$radius(particle),
+				author$project$Box$min(box.p)) < 0) {
 				var newVelocity = _Utils_Tuple2(
-					author$project$Vector$x(particle.velocity),
+					author$project$Vector$x(particle.j),
 					elm$core$Basics$abs(
-						author$project$Vector$y(particle.velocity)));
+						author$project$Vector$y(particle.j)));
 				var newPosition = _Utils_Tuple2(
-					author$project$Vector$x(particle.position),
-					author$project$Box$min(box.height) + author$project$Particle$radius(particle));
+					author$project$Vector$x(particle.i),
+					author$project$Box$min(box.p) + author$project$Particle$radius(particle));
 				return _Utils_update(
 					particle,
-					{position: newPosition, velocity: newVelocity});
+					{i: newPosition, j: newVelocity});
 			} else {
 				return particle;
 			}
@@ -5468,27 +5460,25 @@ var author$project$Box$updateBox = F2(
 		return A2(
 			author$project$Box$Box,
 			_Utils_Tuple2(
-				author$project$Box$min(box.width),
+				author$project$Box$min(box.l),
 				x),
 			_Utils_Tuple2(
-				author$project$Box$min(box.height),
+				author$project$Box$min(box.p),
 				y));
 	});
 var author$project$Home$NewParticles = function (a) {
-	return {$: 'NewParticles', a: a};
+	return {$: 1, a: a};
 };
 var author$project$Vector$vector = F2(
 	function (a, b) {
 		return _Utils_Tuple2(a, b);
 	});
 var elm$core$Bitwise$and = _Bitwise_and;
-var elm$random$Random$Generator = function (a) {
-	return {$: 'Generator', a: a};
-};
+var elm$random$Random$Generator = elm$core$Basics$identity;
 var elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
 var elm$random$Random$Seed = F2(
 	function (a, b) {
-		return {$: 'Seed', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var elm$random$Random$next = function (_n0) {
 	var state0 = _n0.a;
@@ -5503,37 +5493,35 @@ var elm$random$Random$peel = function (_n0) {
 };
 var elm$random$Random$float = F2(
 	function (a, b) {
-		return elm$random$Random$Generator(
-			function (seed0) {
-				var seed1 = elm$random$Random$next(seed0);
-				var range = elm$core$Basics$abs(b - a);
-				var n1 = elm$random$Random$peel(seed1);
-				var n0 = elm$random$Random$peel(seed0);
-				var lo = (134217727 & n1) * 1.0;
-				var hi = (67108863 & n0) * 1.0;
-				var val = ((hi * 1.34217728e8) + lo) / 9.007199254740992e15;
-				var scaled = (val * range) + a;
-				return _Utils_Tuple2(
-					scaled,
-					elm$random$Random$next(seed1));
-			});
+		return function (seed0) {
+			var seed1 = elm$random$Random$next(seed0);
+			var range = elm$core$Basics$abs(b - a);
+			var n1 = elm$random$Random$peel(seed1);
+			var n0 = elm$random$Random$peel(seed0);
+			var lo = (134217727 & n1) * 1.0;
+			var hi = (67108863 & n0) * 1.0;
+			var val = ((hi * 1.34217728e8) + lo) / 9.007199254740992e15;
+			var scaled = (val * range) + a;
+			return _Utils_Tuple2(
+				scaled,
+				elm$random$Random$next(seed1));
+		};
 	});
 var elm$random$Random$map2 = F3(
 	function (func, _n0, _n1) {
-		var genA = _n0.a;
-		var genB = _n1.a;
-		return elm$random$Random$Generator(
-			function (seed0) {
-				var _n2 = genA(seed0);
-				var a = _n2.a;
-				var seed1 = _n2.b;
-				var _n3 = genB(seed1);
-				var b = _n3.a;
-				var seed2 = _n3.b;
-				return _Utils_Tuple2(
-					A2(func, a, b),
-					seed2);
-			});
+		var genA = _n0;
+		var genB = _n1;
+		return function (seed0) {
+			var _n2 = genA(seed0);
+			var a = _n2.a;
+			var seed1 = _n2.b;
+			var _n3 = genB(seed1);
+			var b = _n3.a;
+			var seed2 = _n3.b;
+			return _Utils_Tuple2(
+				A2(func, a, b),
+				seed2);
+		};
 	});
 var author$project$Home$randomAcceleration = A3(
 	elm$random$Random$map2,
@@ -5543,16 +5531,15 @@ var author$project$Home$randomAcceleration = A3(
 var elm$core$Basics$pow = _Basics_pow;
 var elm$random$Random$map = F2(
 	function (func, _n0) {
-		var genA = _n0.a;
-		return elm$random$Random$Generator(
-			function (seed0) {
-				var _n1 = genA(seed0);
-				var a = _n1.a;
-				var seed1 = _n1.b;
-				return _Utils_Tuple2(
-					func(a),
-					seed1);
-			});
+		var genA = _n0;
+		return function (seed0) {
+			var _n1 = genA(seed0);
+			var a = _n1.a;
+			var seed1 = _n1.b;
+			return _Utils_Tuple2(
+				func(a),
+				seed1);
+		};
 	});
 var author$project$Home$randomMass = function (box) {
 	return A2(
@@ -5563,7 +5550,7 @@ var author$project$Home$randomMass = function (box) {
 		A2(
 			elm$random$Random$float,
 			2,
-			author$project$Box$max(box.width) / 100));
+			author$project$Box$max(box.l) / 100));
 };
 var author$project$Home$randomPosition = function (model) {
 	return A3(
@@ -5571,16 +5558,16 @@ var author$project$Home$randomPosition = function (model) {
 		author$project$Vector$vector,
 		A2(
 			elm$random$Random$float,
-			author$project$Box$max(model.box.width) * 0,
-			author$project$Box$max(model.box.width) * 1),
+			author$project$Box$max(model.e.l) * 0,
+			author$project$Box$max(model.e.l) * 1),
 		A2(
 			elm$random$Random$float,
-			author$project$Box$max(model.box.height) * 0,
-			author$project$Box$max(model.box.height) * 1));
+			author$project$Box$max(model.e.p) * 0,
+			author$project$Box$max(model.e.p) * 1));
 };
 var author$project$Home$randomVelocity = function (model) {
-	var vy = 2.0e-5 * author$project$Box$max(model.box.height);
-	var vx = 2.0e-5 * author$project$Box$max(model.box.width);
+	var vy = 2.0e-5 * author$project$Box$max(model.e.p);
+	var vx = 2.0e-5 * author$project$Box$max(model.e.l);
 	return A3(
 		elm$random$Random$map2,
 		author$project$Vector$vector,
@@ -5589,32 +5576,31 @@ var author$project$Home$randomVelocity = function (model) {
 };
 var author$project$Particle$Particle = F4(
 	function (position, velocity, acceleration, mass) {
-		return {acceleration: acceleration, mass: mass, position: position, velocity: velocity};
+		return {M: acceleration, f: mass, i: position, j: velocity};
 	});
 var elm$random$Random$map4 = F5(
 	function (func, _n0, _n1, _n2, _n3) {
-		var genA = _n0.a;
-		var genB = _n1.a;
-		var genC = _n2.a;
-		var genD = _n3.a;
-		return elm$random$Random$Generator(
-			function (seed0) {
-				var _n4 = genA(seed0);
-				var a = _n4.a;
-				var seed1 = _n4.b;
-				var _n5 = genB(seed1);
-				var b = _n5.a;
-				var seed2 = _n5.b;
-				var _n6 = genC(seed2);
-				var c = _n6.a;
-				var seed3 = _n6.b;
-				var _n7 = genD(seed3);
-				var d = _n7.a;
-				var seed4 = _n7.b;
-				return _Utils_Tuple2(
-					A4(func, a, b, c, d),
-					seed4);
-			});
+		var genA = _n0;
+		var genB = _n1;
+		var genC = _n2;
+		var genD = _n3;
+		return function (seed0) {
+			var _n4 = genA(seed0);
+			var a = _n4.a;
+			var seed1 = _n4.b;
+			var _n5 = genB(seed1);
+			var b = _n5.a;
+			var seed2 = _n5.b;
+			var _n6 = genC(seed2);
+			var c = _n6.a;
+			var seed3 = _n6.b;
+			var _n7 = genD(seed3);
+			var d = _n7.a;
+			var seed4 = _n7.b;
+			return _Utils_Tuple2(
+				A4(func, a, b, c, d),
+				seed4);
+		};
 	});
 var author$project$Particle$randomParticle = F4(
 	function (position, velocity, acceleration, mass) {
@@ -5626,7 +5612,7 @@ var author$project$Home$newParticle = function (model) {
 		author$project$Home$randomPosition(model),
 		author$project$Home$randomVelocity(model),
 		author$project$Home$randomAcceleration,
-		author$project$Home$randomMass(model.box));
+		author$project$Home$randomMass(model.e));
 };
 var elm$random$Random$listHelp = F4(
 	function (revList, n, gen, seed) {
@@ -5652,11 +5638,10 @@ var elm$random$Random$listHelp = F4(
 	});
 var elm$random$Random$list = F2(
 	function (n, _n0) {
-		var gen = _n0.a;
-		return elm$random$Random$Generator(
-			function (seed) {
-				return A4(elm$random$Random$listHelp, _List_Nil, n, gen, seed);
-			});
+		var gen = _n0;
+		return function (seed) {
+			return A4(elm$random$Random$listHelp, _List_Nil, n, gen, seed);
+		};
 	});
 var author$project$Home$newParticles = F2(
 	function (model, n) {
@@ -5690,7 +5675,7 @@ var author$project$Vector$distance = F2(
 	});
 var author$project$Particle$distance = F2(
 	function (p, q) {
-		return A2(author$project$Vector$distance, p.position, q.position);
+		return A2(author$project$Vector$distance, p.i, q.i);
 	});
 var author$project$Particle$isCollision = F2(
 	function (p, q) {
@@ -5707,7 +5692,7 @@ var author$project$Vector$multiply = F2(
 			author$project$Vector$y(p) * k);
 	});
 var author$project$Particle$momentum = function (p) {
-	return A2(author$project$Vector$multiply, p.mass, p.velocity);
+	return A2(author$project$Vector$multiply, p.f, p.j);
 };
 var author$project$Vector$add = F2(
 	function (p, q) {
@@ -5734,30 +5719,30 @@ var author$project$Particle$collide_ = F2(
 			author$project$Particle$cr,
 			A2(
 				author$project$Vector$multiply,
-				p.mass,
-				A2(author$project$Vector$subtract, p.velocity, q.velocity)));
+				p.f,
+				A2(author$project$Vector$subtract, p.j, q.j)));
 		var qVelocity = A2(
 			author$project$Vector$divide,
-			p.mass + q.mass,
+			p.f + q.f,
 			A2(author$project$Vector$add, qElasticity, totalMomentum));
 		var pElasticity = A2(
 			author$project$Vector$multiply,
 			author$project$Particle$cr,
 			A2(
 				author$project$Vector$multiply,
-				q.mass,
-				A2(author$project$Vector$subtract, q.velocity, p.velocity)));
+				q.f,
+				A2(author$project$Vector$subtract, q.j, p.j)));
 		var pVelocity = A2(
 			author$project$Vector$divide,
-			p.mass + q.mass,
+			p.f + q.f,
 			A2(author$project$Vector$add, pElasticity, totalMomentum));
 		return _Utils_Tuple2(
 			_Utils_update(
 				p,
-				{velocity: pVelocity}),
+				{j: pVelocity}),
 			_Utils_update(
 				q,
-				{velocity: qVelocity}));
+				{j: qVelocity}));
 	});
 var author$project$Vector$equivalentErr = 1.0e-6;
 var author$project$Vector$equivalent = F2(
@@ -5772,7 +5757,7 @@ var author$project$Particle$sigCollision = F2(
 		var _n0 = A2(author$project$Particle$collide_, p, q);
 		var newP = _n0.a;
 		var newQ = _n0.b;
-		return A2(author$project$Vector$equivalent, p.velocity, newP.velocity) ? false : true;
+		return A2(author$project$Vector$equivalent, p.j, newP.j) ? false : true;
 	});
 var author$project$Particle$collisionFilter = F2(
 	function (p, qs) {
@@ -5796,14 +5781,14 @@ var author$project$Particle$collisionFilter = F2(
 	});
 var author$project$Particle$merge = F2(
 	function (p, q) {
-		var newMass = p.mass + q.mass;
+		var newMass = p.f + q.f;
 		var newPosition = A2(
 			author$project$Vector$divide,
 			newMass,
 			A2(
 				author$project$Vector$add,
-				A2(author$project$Vector$multiply, p.mass, p.position),
-				A2(author$project$Vector$multiply, q.mass, q.position)));
+				A2(author$project$Vector$multiply, p.f, p.i),
+				A2(author$project$Vector$multiply, q.f, q.i)));
 		var newVelocity = A2(
 			author$project$Vector$divide,
 			newMass,
@@ -5835,7 +5820,6 @@ var author$project$Particle$mergeCollisions = function (particles) {
 var author$project$Opt$absTolerance = 1.0e-15;
 var author$project$Opt$maxIter = 1000.0;
 var author$project$Opt$relTolerance = 1.0e-15;
-var elm$core$Debug$log = _Debug_log;
 var author$project$Opt$minimize_ = F5(
 	function (f, x, dx, yi, iter) {
 		minimize_:
@@ -5862,7 +5846,7 @@ var author$project$Opt$minimize_ = F5(
 					return x + dx;
 				} else {
 					if (_Utils_cmp(iter, author$project$Opt$maxIter) > 0) {
-						return A2(elm$core$Debug$log, 'Reached maximum iterations: ', x + dx);
+						return x + dx;
 					} else {
 						if (_Utils_cmp(yo, yi) > 0) {
 							var $temp$f = f,
@@ -5909,10 +5893,10 @@ var author$project$Particle$updatePosition = F2(
 		return _Utils_update(
 			p,
 			{
-				position: A2(
+				i: A2(
 					author$project$Vector$add,
-					p.position,
-					A2(author$project$Vector$multiply, dt, p.velocity))
+					p.i,
+					A2(author$project$Vector$multiply, dt, p.j))
 			});
 	});
 var author$project$Particle$collisionDeltaTime = F2(
@@ -5953,7 +5937,7 @@ var author$project$Particle$isSignificantCollision = F2(
 				return newA;
 			});
 		var pFinal = A3(elm$core$List$foldr, collideOne, p, qs);
-		return !A2(author$project$Vector$equivalent, p.velocity, pFinal.velocity);
+		return !A2(author$project$Vector$equivalent, p.j, pFinal.j);
 	});
 var elm$core$List$sortBy = _List_sortBy;
 var author$project$Particle$resolveCollisions = function (particles) {
@@ -5972,10 +5956,6 @@ var author$project$Particle$resolveCollisions = function (particles) {
 			if (collisionsSorted.b) {
 				var q = collisionsSorted.a;
 				var qs = collisionsSorted.b;
-				var y = A2(
-					elm$core$Debug$log,
-					'Collisions of size',
-					2 + elm$core$List$length(qs));
 				var _n3 = A2(author$project$Particle$collide, p, q);
 				var newP = _n3.a;
 				var newQ = _n3.b;
@@ -6006,7 +5986,7 @@ var author$project$Vector$normalize = function (p) {
 var elm$core$List$maybeCons = F3(
 	function (f, mx, xs) {
 		var _n0 = f(mx);
-		if (_n0.$ === 'Just') {
+		if (!_n0.$) {
 			var x = _n0.a;
 			return A2(elm$core$List$cons, x, xs);
 		} else {
@@ -6026,12 +6006,12 @@ var author$project$Particle$updateAcceleration = F2(
 		var acceleration = F2(
 			function (p, q) {
 				var r = author$project$Vector$normalize(
-					A2(author$project$Vector$subtract, q.position, p.position));
+					A2(author$project$Vector$subtract, q.i, p.i));
 				var dist = A2(
 					elm$core$Basics$max,
 					A2(author$project$Particle$distance, p, q),
 					author$project$Particle$radius(p) + author$project$Particle$radius(q));
-				var k = (g * q.mass) / A2(elm$core$Basics$pow, dist, 2);
+				var k = (g * q.f) / A2(elm$core$Basics$pow, dist, 2);
 				return (A2(author$project$Particle$distance, p, q) < 1.0e-4) ? elm$core$Maybe$Nothing : elm$core$Maybe$Just(
 					A2(author$project$Vector$multiply, k, r));
 			});
@@ -6051,7 +6031,7 @@ var author$project$Particle$updateAcceleration = F2(
 				return _Utils_update(
 					p,
 					{
-						acceleration: totalAcceleration(p)
+						M: totalAcceleration(p)
 					});
 			},
 			particles);
@@ -6061,15 +6041,13 @@ var author$project$Particle$updateVelocity = F2(
 		return _Utils_update(
 			p,
 			{
-				velocity: A2(
+				j: A2(
 					author$project$Vector$add,
-					p.velocity,
-					A2(author$project$Vector$multiply, dt, p.acceleration))
+					p.j,
+					A2(author$project$Vector$multiply, dt, p.M))
 			});
 	});
-var elm$random$Random$Generate = function (a) {
-	return {$: 'Generate', a: a};
-};
+var elm$random$Random$Generate = elm$core$Basics$identity;
 var elm$random$Random$initialSeed = function (x) {
 	var _n0 = elm$random$Random$next(
 		A2(elm$random$Random$Seed, 0, 1013904223));
@@ -6080,19 +6058,19 @@ var elm$random$Random$initialSeed = function (x) {
 		A2(elm$random$Random$Seed, state2, incr));
 };
 var elm$time$Time$Name = function (a) {
-	return {$: 'Name', a: a};
+	return {$: 0, a: a};
 };
 var elm$time$Time$Offset = function (a) {
-	return {$: 'Offset', a: a};
+	return {$: 1, a: a};
 };
 var elm$time$Time$Zone = F2(
 	function (a, b) {
-		return {$: 'Zone', a: a, b: b};
+		return {$: 0, a: a, b: b};
 	});
 var elm$time$Time$customZone = elm$time$Time$Zone;
 var elm$time$Time$now = _Time_now(elm$time$Time$millisToPosix);
 var elm$time$Time$posixToMillis = function (_n0) {
-	var millis = _n0.a;
+	var millis = _n0;
 	return millis;
 };
 var elm$random$Random$init = A2(
@@ -6105,7 +6083,7 @@ var elm$random$Random$init = A2(
 	elm$time$Time$now);
 var elm$random$Random$step = F2(
 	function (_n0, seed) {
-		var generator = _n0.a;
+		var generator = _n0;
 		return generator(seed);
 	});
 var elm$random$Random$onEffects = F3(
@@ -6113,7 +6091,7 @@ var elm$random$Random$onEffects = F3(
 		if (!commands.b) {
 			return elm$core$Task$succeed(seed);
 		} else {
-			var generator = commands.a.a;
+			var generator = commands.a;
 			var rest = commands.b;
 			var _n1 = A2(elm$random$Random$step, generator, seed);
 			var value = _n1.a;
@@ -6132,44 +6110,42 @@ var elm$random$Random$onSelfMsg = F3(
 	});
 var elm$random$Random$cmdMap = F2(
 	function (func, _n0) {
-		var generator = _n0.a;
-		return elm$random$Random$Generate(
-			A2(elm$random$Random$map, func, generator));
+		var generator = _n0;
+		return A2(elm$random$Random$map, func, generator);
 	});
 _Platform_effectManagers['Random'] = _Platform_createManager(elm$random$Random$init, elm$random$Random$onEffects, elm$random$Random$onSelfMsg, elm$random$Random$cmdMap);
 var elm$random$Random$command = _Platform_leaf('Random');
 var elm$random$Random$generate = F2(
 	function (tagger, generator) {
 		return elm$random$Random$command(
-			elm$random$Random$Generate(
-				A2(elm$random$Random$map, tagger, generator)));
+			A2(elm$random$Random$map, tagger, generator));
 	});
 var author$project$Home$update = F2(
 	function (msg, model) {
 		switch (msg.$) {
-			case 'OnAnimate':
+			case 0:
 				var dt = msg.a;
-				var collisionHandler = (model.g > 0) ? author$project$Particle$mergeCollisions : author$project$Particle$resolveCollisions;
-				var particles = A2(
+				var collisionHandler = (model.N > 0) ? author$project$Particle$mergeCollisions : author$project$Particle$resolveCollisions;
+				var particles = (dt < 150) ? A2(
 					elm$core$List$map,
 					author$project$Particle$updateVelocity(dt),
 					A2(
 						author$project$Particle$updateAcceleration,
-						model.g,
+						model.N,
 						collisionHandler(
 							A2(
 								elm$core$List$map,
-								author$project$Box$bounce(model.box),
+								author$project$Box$bounce(model.e),
 								A2(
 									elm$core$List$map,
 									author$project$Particle$updatePosition(dt),
-									model.particles)))));
+									model.s))))) : model.s;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{particles: particles}),
+						{s: particles}),
 					elm$core$Platform$Cmd$none);
-			case 'ResetParticles':
+			case 2:
 				var n = msg.a;
 				return _Utils_Tuple2(
 					model,
@@ -6177,12 +6153,12 @@ var author$project$Home$update = F2(
 						elm$random$Random$generate,
 						author$project$Home$NewParticles,
 						A2(author$project$Home$newParticles, model, n)));
-			case 'NewParticles':
+			case 1:
 				var particles = msg.a;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
-						{particles: particles}),
+						{s: particles}),
 					elm$core$Platform$Cmd$none);
 			default:
 				var windowSize = msg.a;
@@ -6190,11 +6166,11 @@ var author$project$Home$update = F2(
 					_Utils_update(
 						model,
 						{
-							box: A2(
+							e: A2(
 								author$project$Box$updateBox,
-								model.box,
-								_Utils_Tuple2(windowSize.height, windowSize.width)),
-							particles: _List_Nil
+								model.e,
+								_Utils_Tuple2(windowSize.p, windowSize.l)),
+							s: _List_Nil
 						}),
 					A2(
 						elm$random$Random$generate,
@@ -6204,11 +6180,11 @@ var author$project$Home$update = F2(
 							_Utils_update(
 								model,
 								{
-									box: A2(
+									e: A2(
 										author$project$Box$updateBox,
-										model.box,
-										_Utils_Tuple2(windowSize.height, windowSize.width)),
-									particles: _List_Nil
+										model.e,
+										_Utils_Tuple2(windowSize.p, windowSize.l)),
+									s: _List_Nil
 								}),
 							40)));
 		}
@@ -6227,12 +6203,12 @@ var author$project$Home$svgAttributes = function (model) {
 			elm$html$Html$Attributes$style,
 			'width',
 			elm$core$String$fromFloat(
-				author$project$Box$max(model.box.width))),
+				author$project$Box$max(model.e.l))),
 			A2(
 			elm$html$Html$Attributes$style,
 			'height',
 			elm$core$String$fromFloat(
-				author$project$Box$max(model.box.height))),
+				author$project$Box$max(model.e.p))),
 			A2(elm$html$Html$Attributes$style, 'background', 'white')
 		]);
 };
@@ -6283,8 +6259,8 @@ var author$project$Link$toText = F3(
 	});
 var author$project$Link$toTexts = F2(
 	function (box, links) {
-		var textX = author$project$Box$max(box.width) / 5;
-		var range = author$project$Box$max(box.height);
+		var textX = author$project$Box$max(box.l) / 5;
+		var range = author$project$Box$max(box.p);
 		var offsetY = range * 0.1;
 		var n = elm$core$List$length(links);
 		var textYs = A2(
@@ -6312,10 +6288,10 @@ var author$project$Particle$toCircle = F2(
 				[
 					elm$svg$Svg$Attributes$cx(
 					elm$core$String$fromFloat(
-						author$project$Vector$x(particle.position))),
+						author$project$Vector$x(particle.i))),
 					elm$svg$Svg$Attributes$cy(
 					elm$core$String$fromFloat(
-						author$project$Vector$y(particle.position))),
+						author$project$Vector$y(particle.i))),
 					elm$svg$Svg$Attributes$r(
 					elm$core$String$fromFloat(
 						author$project$Particle$radius(particle))),
@@ -6329,8 +6305,8 @@ var author$project$Home$svgElements = function (model) {
 		A2(
 			elm$core$List$map,
 			author$project$Particle$toCircle(fillColor),
-			model.particles),
-		A2(author$project$Link$toTexts, model.box, author$project$Home$links));
+			model.s),
+		A2(author$project$Link$toTexts, model.e, author$project$Home$links));
 };
 var elm$svg$Svg$svg = elm$svg$Svg$trustedNode('svg');
 var author$project$Home$svg = function (model) {
@@ -6354,6 +6330,6 @@ var author$project$Home$view = function (model) {
 };
 var elm$browser$Browser$element = _Browser_element;
 var author$project$Home$main = elm$browser$Browser$element(
-	{init: author$project$Home$init, subscriptions: author$project$Home$subscriptions, update: author$project$Home$update, view: author$project$Home$view});
+	{ay: author$project$Home$init, aE: author$project$Home$subscriptions, aG: author$project$Home$update, aI: author$project$Home$view});
 _Platform_export({'Home':{'init':author$project$Home$main(
-	elm$json$Json$Decode$succeed(_Utils_Tuple0))(0)}});}(this));
+	elm$json$Json$Decode$succeed(0))(0)}});}(this));

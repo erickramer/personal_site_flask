@@ -196,8 +196,8 @@ resolveCollisions particles =
                 case collisionsSorted of
                     q :: qs ->
                         let
-                            y =
-                                Debug.log "Collisions of size" (2 + List.length qs)
+                            -- y =
+                            --     Debug.log "Collisions of size" (2 + List.length qs)
 
                             ( newP, newQ ) =
                                 collide p q
