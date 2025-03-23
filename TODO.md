@@ -16,8 +16,8 @@
 - [ ] **Implement Error Handling**  
   Replace bare except blocks in sentiment/ml.py with specific exception handling. Add proper error responses with appropriate HTTP status codes for API endpoints to improve debugging and user experience.
 
-- [ ] **Add Testing Infrastructure**  
-  Create a comprehensive test suite with pytest fixtures for both unit and integration tests. Focus particularly on the sentiment analysis functionality to ensure accuracy and reliability of predictions.
+- [x] **Add Testing Infrastructure**  
+  Create a comprehensive test suite with pytest fixtures for both unit and integration tests. Focus on integration testing to ensure the API endpoints are working as expected, and that the correct data is being passed to the frontend. Ensure that the test suite is comprehensive and covers all functionality. Ensure that the test suite is easy to run and that the tests are fast to run. Ensure that this works with github's CI tooling. 
 
 - [x] **Modernize Dependencies**  
   Update requirements.txt to include specific version numbers and add missing dependencies like tensorflow. Consider using Poetry or Pipenv for better dependency management and reproducible environments.

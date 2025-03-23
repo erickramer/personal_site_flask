@@ -18,6 +18,42 @@ flask run
 
 Then visit http://localhost:5000 in your browser.
 
+## Testing
+
+The application includes a comprehensive test suite using pytest. To run the tests, first install the testing dependencies:
+
+```bash
+pip install -e ".[dev]"
+```
+
+Then you can run the tests with:
+
+```bash
+# Run all tests
+pytest
+
+# Run tests with coverage report
+pytest --cov=./ --cov-report=term
+
+# Generate HTML coverage report
+pytest --cov=./ --cov-report=html
+
+# Run specific test categories
+pytest -m routes  # Just route tests
+pytest -m sentiment  # Just sentiment module tests
+
+# Run tests in verbose mode
+pytest -v
+```
+
+The test suite includes:
+- Unit tests for models and utility functions
+- Integration tests for API endpoints
+- Configuration tests
+- Route tests
+
+Tests are automatically run via GitHub Actions when pushing to the master branch or creating a pull request.
+
 ## Project Overview
 
 This Flask-based personal site combines traditional web technologies with modern approaches like Elm and machine learning.
