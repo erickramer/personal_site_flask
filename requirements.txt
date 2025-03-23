@@ -7,9 +7,9 @@ Werkzeug==2.3.7
 SQLAlchemy==2.0.27
 
 # ML/Data processing
-tensorflow==2.15.0
-numpy==1.24.3
-pandas==2.0.3
+tensorflow>=2.12.0,<2.14.0
+numpy>=1.22.0,<1.25.0
+pandas>=1.5.0,<2.1.0
 
 # Development & Testing
 python-dotenv==1.0.0
