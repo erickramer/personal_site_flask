@@ -18,7 +18,7 @@ python app.py
 
 Then visit http://localhost:5000 in your browser.
 
-> **Note:** The sentiment analysis module is currently disabled due to a circular import issue. Future updates will fix this.
+> **Note:** The sentiment analysis module is currently disabled due to circular import issues. The app runs without it, providing access to the main portfolio pages and demos. The Flask development server automatically starts and the app is available at http://127.0.0.1:5000.
 
 ## Project Overview
 
