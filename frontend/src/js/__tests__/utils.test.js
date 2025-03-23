@@ -87,6 +87,21 @@ describe('truncateText', () => {
 
 // Tests for safeJsonParse function
 describe('safeJsonParse', () => {
+  // Silence console.error for these tests
+  let originalConsoleError;
+  
+  beforeEach(() => {
+    // Save original console.error
+    originalConsoleError = console.error;
+    // Replace with no-op function
+    console.error = jest.fn();
+  });
+  
+  afterEach(() => {
+    // Restore original console.error
+    console.error = originalConsoleError;
+  });
+  
   test('correctly parses valid JSON', () => {
     const jsonString = '{"name":"test","value":123}';
     expect(safeJsonParse(jsonString)).toEqual({name: 'test', value: 123});
@@ -106,5 +121,11 @@ describe('safeJsonParse', () => {
   test('handles array JSON', () => {
     const jsonArray = '[1,2,3]';
     expect(safeJsonParse(jsonArray)).toEqual([1, 2, 3]);
+  });
+  
+  test('logs error when JSON is invalid', () => {
+    const invalidJson = '{invalid: json}';
+    safeJsonParse(invalidJson);
+    expect(console.error).toHaveBeenCalled();
   });
 });
