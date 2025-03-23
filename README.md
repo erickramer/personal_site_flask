@@ -23,7 +23,21 @@ Then visit http://localhost:5000 in your browser.
 
 ## Testing
 
-The application includes a comprehensive test suite using pytest. To run the tests, first install the testing dependencies:
+The application includes comprehensive test suites for both backend and frontend code.
+
+### Running All Tests
+
+```bash
+# Run all tests (both backend and frontend)
+make test-all
+
+# Generate coverage reports for all tests
+make coverage-all
+```
+
+### Backend Testing
+
+To run the backend tests, first install the testing dependencies:
 
 ```bash
 pip install -e ".[dev]"
@@ -32,7 +46,9 @@ pip install -e ".[dev]"
 Then you can run the tests with:
 
 ```bash
-# Run all tests
+# Run all backend tests
+make test-backend
+# or directly with pytest
 pytest
 
 # Run tests with coverage report
@@ -49,11 +65,30 @@ pytest -m sentiment  # Just sentiment module tests
 pytest -v
 ```
 
-The test suite includes:
+The backend test suite includes:
 - Unit tests for models and utility functions
 - Integration tests for API endpoints
 - Configuration tests
 - Route tests
+
+### Frontend Testing
+
+```bash
+# Run all frontend tests
+make test-frontend
+
+# Run frontend tests in watch mode (for development)
+make test-frontend-watch
+
+# Generate frontend test coverage report
+make test-frontend-coverage
+```
+
+The frontend test suite includes:
+- Component tests using Jest and Testing Library
+- Unit tests for utility functions
+- Integration tests for API interactions
+- Mock tests for third-party libraries (D3, etc.)
 
 Tests are automatically run via GitHub Actions when pushing to the master branch or creating a pull request.
 
@@ -97,6 +132,27 @@ make dev-frontend
 # Clean frontend build artifacts
 make clean-frontend
 ```
+
+### Frontend Testing
+
+The frontend includes a comprehensive Jest test suite:
+
+```bash
+# Run all frontend tests
+make test-frontend
+
+# Run frontend tests in watch mode (for development)
+make test-frontend-watch
+
+# Generate frontend test coverage report
+make test-frontend-coverage
+```
+
+The test suite includes:
+- Component tests using Jest and Testing Library
+- Unit tests for utility functions
+- Integration tests for API interactions
+- Mock tests for third-party libraries (D3, etc.)
 
 ## Project Structure
 

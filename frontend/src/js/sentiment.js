@@ -1,5 +1,6 @@
 // Sentiment analysis page scripts
 import * as d3 from 'd3';
+import { debounce, formatPercentage, truncateText } from './utils';
 
 // Import specific styles
 import '../css/sentiment.css';
@@ -45,8 +46,11 @@ function setupEventListeners() {
 function submitTextForAnalysis(text) {
   if (!text.trim()) return;
   
+  // Truncate very long inputs to 280 chars (Twitter-like limit)
+  const processedText = truncateText(text, 280);
+  
   const formData = new FormData();
-  formData.append('text', text);
+  formData.append('text', processedText);
   
   fetch('/sentiment/api/score', {
     method: 'POST',
@@ -65,18 +69,9 @@ function updateVisualization(data) {
   // Update the D3 visualization with the returned data
   console.log('Sentiment data received:', data);
   
+  // Format sentiment score as percentage for display
+  const sentimentPercentage = formatPercentage(data.sentiment);
+  console.log('Sentiment score:', sentimentPercentage);
+  
   // This would call functions from the original viz.js to update the visualization
-}
-
-// Utility function to debounce API calls
-function debounce(func, wait) {
-  let timeout;
-  return function() {
-    const context = this;
-    const args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      func.apply(context, args);
-    }, wait);
-  };
 }
