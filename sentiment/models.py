@@ -1,6 +1,5 @@
-from app import db
-from sentiment import app
-from emojis import *
+from models import db
+from sentiment.emojis import *
 import numpy as np
 
 class Tweet(db.Model):

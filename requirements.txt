@@ -1,3 +1,20 @@
-flask
-flask-sqlalchemy
-keras
+# Core web framework
+Flask==2.3.3
+Flask-SQLAlchemy==3.1.1
+Werkzeug==2.3.7
+
+# Database
+SQLAlchemy==2.0.27
+
+# ML/Data processing
+tensorflow>=2.12.0,<2.14.0
+numpy>=1.22.0,<1.25.0
+pandas>=1.5.0,<2.1.0
+
+# Development & Testing
+python-dotenv==1.0.0
+pytest==7.4.3
+pytest-flask==1.2.0
+
+# Production
+gunicorn==21.2.0
