@@ -6,7 +6,7 @@ from flask import current_app
 # Import db from models module to avoid circular imports
 from models import db
 from .emojis import emojis
-from sentiment.models import Tweet
+from .models import Tweet
 
 import os
 import numpy as np

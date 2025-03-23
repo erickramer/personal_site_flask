@@ -85,7 +85,7 @@ def register_routes(app):
     # Sentiment analysis routes
     @app.route("/sentiment")
     def sentiment_index():
-        return render_template("sentiment/sentiment.html")
+        return render_template("sentiment.html")
     
     @app.route("/sentiment/api/score", methods=['POST'])
     def sentiment_score():
