@@ -19,7 +19,7 @@
 - [ ] **Add Testing Infrastructure**  
   Create a comprehensive test suite with pytest fixtures for both unit and integration tests. Focus particularly on the sentiment analysis functionality to ensure accuracy and reliability of predictions.
 
-- [ ] **Modernize Dependencies**  
+- [x] **Modernize Dependencies**  
   Update requirements.txt to include specific version numbers and add missing dependencies like tensorflow. Consider using Poetry or Pipenv for better dependency management and reproducible environments.
 
 ## Security
