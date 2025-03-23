@@ -117,7 +117,11 @@ This Flask-based personal site combines traditional web technologies with modern
 
 ## Frontend Development
 
-The frontend assets are built using webpack. The source files are located in the `frontend/src` directory and the compiled assets are placed in `static/dist`.
+The frontend uses a combination of JavaScript (built with webpack) and Elm:
+
+### JavaScript/CSS
+
+The JavaScript/CSS assets are built using webpack. The source files are located in the `frontend/src` directory and the compiled assets are placed in `static/dist`.
 
 ```bash
 # Install frontend dependencies
@@ -132,6 +136,20 @@ make dev-frontend
 # Clean frontend build artifacts
 make clean-frontend
 ```
+
+### Elm
+
+The application also uses Elm for interactive components:
+
+```bash
+# Build Elm files (requires elm to be installed)
+make build-elm
+
+# Run Elm reactor for development (http://localhost:8000)
+make dev-elm
+```
+
+Note: Elm must be installed globally (`npm install -g elm`) for the build commands to work.
 
 ### Frontend Testing
 

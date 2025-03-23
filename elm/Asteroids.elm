@@ -1,4 +1,4 @@
-port module Main exposing (KeyPoint, Model, Msg(..), Particle, Pose, Position, Space, SpaceShip, Span, Vector, asteroidToCircle, canvasSpace, collideAsteroid, collideAsteroids, collideMissile, collideMissiles, createMissile, diagonal, filterParticles, gameSpace, inSpace, init, isCollision, main, missileToCircle, moveParticle, moveSpaceship, newMissile, newPose, particleScale, randomAsteroid, randomPosition, scalarScale, scaleCanvasToGameVector, scaleGameToSvgParticle, scaleGameToSvgVector, spaceShipToImg, subscriptions, svgHeight, svgSpace, svgWidth, toCircle, update, vectorScale, view)
+port module Asteroids exposing (KeyPoint, Model, Msg(..), Particle, Pose, Position, Space, SpaceShip, Span, Vector, asteroidToCircle, canvasSpace, collideAsteroid, collideAsteroids, collideMissile, collideMissiles, createMissile, diagonal, filterParticles, gameSpace, inSpace, init, isCollision, main, missileToCircle, moveParticle, moveSpaceship, newMissile, newPose, particleScale, randomAsteroid, randomPosition, scalarScale, scaleCanvasToGameVector, scaleGameToSvgParticle, scaleGameToSvgVector, spaceShipToImg, subscriptions, svgHeight, svgSpace, svgWidth, toCircle, update, vectorScale, view)
 
 import Array
 import Browser
@@ -518,8 +518,8 @@ subscriptions model =
 view : Model -> Html Msg
 view model =
     div [ Html.Attributes.class "container" ]
-        [   div [ Html.Attributes.class "row" ] []
-            [Html.h3 [] [ text ("Score: " ++ String.fromInt model.score) ]
+        [ div [ Html.Attributes.class "row" ] 
+            [Html.h3 [] [ text ("Score: " ++ String.fromInt model.score) ]]
         , div []
             [ Svg.svg
                 [ width (String.fromFloat svgWidth)
