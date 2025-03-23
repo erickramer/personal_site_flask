@@ -12,8 +12,12 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 # Install dependencies
 pip install -r requirements.txt
 
-# Start the Flask application
-python app.py
+# Set Flask development environment variables
+export FLASK_APP=app.py
+export FLASK_ENV=development
+
+# Start the Flask application (development mode)
+flask run
 ```
 
 Then visit http://localhost:5000 in your browser.
