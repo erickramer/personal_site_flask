@@ -1,9 +1,6 @@
-import keras
-from keras.models import Model
-from keras.layers import Input
-from keras.layers.core import Dense, Dropout
-from keras.layers.embeddings import Embedding
-from keras.layers.recurrent import LSTM
+import tensorflow as tf
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Dense, Dropout, Embedding, LSTM
 
 from app import app, db
 from .emojis import emojis
@@ -70,7 +67,7 @@ class SentimentModel(object):
         return model
 
     def _load_model(self):
-        return keras.models.load_model(self.model_path)
+        return tf.keras.models.load_model(self.model_path)
 
     def _set_baseline(self):
         tweet = Tweet("")
@@ -83,7 +80,7 @@ class SentimentModel(object):
 
         gen = data_gen(batch_size)
 
-        self._model.fit_generator(gen,
+        self._model.fit(gen,
                 steps_per_epoch=steps_per_epoch,
                 epochs=nb_epoch)
 

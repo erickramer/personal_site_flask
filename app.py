@@ -2,19 +2,34 @@ from flask import Flask, render_template, redirect
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+# Setup DB
+db = SQLAlchemy()
 
-app.config['BASE_DIR'] = os.getcwd()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getcwd() + '/data/tweets.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
-db.engine.raw_connection().text_factory = str
+def create_app():
+    app = Flask(__name__)
+    
+    app.config['BASE_DIR'] = os.getcwd()
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getcwd() + '/data/tweets.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    
+    # Initialize SQLAlchemy
+    db.init_app(app)
+    
+    # Initialize SQLAlchemy within app context
+    with app.app_context():
+        # Set text_factory for SQLite connections
+        db.engine.raw_connection().text_factory = str
+        
+        # Temporarily disable the sentiment blueprint to fix circular import issues
+        # from sentiment import app as sentiment_blueprint
+        # app.register_blueprint(sentiment_blueprint, url_prefix="/sentiment")
+        
+        # from image_recog import app as image_blueprint
+        # app.register_blueprint(image_blueprint, url_prefix="/image")
+    
+    return app
 
-from sentiment import app as sentiment_blueprint
-app.register_blueprint(sentiment_blueprint, url_prefix="/sentiment")
-
-# from image_recog import app as image_blueprint
-# app.register_blueprint(image_blueprint, url_prefix="/image")
+app = create_app()
 
 @app.route("/")
 def index():
@@ -47,3 +62,6 @@ def email():
 @app.route("/resume")
 def resume():
     return redirect("https://github.com/erickramer/resume/blob/master/EricKramer-resume.pdf")
+    
+if __name__ == "__main__":
+    app.run(debug=True)

@@ -2,6 +2,24 @@
 
 A personal portfolio and demos website built with Flask, featuring interactive components and machine learning.
 
+## Quick Start
+
+```bash
+# Create and activate a virtual environment (optional but recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the Flask application
+python app.py
+```
+
+Then visit http://localhost:5000 in your browser.
+
+> **Note:** The sentiment analysis module is currently disabled due to a circular import issue. Future updates will fix this.
+
 ## Project Overview
 
 This Flask-based personal site combines traditional web technologies with modern approaches like Elm and machine learning.

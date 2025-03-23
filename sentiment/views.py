@@ -1,12 +1,12 @@
 from sentiment import app
 from flask import render_template, jsonify, request
-from ml import SentimentModel
+from sentiment.ml import SentimentModel
 
 sentiment_model = SentimentModel()
 
 @app.route('/')
 def index():
-    print "hello, eric"
+    print("hello, eric")
     return render_template('sentiment.html')
 
 @app.route('/api/score', methods=['POST'])
