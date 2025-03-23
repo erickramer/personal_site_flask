@@ -9,11 +9,14 @@ A personal portfolio and demos website built with Flask, featuring interactive c
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies (includes python-dotenv for environment variable loading)
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Start the Flask application (environment variables will be loaded from .flaskenv)
-flask run
+# Setup frontend (requires Node.js)
+make setup
+
+# Start the Flask application
+make run-app
 ```
 
 Then visit http://localhost:5000 in your browser.
@@ -71,16 +74,39 @@ This Flask-based personal site combines traditional web technologies with modern
 - **Backend**: Flask, SQLAlchemy, Python
 - **Frontend**: HTML/CSS (Skeleton CSS framework), JavaScript
 - **UI Framework**: Elm for interactive components
+- **Build System**: Webpack, Babel, SASS
 - **Data Visualization**: D3.js
 - **Machine Learning**: Keras/TensorFlow for sentiment analysis
 - **Libraries**: jQuery, Underscore.js
 - **Database**: SQLite
+
+## Frontend Development
+
+The frontend assets are built using webpack. The source files are located in the `frontend/src` directory and the compiled assets are placed in `static/dist`.
+
+```bash
+# Install frontend dependencies
+make install-frontend
+
+# Build frontend assets for production
+make build-frontend
+
+# Watch for changes during development
+make dev-frontend
+
+# Clean frontend build artifacts
+make clean-frontend
+```
 
 ## Project Structure
 
 - **app.py**: Main Flask application
 - **templates/**: HTML templates for different pages
 - **static/**: CSS, JS, images and other static assets
+  - **dist/**: Compiled and minified frontend assets
+- **frontend/**: Frontend source files
+  - **src/**: Source JavaScript and CSS
+  - **webpack.config.js**: Webpack configuration
 - **sentiment/**: Sentiment analysis module
   - Machine learning model (ml.py)
   - Tweet models (models.py)

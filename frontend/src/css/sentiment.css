@@ -1,0 +1,41 @@
+/* Sentiment Analysis Styles */
+
+#visualization svg {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  background-color: #fafafa;
+  margin-top: 2rem;
+}
+
+#target {
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #d1d1d1;
+  padding: 12px 10px;
+  height: 100px;
+  transition: border 0.3s ease;
+}
+
+#target:focus {
+  border-color: #33C3F0;
+  outline: 0;
+}
+
+button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+/* Emoji styling */
+.emoji-circle {
+  stroke: #e1e1e1;
+  stroke-width: 1px;
+  transition: all 0.3s ease;
+}
+
+.emoji-circle:hover {
+  stroke: #33C3F0;
+  stroke-width: 2px;
+}

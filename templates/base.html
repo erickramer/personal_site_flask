@@ -20,12 +20,12 @@
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="static/css/normalize.css">
-  <link rel="stylesheet" href="static/css/skeleton.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/main.css') }}">
+  {% block extra_css %}{% endblock %}
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="static/images/favicon.png">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='dist/images/favicon.png') }}">
   {% endblock %}
 
 
@@ -34,6 +34,11 @@
 
   <div id="content">{%block content %}{% endblock %}</div>
 
+  <!-- JavaScript
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="{{ url_for('static', filename='dist/js/vendors.bundle.js') }}"></script>
+  <script src="{{ url_for('static', filename='dist/js/main.bundle.js') }}"></script>
+  {% block extra_js %}{% endblock %}
 
 <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
