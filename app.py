@@ -4,6 +4,8 @@ import logging
 
 # Import db from models to avoid circular imports
 from models import db
+# Import configuration
+from config import config
 
 # Import sentiment-related modules
 from sentiment.ml import SentimentModel
@@ -18,18 +20,18 @@ def get_sentiment_model():
         _sentiment_model = SentimentModel()
     return _sentiment_model
 
-def create_app(test_config=None):
+def create_app(config_name='default'):
     # Create Flask application
     app = Flask(__name__)
     
-    # Set default configuration
-    app.config['BASE_DIR'] = os.getcwd()
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.getcwd() + '/data/tweets.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # Load the appropriate configuration
+    app.config.from_object(config[config_name])
     
-    # Override with test config if provided
-    if test_config:
-        app.config.update(test_config)
+    # Ensure the instance folder exists
+    try:
+        os.makedirs(app.instance_path)
+    except OSError:
+        pass
     
     # Initialize extensions
     db.init_app(app)
@@ -91,8 +93,9 @@ def register_routes(app):
         res = model.score(text)
         return jsonify(res)
 
-# Create the application instance
-app = create_app()
+# Create the application instance based on environment
+config_name = os.environ.get('FLASK_CONFIG', 'default')
+app = create_app(config_name)
     
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

@@ -9,14 +9,10 @@ A personal portfolio and demos website built with Flask, featuring interactive c
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
+# Install dependencies (includes python-dotenv for environment variable loading)
 pip install -r requirements.txt
 
-# Set Flask development environment variables
-export FLASK_APP=app.py
-export FLASK_DEBUG=1  # For development mode (replaces deprecated FLASK_ENV)
-
-# Start the Flask application (development mode)
+# Start the Flask application (environment variables will be loaded from .flaskenv)
 flask run
 ```
 

@@ -49,7 +49,8 @@ class SentimentModel(object):
 
     @property
     def model_path(self):
-        return os.path.join(current_app.config['BASE_DIR'], 'data/model.h5')
+        # Use BASE_DIR from config with consistent path handling
+        return os.path.join(current_app.config['BASE_DIR'], 'data', 'model.h5')
 
     def _build_model(self):
         text = Input(shape=(140,))
