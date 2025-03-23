@@ -1,5 +1,4 @@
-from app import db
-from sentiment import app as sentiment_app
+from models import db
 from sentiment.emojis import *
 import numpy as np
 

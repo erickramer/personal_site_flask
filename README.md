@@ -14,15 +14,13 @@ pip install -r requirements.txt
 
 # Set Flask development environment variables
 export FLASK_APP=app.py
-export FLASK_ENV=development
+export FLASK_DEBUG=1  # For development mode (replaces deprecated FLASK_ENV)
 
 # Start the Flask application (development mode)
 flask run
 ```
 
 Then visit http://localhost:5000 in your browser.
-
-> **Note:** The sentiment analysis module is currently disabled due to circular import issues. The app runs without it, providing access to the main portfolio pages and demos. The Flask development server automatically starts and the app is available at http://127.0.0.1:5000.
 
 ## Project Overview
 

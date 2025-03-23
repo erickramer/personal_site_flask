@@ -1,20 +1,27 @@
-from sentiment import app
-from flask import render_template, jsonify, request
+from flask import render_template, jsonify, request, current_app
+from sentiment import bp
 from sentiment.ml import SentimentModel
 
-sentiment_model = SentimentModel()
+# Initialize sentiment model lazily when needed
+_sentiment_model = None
 
-@app.route('/')
+def get_sentiment_model():
+    global _sentiment_model
+    if _sentiment_model is None:
+        _sentiment_model = SentimentModel()
+    return _sentiment_model
+
+@bp.route('/')
 def index():
-    print("hello, eric")
     return render_template('sentiment.html')
 
-@app.route('/api/score', methods=['POST'])
+@bp.route('/api/score', methods=['POST'])
 def score():
     text = request.form['text']
-    res = sentiment_model.score(text)
+    model = get_sentiment_model()
+    res = model.score(text)
     return jsonify(res)
 
-@app.route('/static/<path:path>')
+@bp.route('/static/<path:path>')
 def static_file(path):
-    return app.send_static_file(path)
+    return bp.send_static_file(path)

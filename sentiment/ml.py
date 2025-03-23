@@ -1,13 +1,16 @@
 import tensorflow as tf
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Dropout, Embedding, LSTM
+from flask import current_app
 
-from app import app, db
+# Import db from models module to avoid circular imports
+from models import db
 from .emojis import emojis
-from .models import Tweet
+from sentiment.models import Tweet
 
 import os
 import numpy as np
+import logging
 
 def data_gen(batch_size=100):
     # loading all tweets into memory for speed
@@ -46,7 +49,7 @@ class SentimentModel(object):
 
     @property
     def model_path(self):
-        return os.path.join(app.config['BASE_DIR'], 'data/model.h5')
+        return os.path.join(current_app.config['BASE_DIR'], 'data/model.h5')
 
     def _build_model(self):
         text = Input(shape=(140,))
@@ -88,7 +91,7 @@ class SentimentModel(object):
             self._model.save(self.model_path)
 
     def score(self, text, normalize = True):
-        app.logger.info("Scoring tweet: %s ", text)
+        logging.info("Scoring tweet: %s ", text)
 
         tweet = Tweet(text)
         x = tweet.x.reshape(1, -1)
@@ -98,8 +101,8 @@ class SentimentModel(object):
 
             if normalize:
                 scores /= self.baseline
-        except:
-            app.logger.error("Failed on tweet: %s", text)
+        except Exception as e:
+            logging.error("Failed on tweet: %s. Error: %s", text, str(e))
             scores = self.baseline
 
 

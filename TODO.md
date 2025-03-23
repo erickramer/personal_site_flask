@@ -2,10 +2,10 @@
 
 ## Application Structure
 
-- [ ] **Resolve Circular Import Issues**  
+- [x] **Resolve Circular Import Issues**  
   Fix the circular dependency problems between app.py and sentiment modules. Implement a proper application factory pattern where models are defined separately, and ensure blueprints are correctly registered without import conflicts.
 
-- [ ] **Complete Blueprint Implementation**  
+- [x] **Complete Blueprint Implementation**  
   Properly implement the sentiment blueprint that is currently disabled. Restructure the code to avoid circular imports while maintaining the modular architecture intended with the blueprint design.
 
 - [ ] **Implement Application Configuration**  
