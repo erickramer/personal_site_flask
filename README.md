@@ -9,18 +9,35 @@ A personal portfolio and demos website built with Flask, featuring interactive c
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies (includes python-dotenv for environment variable loading)
+# Install Python dependencies
 pip install -r requirements.txt
 
-# Start the Flask application (environment variables will be loaded from .flaskenv)
-flask run
+# Setup frontend (requires Node.js)
+make setup
+
+# Start the Flask application
+make run-app
 ```
 
 Then visit http://localhost:5000 in your browser.
 
 ## Testing
 
-The application includes a comprehensive test suite using pytest. To run the tests, first install the testing dependencies:
+The application includes comprehensive test suites for both backend and frontend code.
+
+### Running All Tests
+
+```bash
+# Run all tests (both backend and frontend)
+make test-all
+
+# Generate coverage reports for all tests
+make coverage-all
+```
+
+### Backend Testing
+
+To run the backend tests, first install the testing dependencies:
 
 ```bash
 pip install -e ".[dev]"
@@ -29,7 +46,9 @@ pip install -e ".[dev]"
 Then you can run the tests with:
 
 ```bash
-# Run all tests
+# Run all backend tests
+make test-backend
+# or directly with pytest
 pytest
 
 # Run tests with coverage report
@@ -46,11 +65,30 @@ pytest -m sentiment  # Just sentiment module tests
 pytest -v
 ```
 
-The test suite includes:
+The backend test suite includes:
 - Unit tests for models and utility functions
 - Integration tests for API endpoints
 - Configuration tests
 - Route tests
+
+### Frontend Testing
+
+```bash
+# Run all frontend tests
+make test-frontend
+
+# Run frontend tests in watch mode (for development)
+make test-frontend-watch
+
+# Generate frontend test coverage report
+make test-frontend-coverage
+```
+
+The frontend test suite includes:
+- Component tests using Jest and Testing Library
+- Unit tests for utility functions
+- Integration tests for API interactions
+- Mock tests for third-party libraries (D3, etc.)
 
 Tests are automatically run via GitHub Actions when pushing to the master branch or creating a pull request.
 
@@ -71,16 +109,78 @@ This Flask-based personal site combines traditional web technologies with modern
 - **Backend**: Flask, SQLAlchemy, Python
 - **Frontend**: HTML/CSS (Skeleton CSS framework), JavaScript
 - **UI Framework**: Elm for interactive components
+- **Build System**: Webpack, Babel, SASS
 - **Data Visualization**: D3.js
 - **Machine Learning**: Keras/TensorFlow for sentiment analysis
 - **Libraries**: jQuery, Underscore.js
 - **Database**: SQLite
+
+## Frontend Development
+
+The frontend uses a combination of JavaScript (built with webpack) and Elm:
+
+### JavaScript/CSS
+
+The JavaScript/CSS assets are built using webpack. The source files are located in the `frontend/src` directory and the compiled assets are placed in `static/dist`.
+
+```bash
+# Install frontend dependencies
+make install-frontend
+
+# Build frontend assets for production
+make build-frontend
+
+# Watch for changes during development
+make dev-frontend
+
+# Clean frontend build artifacts
+make clean-frontend
+```
+
+### Elm
+
+The application also uses Elm for interactive components:
+
+```bash
+# Build Elm files (requires elm to be installed)
+make build-elm
+
+# Run Elm reactor for development (http://localhost:8000)
+make dev-elm
+```
+
+Note: Elm must be installed globally (`npm install -g elm`) for the build commands to work.
+
+### Frontend Testing
+
+The frontend includes a comprehensive Jest test suite:
+
+```bash
+# Run all frontend tests
+make test-frontend
+
+# Run frontend tests in watch mode (for development)
+make test-frontend-watch
+
+# Generate frontend test coverage report
+make test-frontend-coverage
+```
+
+The test suite includes:
+- Component tests using Jest and Testing Library
+- Unit tests for utility functions
+- Integration tests for API interactions
+- Mock tests for third-party libraries (D3, etc.)
 
 ## Project Structure
 
 - **app.py**: Main Flask application
 - **templates/**: HTML templates for different pages
 - **static/**: CSS, JS, images and other static assets
+  - **dist/**: Compiled and minified frontend assets
+- **frontend/**: Frontend source files
+  - **src/**: Source JavaScript and CSS
+  - **webpack.config.js**: Webpack configuration
 - **sentiment/**: Sentiment analysis module
   - Machine learning model (ml.py)
   - Tweet models (models.py)

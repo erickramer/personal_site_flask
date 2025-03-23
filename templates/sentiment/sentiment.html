@@ -1,38 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends "base.html" %}
 
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>Emojis and Twitter</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+{% block title %}Tweet Sentiment Analyzer{% endblock %}
 
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dist/css/sentiment.css') }}">
+{% endblock %}
 
-  <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
-
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="/static/sentiment/bower_components/skeleton/css/normalize.css">
-  <link rel="stylesheet" href="/static/sentiment/bower_components/skeleton/css/skeleton.css">
-
-  <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="/static/images/favicon.png">
-
-  <script src="/static/sentiment/bower_components/d3/d3.js"></script>
-  <script src="/static/sentiment/bower_components/jquery/dist/jquery.js"></script>
-  <script src="/static/sentiment/bower_components/underscore/underscore.js"></script>
-  <script src="/static/sentiment/viz.js"></script>
-</head>
-<body>
-
+{% block content %}
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
@@ -66,8 +40,8 @@
   </div>
 
 
+{% endblock %}
 
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-</body>
-</html>
+{% block extra_js %}
+<script src="{{ url_for('static', filename='dist/js/sentiment.bundle.js') }}"></script>
+{% endblock %}

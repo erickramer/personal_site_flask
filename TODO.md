@@ -32,8 +32,8 @@
 
 ## Frontend
 
-- [ ] **Organize Frontend Assets**  
-  Implement a proper frontend build process with minification and bundling. Consider consolidating the multiple JS libraries or fully committing to Elm architecture throughout more of the application.
+- [x] **Organize Frontend Assets**  
+  Implement a proper frontend build process with minification and bundling. Ideally, fully commit to Elm architecture throughout more of the application. If Elm is lacking key features, then JS libraries should be used.
 
 ## Performance
 

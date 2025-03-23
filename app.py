@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, jsonify, request
+from flask import Flask, render_template, redirect, jsonify, request, url_for
 import os
 import logging
 
@@ -22,7 +22,8 @@ def get_sentiment_model():
 
 def create_app(config_name='default'):
     # Create Flask application
-    app = Flask(__name__)
+    # Define static folder as the root static folder with a static_url_path of /static
+    app = Flask(__name__, static_folder='static', static_url_path='/static')
     
     # Load the appropriate configuration
     app.config.from_object(config[config_name])
