@@ -43,7 +43,8 @@ function setupEventListeners() {
   }
 }
 
-function submitTextForAnalysis(text) {
+// Export for testing
+export function submitTextForAnalysis(text) {
   if (!text.trim()) return;
   
   // Truncate very long inputs to 280 chars (Twitter-like limit)
