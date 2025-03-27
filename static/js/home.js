@@ -6191,18 +6191,18 @@ var $author$project$Home$update = F2(
 		}
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm$svg$Svg$Attributes$id = _VirtualDom_attribute('id');
-var $elm$svg$Svg$Attributes$z = _VirtualDom_attribute('z');
+var $elm$svg$Svg$Attributes$pointerEvents = _VirtualDom_attribute('pointer-events');
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
 var $author$project$Home$svgAttributes = function (model) {
 	return _List_fromArray(
 		[
 			$elm$svg$Svg$Attributes$id('mysvg'),
-			$elm$svg$Svg$Attributes$z('-1'),
+			$elm$svg$Svg$Attributes$pointerEvents('all'),
 			A2(
 			$elm$html$Html$Attributes$style,
 			'width',
@@ -6320,10 +6320,7 @@ var $author$project$Home$svg = function (model) {
 var $author$project$Home$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				A2($elm$html$Html$Attributes$style, 'z-index', '-1')
-			]),
+		_List_Nil,
 		_List_fromArray(
 			[
 				$author$project$Home$svg(model)
