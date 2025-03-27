@@ -59,7 +59,7 @@ init _ =
 
 
 view model =
-    div [Html.Attributes.style "z-index" "-1"] [svg model]
+    div [] [svg model]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -116,7 +116,7 @@ svgAttributes model =
     [ -- Svg.Attributes.height (String.fromFloat (Box.max model.box.height))
       --, Svg.Attributes.width (String.fromFloat (Box.max model.box.width))
       Svg.Attributes.id "mysvg"
-    , Svg.Attributes.z "-1"
+    , Svg.Attributes.pointerEvents "all"
     , style "width" (String.fromFloat (Box.max model.box.width))
     , style "height" (String.fromFloat (Box.max model.box.height))
     , style "background" "white"
