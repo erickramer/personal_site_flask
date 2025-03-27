@@ -6263,7 +6263,7 @@ var $author$project$Link$toText = F3(
 			$elm$svg$Svg$a,
 			_List_fromArray(
 				[
-					$elm$svg$Svg$Attributes$xlinkHref(link)
+					$elm$svg$Svg$Attributes$xlinkHref('/' + link)
 				]),
 			_List_fromArray(
 				[

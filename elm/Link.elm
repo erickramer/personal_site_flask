@@ -18,7 +18,7 @@ toTexts box links =
 
 toText textX textY link =
     Svg.a 
-        [Svg.Attributes.xlinkHref link]
+        [Svg.Attributes.xlinkHref ("/" ++ link)]
         [Svg.text_ 
                 [
                  x (String.fromFloat textX), 
