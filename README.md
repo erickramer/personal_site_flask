@@ -90,7 +90,24 @@ The frontend test suite includes:
 - Integration tests for API interactions
 - Mock tests for third-party libraries (D3, etc.)
 
-Tests are automatically run via GitHub Actions when pushing to the master branch or creating a pull request.
+Tests are automatically run via GitHub Actions when pushing to the master branch or creating a pull request. The application is also automatically deployed to Google App Engine when changes are merged to the master branch.
+
+## Deployment
+
+The application is automatically deployed to Google App Engine when changes are merged to the master branch on GitHub.
+
+### Setting Up Automatic Deployment
+
+To set up automatic deployment, you need to:
+
+1. Create a Google Cloud Project and enable the App Engine API
+2. Create a Service Account with App Engine Admin and Storage Admin roles
+3. Download the Service Account key as JSON
+4. Add the following secrets to your GitHub repository:
+   - `GCP_PROJECT_ID`: Your Google Cloud Project ID
+   - `GCP_SA_KEY`: The entire content of the downloaded Service Account JSON key file
+
+The GitHub Actions workflow in `.github/workflows/deploy.yml` will handle the rest, automatically deploying your application when changes are merged to the master branch.
 
 ## Project Overview
 
