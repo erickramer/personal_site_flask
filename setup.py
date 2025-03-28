@@ -17,6 +17,8 @@ setup(
             "pytest",
             "pytest-flask",
             "pytest-cov",
+            "beautifulsoup4",
+            "bs4",
         ],
     },
 )
