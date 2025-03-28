@@ -30,16 +30,18 @@ jobs:
         
     - name: Install backend dependencies
       run: |
+        # Create virtual environment
+        uv venv
         # Install mock TensorFlow for CI environment
-        uv pip install tensorflow-cpu>=2.12.0
+        uv pip install tensorflow-cpu>=2.12.0 --system
         # Install the package in development mode
-        uv pip install -e ".[dev]"
+        uv pip install -e ".[dev]" --system
     
     - name: Create Mock ML Model
       run: |
         mkdir -p data
         # Create a dummy model file to avoid loading actual model
-        uv pip install h5py
+        uv pip install h5py --system
         python -c "import h5py; f = h5py.File('data/model.h5', 'w'); f.close()"
     
     - name: Test with pytest
