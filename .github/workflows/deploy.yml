@@ -67,11 +67,17 @@ jobs:
     - name: Install Elm
       run: npm install -g elm
     
-    - name: Build frontend assets
+    - name: Build and optimize frontend assets
       run: |
         cd frontend
         npm run build
-        cp -r dist ../static/
+        # Only copy necessary files to static
+        rm -rf ../static/dist
+        mkdir -p ../static/dist
+        cp -r dist/css ../static/dist/
+        cp -r dist/js ../static/dist/
+        cp -r dist/*.html ../static/dist/ 2>/dev/null || true
+        cp -r dist/*.ico ../static/dist/ 2>/dev/null || true
     
     - name: Build Elm assets
       run: |
@@ -121,10 +127,9 @@ jobs:
     
     - name: Deploy to App Engine
       id: deploy
-      uses: google-github-actions/deploy-appengine@v1
-      with:
-        project_id: ${{ secrets.GCP_PROJECT_ID }}
-        deliverables: app.yaml
+      run: |
+        gcloud app deploy app.yaml --project ${{ secrets.GCP_PROJECT_ID }} --quiet
     
     - name: Print deployment URL
-      run: echo "Deployed to ${{ steps.deploy.outputs.url }}"
+      run: |
+        echo "Deployed to https://${{ secrets.GCP_PROJECT_ID }}.appspot.com"

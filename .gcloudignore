@@ -1,0 +1,77 @@
+# Ignore common files and directories
+.git/
+.gitignore
+.gcloudignore
+.github/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.hypothesis/
+.vscode/
+*.sublime-workspace
+*.swp
+*~
+
+# Python environments and cache
+venv/
+env/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Node.js and frontend
+node_modules/
+frontend/node_modules/
+frontend/coverage/
+frontend/.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Elm
+elm-stuff/
+
+# Other large directories
+.git/
+.svn/
+static/sentiment/bower_components/
+!static/sentiment/bower_components/d3/d3.min.js
+!static/sentiment/bower_components/jquery/dist/jquery.min.js
+!static/sentiment/bower_components/underscore/underscore-min.js
+!static/sentiment/bower_components/skeleton/css/
+
+# Test directories and files
+tests/
+pytest.ini
+
+# Documentation
+README.md
+*.md
+LICENSE
+docs/
+
+# Data files
+data/tweets.db
+data/tweets.json
+# Keep the model file
+!data/model.h5
