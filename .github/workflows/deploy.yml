@@ -93,9 +93,19 @@ jobs:
       uses: google-github-actions/auth@v1
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
+        create_credentials_file: true
+        export_environment_variables: true
     
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
+      with:
+        version: ">= 363.0.0"
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+      
+    - name: Verify service account permissions
+      run: |
+        echo "Using service account: $(gcloud config get-value account)"
+        gcloud projects get-iam-policy ${{ secrets.GCP_PROJECT_ID }} --filter="bindings.members:$(gcloud config get-value account)" --format="value(bindings.role)"
       
     - name: Check and create App Engine application
       run: |
@@ -128,6 +138,10 @@ jobs:
     - name: Deploy to App Engine
       id: deploy
       run: |
+        # Print current auth info for debugging
+        echo "Current auth account: $(gcloud auth list --filter=status:ACTIVE --format='value(account)')"
+        
+        # Deploy without trying to impersonate the service account
         gcloud app deploy app.yaml --project ${{ secrets.GCP_PROJECT_ID }} --quiet
     
     - name: Print deployment URL
