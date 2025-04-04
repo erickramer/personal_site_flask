@@ -39,6 +39,10 @@ def create_app(config_name="default"):
     # Create Flask application
     # Define static folder as the root static folder with a static_url_path of /static
     app = Flask(__name__, static_folder="static", static_url_path="/static")
+    
+    # Set stronger static file caching for production
+    if config_name == "production":
+        app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 year
 
     # Load the appropriate configuration
     app.config.from_object(config[config_name])
@@ -133,6 +137,28 @@ can reach me at 619.724.3800 or ericransomkramer@gmail.com.
         model = get_sentiment_model()
         res = model.score(text)
         return jsonify(res)
+        
+    # Debug route to check static files
+    @app.route("/debug/static")
+    def debug_static():
+        import os
+        from flask import current_app, jsonify
+        
+        static_folder = current_app.static_folder
+        static_files = []
+        
+        for root, dirs, files in os.walk(static_folder):
+            for file in files:
+                relpath = os.path.relpath(os.path.join(root, file), static_folder)
+                static_files.append({
+                    "path": relpath,
+                    "url": url_for('static', filename=relpath)
+                })
+        
+        return jsonify({
+            "static_folder": static_folder,
+            "files": static_files
+        })
 
 
 # Create the application instance based on environment

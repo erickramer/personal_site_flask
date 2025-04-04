@@ -73,11 +73,18 @@ jobs:
         npm run build
         # Only copy necessary files to static
         rm -rf ../static/dist
-        mkdir -p ../static/dist
-        cp -r dist/css ../static/dist/
-        cp -r dist/js ../static/dist/
+        mkdir -p ../static/dist/css ../static/dist/js ../static/dist/images
+        cp -r dist/css/* ../static/dist/css/
+        cp -r dist/js/* ../static/dist/js/
+        # Copy images to dist folder
+        cp -r dist/images/* ../static/dist/images/ 2>/dev/null || true
         cp -r dist/*.html ../static/dist/ 2>/dev/null || true
         cp -r dist/*.ico ../static/dist/ 2>/dev/null || true
+        # Copy static images from source if they exist
+        cp -r frontend/src/images/* ../static/dist/images/ 2>/dev/null || true
+        # List files to verify
+        echo "Static files in ../static/dist:"
+        find ../static/dist -type f | sort
     
     - name: Build Elm assets
       run: |
