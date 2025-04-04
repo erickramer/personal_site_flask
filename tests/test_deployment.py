@@ -51,7 +51,7 @@ def test_flask_app_static_config():
     app = create_app('production')
     
     # Check static folder configuration
-    assert app.static_folder == 'static', "Static folder should be set to 'static'"
+    assert os.path.basename(app.static_folder) == 'static', "Static folder should end with 'static'"
     assert app.static_url_path == '/static', "Static URL path should be '/static'"
     
     # Check cache timeout for static files
