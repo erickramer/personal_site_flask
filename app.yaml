@@ -13,6 +13,8 @@ handlers:
 env_variables:
   FLASK_APP: app.py
   FLASK_CONFIG: production
+  PYTHONUNBUFFERED: "true"
+  LOG_LEVEL: "INFO"
 
 instance_class: F2
 

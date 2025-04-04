@@ -26,8 +26,9 @@ class ProductionConfig(Config):
     """Production config."""
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(Config.BASE_DIR, 'data/tweets.db')
+    # In App Engine, use in-memory SQLite database to avoid filesystem issues
+    # or use environment variable if database connection is available
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///:memory:')
     SECRET_KEY = os.environ.get('SECRET_KEY', 'production-key-required')
 
     # Production-specific security settings

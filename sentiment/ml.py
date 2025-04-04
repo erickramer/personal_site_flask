@@ -36,12 +36,22 @@ def data_gen(batch_size=100):
 
 class SentimentModel(object):
 
-    def __init__(self, model = None):
-        if model is None:
+    def __init__(self, model=None):
+        if model == "dummy":
+            # Explicitly use dummy model
+            self._model = self._build_dummy_model()
+            logging.info("Using dummy sentiment model")
+        elif model is None:
             try:
-                if os.path.exists(self.model_path):
+                # Check if we're in App Engine production environment
+                if os.environ.get('GAE_ENV', '').startswith('standard'):
+                    logging.info("Running in App Engine environment, using dummy model")
+                    self._model = self._build_dummy_model()
+                elif os.path.exists(self.model_path):
+                    logging.info(f"Loading model from {self.model_path}")
                     self._model = self._load_model()
                 else:
+                    logging.info("Building new model")
                     self._model = self._build_model()
             except Exception as e:
                 # For testing and CI environments, create a dummy model
