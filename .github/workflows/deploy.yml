@@ -69,22 +69,48 @@ jobs:
     
     - name: Build and optimize frontend assets
       run: |
+        # Make sure build is clean
         cd frontend
         npm run build
-        # Only copy necessary files to static
+        
+        # Create static directories with proper permissions
         rm -rf ../static/dist
         mkdir -p ../static/dist/css ../static/dist/js ../static/dist/images
-        cp -r dist/css/* ../static/dist/css/
-        cp -r dist/js/* ../static/dist/js/
-        # Copy images to dist folder
-        cp -r dist/images/* ../static/dist/images/ 2>/dev/null || true
-        cp -r dist/*.html ../static/dist/ 2>/dev/null || true
-        cp -r dist/*.ico ../static/dist/ 2>/dev/null || true
-        # Copy static images from source if they exist
-        cp -r frontend/src/images/* ../static/dist/images/ 2>/dev/null || true
-        # List files to verify
+        chmod -R 755 ../static/dist
+        
+        # Copy CSS files and set proper permissions
+        echo "Copying CSS files..."
+        cp -rv dist/css/* ../static/dist/css/
+        find ../static/dist/css -type f -name "*.css" -exec chmod 644 {} \;
+        
+        # Copy JS files and set proper permissions
+        echo "Copying JS files..."
+        cp -rv dist/js/* ../static/dist/js/
+        find ../static/dist/js -type f -name "*.js" -exec chmod 644 {} \;
+        
+        # Copy images and set proper permissions
+        echo "Copying image files..."
+        if [ -d "dist/images" ]; then
+          cp -rv dist/images/* ../static/dist/images/ 2>/dev/null || true
+        fi
+        if [ -d "src/images" ]; then
+          cp -rv src/images/* ../static/dist/images/ 2>/dev/null || true
+        fi
+        find ../static/dist/images -type f -exec chmod 644 {} \; 2>/dev/null || true
+        
+        # Copy any other files at the root level
+        cp -v dist/*.html ../static/dist/ 2>/dev/null || true
+        cp -v dist/*.ico ../static/dist/ 2>/dev/null || true
+        
+        # Print out information about the static files for debugging
         echo "Static files in ../static/dist:"
         find ../static/dist -type f | sort
+        
+        # Print out the sizes to ensure files were copied correctly
+        echo "CSS file sizes:"
+        ls -la ../static/dist/css/
+        echo "JS file sizes:"
+        ls -la ../static/dist/js/
     
     - name: Build Elm assets
       run: |

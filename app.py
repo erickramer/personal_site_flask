@@ -40,9 +40,41 @@ def create_app(config_name="default"):
     # Define static folder as the root static folder with a static_url_path of /static
     app = Flask(__name__, static_folder="static", static_url_path="/static")
     
-    # Set stronger static file caching for production
+    # Enhance logging
     if config_name == "production":
+        # Set up logging
+        import logging
+        from logging.handlers import RotatingFileHandler
+        
+        # Create logs directory if it doesn't exist
+        logs_dir = os.path.join(app.instance_path, 'logs')
+        try:
+            os.makedirs(logs_dir)
+        except OSError:
+            pass
+            
+        # Configure logging
+        log_level = os.environ.get('LOG_LEVEL', 'INFO')
+        log_handler = RotatingFileHandler(
+            os.path.join(logs_dir, 'app.log'),
+            maxBytes=1024 * 1024,
+            backupCount=5
+        )
+        log_formatter = logging.Formatter(
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
+        log_handler.setFormatter(log_formatter)
+        log_handler.setLevel(getattr(logging, log_level))
+        app.logger.addHandler(log_handler)
+        app.logger.setLevel(getattr(logging, log_level))
+        
+        # Set stronger static file caching for production
         app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 year
+        
+        # Log static file configuration
+        app.logger.info(f"Static folder: {app.static_folder}")
+        app.logger.info(f"Static URL path: {app.static_url_path}")
+        app.logger.info(f"Cache timeout: {app.config['SEND_FILE_MAX_AGE_DEFAULT']}")
 
     # Load the appropriate configuration
     app.config.from_object(config[config_name])
@@ -138,26 +170,95 @@ can reach me at 619.724.3800 or ericransomkramer@gmail.com.
         res = model.score(text)
         return jsonify(res)
         
+    # Debug route to directly serve CSS
+    @app.route("/debug/css/<path:filename>")
+    def debug_css(filename):
+        from flask import send_from_directory, abort, make_response
+        
+        if not filename.endswith('.css'):
+            return abort(400, "Only CSS files are allowed")
+            
+        # Determine if it's in dist or regular css folder
+        if filename.startswith('dist/'):
+            css_path = os.path.join(app.static_folder, filename)
+        else:
+            css_path = os.path.join(app.static_folder, 'dist/css', filename)
+            
+        # Check if file exists
+        if not os.path.exists(css_path):
+            return abort(404, f"CSS file not found: {css_path}")
+            
+        # Read file content and return directly
+        with open(css_path, 'r') as f:
+            content = f.read()
+            
+        response = make_response(content)
+        response.headers['Content-Type'] = 'text/css'
+        return response
+    
     # Debug route to check static files
     @app.route("/debug/static")
     def debug_static():
         import os
-        from flask import current_app, jsonify
+        import mimetypes
+        from flask import current_app, jsonify, send_from_directory, request
         
         static_folder = current_app.static_folder
         static_files = []
         
         for root, dirs, files in os.walk(static_folder):
             for file in files:
-                relpath = os.path.relpath(os.path.join(root, file), static_folder)
+                file_path = os.path.join(root, file)
+                relpath = os.path.relpath(file_path, static_folder)
+                url = url_for('static', filename=relpath)
+                
+                # Get the size and mime type
+                size = os.path.getsize(file_path)
+                mime_type, _ = mimetypes.guess_type(file_path)
+                
+                # Check file permissions
+                readable = os.access(file_path, os.R_OK)
+                
                 static_files.append({
                     "path": relpath,
-                    "url": url_for('static', filename=relpath)
+                    "url": url,
+                    "size": size,
+                    "mime_type": mime_type,
+                    "readable": readable
+                })
+        
+        # Sort files by path for easier reading
+        static_files.sort(key=lambda x: x["path"])
+        
+        # Detailed check for CSS files
+        css_files = [f for f in static_files if f["path"].endswith('.css')]
+        css_checks = []
+        
+        for css_file in css_files:
+            try:
+                # Try to access the file through Flask
+                full_path = os.path.join(static_folder, css_file["path"])
+                with open(full_path, 'rb') as f:
+                    content = f.read(100)  # Read just the beginning
+                css_checks.append({
+                    "path": css_file["path"],
+                    "accessible": True,
+                    "size": len(content),
+                    "content_preview": content[:20].decode('utf-8', errors='replace')
+                })
+            except Exception as e:
+                css_checks.append({
+                    "path": css_file["path"],
+                    "accessible": False,
+                    "error": str(e)
                 })
         
         return jsonify({
             "static_folder": static_folder,
-            "files": static_files
+            "files": static_files,
+            "css_checks": css_checks,
+            "app_url_map": str(app.url_map),
+            "request_headers": dict(request.headers)
         })
 
 
