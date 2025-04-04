@@ -66,3 +66,28 @@ def client(app):
 def runner(app):
     """A test CLI runner for the app."""
     return app.test_cli_runner()
+
+@pytest.fixture
+def is_ci_environment():
+    """Determine if we're running in a CI environment."""
+    # Common CI environment variables
+    ci_env_vars = [
+        'CI',
+        'GITHUB_ACTIONS',
+        'TRAVIS',
+        'CIRCLECI', 
+        'JENKINS_URL',
+        'GITLAB_CI'
+    ]
+    
+    for var in ci_env_vars:
+        if os.environ.get(var):
+            return True
+    
+    # Also check if dist directory exists as a heuristic
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    dist_dir = os.path.join(base_dir, 'static', 'dist')
+    if not os.path.exists(dist_dir):
+        return True
+        
+    return False
