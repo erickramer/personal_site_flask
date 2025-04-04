@@ -52,3 +52,9 @@ ENV/
 *.swp
 *.swo
 .DS_Store
+
+# Log files
+*.log
+instance/logs/
+logs/
+app.log*
