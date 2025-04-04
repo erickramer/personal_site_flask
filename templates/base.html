@@ -20,7 +20,29 @@
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!-- Try the regular static URL first -->
   <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/main.css') }}">
+  
+  <!-- Backup method: use the debug endpoint if the static files fail to load -->
+  <script>
+    // Check if the CSS loaded correctly 
+    window.addEventListener('load', function() {
+      // Check if styles were applied
+      const hasStyles = document.body.offsetWidth > 0;
+      const cssLoaded = Array.from(document.styleSheets).some(sheet => 
+        sheet.href && sheet.href.includes('main.css'));
+      
+      if (!cssLoaded) {
+        console.log('Using backup CSS method...');
+        // Load CSS via debug endpoint
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = '/debug/file/dist/css/main.css';
+        document.head.appendChild(link);
+      }
+    });
+  </script>
+  
   {% block extra_css %}{% endblock %}
 
   <!-- Favicon
@@ -38,6 +60,25 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src="{{ url_for('static', filename='dist/js/vendors.bundle.js') }}"></script>
   <script src="{{ url_for('static', filename='dist/js/main.bundle.js') }}"></script>
+  
+  <!-- Backup method for JS -->
+  <script>
+    // Handle JS loading issues
+    window.addEventListener('error', function(e) {
+      const src = e.target.src || '';
+      if (src.includes('bundle.js')) {
+        console.log('JS file failed to load, trying backup method: ' + src);
+        
+        // Extract the bundle name
+        const bundleName = src.split('/').pop();
+        
+        // Create new script element with debug endpoint
+        const script = document.createElement('script');
+        script.src = '/debug/file/dist/js/' + bundleName;
+        document.body.appendChild(script);
+      }
+    }, true);
+  </script>
   {% block extra_js %}{% endblock %}
 
 <!-- End Document

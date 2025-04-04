@@ -184,6 +184,38 @@ can reach me at 619.724.3800 or ericransomkramer@gmail.com.
         res = model.score(text)
         return jsonify(res)
         
+    # Debug route to directly serve static files
+    @app.route("/debug/file/<path:filepath>")
+    def debug_file(filepath):
+        from flask import send_from_directory, abort, make_response
+        import mimetypes
+        
+        # Full path to the static file
+        full_path = os.path.join(app.static_folder, filepath)
+        
+        # Check if file exists
+        if not os.path.exists(full_path):
+            return abort(404, f"File not found: {full_path}")
+        
+        # Get MIME type
+        mime_type, encoding = mimetypes.guess_type(full_path)
+        if not mime_type:
+            mime_type = 'application/octet-stream'
+            
+        # Read file content directly
+        try:
+            with open(full_path, 'rb') as f:
+                content = f.read()
+        except Exception as e:
+            return abort(500, f"Error reading file: {str(e)}")
+            
+        # Create response
+        response = make_response(content)
+        response.headers['Content-Type'] = mime_type
+        response.headers['Content-Length'] = str(len(content))
+        app.logger.info(f"Serving {filepath} with mime type {mime_type}, size {len(content)}")
+        return response
+        
     # Debug route to directly serve CSS
     @app.route("/debug/css/<path:filename>")
     def debug_css(filename):
