@@ -2,12 +2,59 @@ runtime: python39
 entrypoint: gunicorn -b :$PORT app:app
 
 handlers:
+# CSS files with specific mime type and long cache
+- url: /static/dist/css/(.+\.css)$
+  static_files: static/dist/css/\1
+  upload: static/dist/css/(.+\.css)$
+  mime_type: text/css
+  secure: always
+  expiration: "365d"
+  http_headers:
+    Cache-Control: "public, max-age=31536000"
+
+# JS files with specific mime type and long cache
+- url: /static/dist/js/(.+\.js)$
+  static_files: static/dist/js/\1
+  upload: static/dist/js/(.+\.js)$
+  mime_type: application/javascript
+  secure: always
+  expiration: "365d"
+  http_headers:
+    Cache-Control: "public, max-age=31536000"
+
+# Images with appropriate mime types
+- url: /static/dist/images/(.+\.(png|jpg|gif|svg))$
+  static_files: static/dist/images/\1
+  upload: static/dist/images/(.+\.(png|jpg|gif|svg))$
+  secure: always
+  expiration: "365d"
+  http_headers:
+    Cache-Control: "public, max-age=31536000"
+
+# Fallback for other dist files
 - url: /static/dist/(.*)
   static_files: static/dist/\1
   upload: static/dist/(.*)
   secure: always
   expiration: "365d"
 
+# Regular CSS with appropriate mime type
+- url: /static/css/(.+\.css)$
+  static_files: static/css/\1
+  upload: static/css/(.+\.css)$
+  mime_type: text/css
+  secure: always
+  expiration: "7d"
+
+# Regular JS with appropriate mime type
+- url: /static/js/(.+\.js)$
+  static_files: static/js/\1
+  upload: static/js/(.+\.js)$
+  mime_type: application/javascript
+  secure: always
+  expiration: "7d"
+
+# Fallback for other static files
 - url: /static/(.*)
   static_files: static/\1
   upload: static/(.*)
