@@ -19,6 +19,7 @@ setup(
             "pytest-cov",
             "beautifulsoup4",
             "bs4",
+            "pyyaml",
         ],
     },
 )

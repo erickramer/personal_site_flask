@@ -3,11 +3,21 @@ Tests specifically for validating deployment configuration.
 These don't run in CI but can be used to verify configuration files.
 """
 import os
-import yaml
 import re
 import pytest
 
-pytestmark = pytest.mark.deploy
+# Try to import yaml, but don't fail if it's not available
+try:
+    import yaml
+    YAML_AVAILABLE = True
+except ImportError:
+    YAML_AVAILABLE = False
+    
+# Skip all tests in this module if yaml is not available
+pytestmark = [
+    pytest.mark.deploy,
+    pytest.mark.skipif(not YAML_AVAILABLE, reason="PyYAML not installed")
+]
 
 def test_app_yaml_static_handlers():
     """Test that app.yaml has proper static file handlers configured."""
