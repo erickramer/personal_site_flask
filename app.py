@@ -44,25 +44,39 @@ def create_app(config_name="default"):
     if config_name == "production":
         # Set up logging
         import logging
+        import sys
         from logging.handlers import RotatingFileHandler
         
-        # Create logs directory if it doesn't exist
-        logs_dir = os.path.join(app.instance_path, 'logs')
-        try:
-            os.makedirs(logs_dir)
-        except OSError:
-            pass
-            
         # Configure logging
         log_level = os.environ.get('LOG_LEVEL', 'INFO')
-        log_handler = RotatingFileHandler(
-            os.path.join(logs_dir, 'app.log'),
-            maxBytes=1024 * 1024,
-            backupCount=5
-        )
         log_formatter = logging.Formatter(
             '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
+        
+        # Check if we're in App Engine
+        in_app_engine = os.environ.get('GAE_ENV', '').startswith('standard')
+        
+        if in_app_engine:
+            # In App Engine, log to stdout which gets captured by Cloud Logging
+            log_handler = logging.StreamHandler(sys.stdout)
+            app.logger.info("Running in App Engine, logging to stdout")
+        else:
+            # For local development, use file-based logging
+            # Create logs directory if it doesn't exist
+            logs_dir = os.path.join(app.instance_path, 'logs')
+            try:
+                os.makedirs(logs_dir)
+            except OSError:
+                pass
+                
+            # Use a file handler for local development
+            log_handler = RotatingFileHandler(
+                os.path.join(logs_dir, 'app.log'),
+                maxBytes=1024 * 1024,
+                backupCount=5
+            )
+        
+        # Configure the handler
         log_handler.setFormatter(log_formatter)
         log_handler.setLevel(getattr(logging, log_level))
         app.logger.addHandler(log_handler)
