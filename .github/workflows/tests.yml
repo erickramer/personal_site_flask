@@ -16,6 +16,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Ensure pip cache directory exists
+      run: mkdir -p ~/.cache/pip
     
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
