@@ -96,3 +96,16 @@ def test_flask_app_static_config():
     
     # Check cache timeout for static files
     assert app.config['SEND_FILE_MAX_AGE_DEFAULT'] == 31536000, "Production should use 1 year cache"
+
+
+def test_github_workflow_uses_make_deploy():
+    """Ensure the deploy workflow calls `make deploy`."""
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    workflow_path = os.path.join(base_dir, '.github', 'workflows', 'deploy.yml')
+
+    with open(workflow_path, 'r') as f:
+        workflow = yaml.safe_load(f)
+
+    steps = workflow['jobs']['test-and-deploy']['steps']
+    assert any('make deploy' in (step.get('run') or '') for step in steps), (
+        "deploy.yml should run 'make deploy'")
