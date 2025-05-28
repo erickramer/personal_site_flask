@@ -9,10 +9,7 @@ A personal portfolio and demos website built with Flask, featuring interactive c
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Setup frontend (requires Node.js)
+# Install all dependencies and build assets
 make setup
 
 # Start the Flask application

@@ -1,10 +1,11 @@
-.PHONY: install-frontend build-frontend build-elm dev-frontend dev-elm clean-frontend test-frontend test-frontend-watch test-frontend-coverage test-backend test-all run-app
+.PHONY: install-frontend build-frontend build-elm dev-frontend dev-elm clean-frontend test-frontend test-frontend-watch test-frontend-coverage test-backend test-all run-app install-elm install-python-deps
 
 # Frontend Build Commands
-install-frontend:
+install-elm:
+	@which elm >/dev/null || npm install -g elm
+
+install-frontend: install-elm
 	cd frontend && npm install
-	# Check if elm is installed
-	@which elm >/dev/null || (echo "Elm is not installed. Please run 'npm install -g elm'" && exit 1)
 
 build-frontend:
 	cd frontend && npm run build
@@ -43,6 +44,12 @@ test-frontend-watch:
 test-frontend-coverage:
 	cd frontend && npm run test:coverage
 
+# Backend Setup Commands
+install-python-deps:
+	@which uv >/dev/null || pip install uv
+	uv pip install -r requirements.txt
+	uv pip install -e .[dev]
+
 # Backend Test Commands
 test-backend:
 	python -m pytest
@@ -56,7 +63,7 @@ run-app:
 	export FLASK_APP=app.py && export FLASK_DEBUG=1 && flask run
 
 # Combined Commands
-setup: install-frontend build-frontend build-elm
+setup: install-python-deps install-frontend build-frontend build-elm
 
 # Coverage Commands
 coverage-all: 
