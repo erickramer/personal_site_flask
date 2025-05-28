@@ -48,7 +48,7 @@ test-frontend-coverage:
 install-python-deps:
 	@which uv >/dev/null || pip install uv
 	uv pip install --system -r requirements.txt 
-	uv pip install -e .[dev]
+	uv pip install --system -e .[dev]
 
 # Backend Test Commands
 test-backend:
