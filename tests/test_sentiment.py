@@ -37,12 +37,17 @@ def test_sentiment_api_score(client, mock_sentiment_model):
     
     assert response.status_code == 200
     data = json.loads(response.data)
-    
+
     # Check that the response has the expected structure
     assert "emoji" in data
     assert "sentiment" in data
     assert isinstance(data["sentiment"], (int, float))
     assert isinstance(data["emoji"], dict)
+
+    # Validate the mocked sentiment scores
+    assert data["sentiment"] == pytest.approx(0.8)
+    assert data["emoji"]["😊"] == pytest.approx(0.9)
+    assert data["emoji"]["😢"] == pytest.approx(0.1)
 
 def test_tweet_model(session):
     """Test basic Tweet model functionality."""
