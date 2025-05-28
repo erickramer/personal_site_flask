@@ -146,6 +146,7 @@ class SentimentModel(object):
         except Exception as e:
             logging.error("Failed on tweet: %s. Error: %s", text, str(e))
             scores = self.baseline
+            sentiment = np.array([[0.0]])
 
 
         scores = [float(s) for s in scores[0, :]]
