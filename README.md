@@ -205,7 +205,6 @@ The test suite includes:
   - Views and routes (views.py)
 - **elm/**: Elm source files for interactive UI components
 - **data/**: Database files and ML model storage
-- **refactored/**: In-progress refactored application structure
 
 ## Notable Components
 
