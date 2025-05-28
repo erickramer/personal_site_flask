@@ -72,3 +72,7 @@ coverage-all:
 
 # Default
 all: setup
+
+# Deploy to Google App Engine
+deploy: build-frontend build-elm
+	gcloud app deploy app.yaml

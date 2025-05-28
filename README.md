@@ -106,6 +106,19 @@ To set up automatic deployment, you need to:
 
 The GitHub Actions workflow in `.github/workflows/deploy.yml` will handle the rest, automatically deploying your application when changes are merged to the master branch.
 
+### Manual Deployment
+
+If you want to deploy manually using the Google Cloud SDK, make sure the compiled
+static assets are available. The provided Makefile includes a `deploy` target that
+builds the frontend and Elm assets and then runs `gcloud app deploy`:
+
+```bash
+make deploy
+```
+
+This command ensures that `static/dist` is populated before uploading the
+application to App Engine.
+
 ## Project Overview
 
 This Flask-based personal site combines traditional web technologies with modern approaches like Elm and machine learning.
