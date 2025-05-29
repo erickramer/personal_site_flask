@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, jsonify, request, url_for, send_from_directory
+from flask import Flask, render_template, redirect, jsonify, request, url_for, send_from_directory, abort
 import os
 import logging
 
@@ -129,11 +129,16 @@ def register_routes(app):
     # Serve the favicon for browsers that request /favicon.ico
     @app.route("/favicon.ico")
     def favicon():
-        return send_from_directory(
-            os.path.join(app.static_folder, "dist", "images"),
-            "favicon.png",
-            mimetype="image/png",
-        )
+        """Serve the favicon from the built assets if available."""
+        dist_dir = os.path.join(app.static_folder, "dist", "images")
+        fallback_dir = os.path.join(app.static_folder, "images")
+
+        if os.path.exists(os.path.join(dist_dir, "favicon.png")):
+            return send_from_directory(dist_dir, "favicon.png", mimetype="image/png")
+        elif os.path.exists(os.path.join(fallback_dir, "favicon.png")):
+            return send_from_directory(fallback_dir, "favicon.png", mimetype="image/png")
+
+        return abort(404)
 
     @app.route("/contact")
     def contact():
