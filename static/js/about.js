@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ak.P === region.au.P)
+	if (region.ac.I === region.an.I)
 	{
-		return 'on line ' + region.ak.P;
+		return 'on line ' + region.ac.I;
 	}
-	return 'on lines ' + region.ak.P + ' through ' + region.au.P;
+	return 'on lines ' + region.ac.I + ' through ' + region.an.I;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bd,
-		impl.by,
-		impl.bu,
+		impl.a8,
+		impl.bt,
+		impl.bp,
 		function() { return function() {} }
 	);
 });
@@ -2659,9 +2659,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		v: func(record.v),
-		al: record.al,
-		ai: record.ai
+		u: func(record.u),
+		ad: record.ad,
+		aa: record.aa
 	}
 });
 
@@ -2929,11 +2929,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.v;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.al;
+		var message = !tag ? value : tag < 3 ? value.a : value.u;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ad;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.ai) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.aa) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,11 +3883,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bd,
-		impl.by,
-		impl.bu,
+		impl.a8,
+		impl.bt,
+		impl.bp,
 		function(sendToApp, initialModel) {
-			var view = impl.bz;
+			var view = impl.bu;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3919,12 +3919,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bd,
-		impl.by,
-		impl.bu,
+		impl.a8,
+		impl.bt,
+		impl.bp,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.aj && impl.aj(sendToApp)
-			var view = impl.bz;
+			var divertHrefToApp = impl.ab && impl.ab(sendToApp)
+			var view = impl.bu;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3932,12 +3932,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.a0);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aX);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.bx) && (_VirtualDom_doc.title = title = doc.bx);
+				(title !== doc.bs) && (_VirtualDom_doc.title = title = doc.bs);
 			});
 		}
 	);
@@ -3993,12 +3993,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.bo;
-	var onUrlRequest = impl.bp;
+	var onUrlChange = impl.bj;
+	var onUrlRequest = impl.bk;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		aj: function(sendToApp)
+		ab: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.aL === next.aL
-							&& curr.az === next.az
-							&& curr.aI.a === next.aI.a
+							&& curr.aG === next.aG
+							&& curr.as === next.as
+							&& curr.aC.a === next.aC.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4024,13 +4024,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bd: function(flags)
+		a8: function(flags)
 		{
-			return A3(impl.bd, flags, _Browser_getUrl(), key);
+			return A3(impl.a8, flags, _Browser_getUrl(), key);
 		},
-		bz: impl.bz,
-		by: impl.by,
-		bu: impl.bu
+		bu: impl.bu,
+		bt: impl.bt,
+		bp: impl.bp
 	});
 }
 
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bb: 'hidden', a2: 'visibilitychange' }
+		? { a6: 'hidden', aZ: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bb: 'mozHidden', a2: 'mozvisibilitychange' }
+		? { a6: 'mozHidden', aZ: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bb: 'msHidden', a2: 'msvisibilitychange' }
+		? { a6: 'msHidden', aZ: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bb: 'webkitHidden', a2: 'webkitvisibilitychange' }
-		: { bb: 'hidden', a2: 'visibilitychange' };
+		? { a6: 'webkitHidden', aZ: 'webkitvisibilitychange' }
+		: { a6: 'hidden', aZ: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		aR: _Browser_getScene(),
-		aX: {
-			c: _Browser_window.pageXOffset,
-			d: _Browser_window.pageYOffset,
-			N: _Browser_doc.documentElement.clientWidth,
-			H: _Browser_doc.documentElement.clientHeight
+		aM: _Browser_getScene(),
+		aT: {
+			T: _Browser_window.pageXOffset,
+			U: _Browser_window.pageYOffset,
+			o: _Browser_doc.documentElement.clientWidth,
+			p: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		N: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		H: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		o: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		p: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			aR: {
-				N: node.scrollWidth,
-				H: node.scrollHeight
+			aM: {
+				o: node.scrollWidth,
+				p: node.scrollHeight
 			},
-			aX: {
-				c: node.scrollLeft,
-				d: node.scrollTop,
-				N: node.clientWidth,
-				H: node.clientHeight
+			aT: {
+				T: node.scrollLeft,
+				U: node.scrollTop,
+				o: node.clientWidth,
+				p: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			aR: _Browser_getScene(),
-			aX: {
-				c: x,
-				d: y,
-				N: _Browser_doc.documentElement.clientWidth,
-				H: _Browser_doc.documentElement.clientHeight
+			aM: _Browser_getScene(),
+			aT: {
+				T: x,
+				U: y,
+				o: _Browser_doc.documentElement.clientWidth,
+				p: _Browser_doc.documentElement.clientHeight
 			},
-			a5: {
-				c: x + rect.left,
-				d: y + rect.top,
-				N: rect.width,
-				H: rect.height
+			a0: {
+				T: x + rect.left,
+				U: y + rect.top,
+				o: rect.width,
+				p: rect.height
 			}
 		};
 	});
@@ -4310,6 +4310,43 @@ function _Browser_load(url)
 		}
 	}));
 }
+
+
+
+var _Bitwise_and = F2(function(a, b)
+{
+	return a & b;
+});
+
+var _Bitwise_or = F2(function(a, b)
+{
+	return a | b;
+});
+
+var _Bitwise_xor = F2(function(a, b)
+{
+	return a ^ b;
+});
+
+function _Bitwise_complement(a)
+{
+	return ~a;
+};
+
+var _Bitwise_shiftLeftBy = F2(function(offset, a)
+{
+	return a << offset;
+});
+
+var _Bitwise_shiftRightBy = F2(function(offset, a)
+{
+	return a >> offset;
+});
+
+var _Bitwise_shiftRightZfBy = F2(function(offset, a)
+{
+	return a >>> offset;
+});
 
 
 
@@ -4356,43 +4393,6 @@ function _Time_getZoneName()
 		callback(_Scheduler_succeed(name));
 	});
 }
-
-
-
-var _Bitwise_and = F2(function(a, b)
-{
-	return a & b;
-});
-
-var _Bitwise_or = F2(function(a, b)
-{
-	return a | b;
-});
-
-var _Bitwise_xor = F2(function(a, b)
-{
-	return a ^ b;
-});
-
-function _Bitwise_complement(a)
-{
-	return ~a;
-};
-
-var _Bitwise_shiftLeftBy = F2(function(offset, a)
-{
-	return a << offset;
-});
-
-var _Bitwise_shiftRightBy = F2(function(offset, a)
-{
-	return a >> offset;
-});
-
-var _Bitwise_shiftRightZfBy = F2(function(offset, a)
-{
-	return a >>> offset;
-});
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
@@ -4799,25 +4799,25 @@ var $elm$core$Array$treeFromBuilder = F2(
 	});
 var $elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.e) {
+		if (!builder.b) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.g),
+				$elm$core$Elm$JsArray$length(builder.d),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.g);
+				builder.d);
 		} else {
-			var treeLen = builder.e * $elm$core$Array$branchFactor;
+			var treeLen = builder.b * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.h) : builder.h;
-			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.e);
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.f) : builder.f;
+			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.b);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.g) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.d) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.g);
+				builder.d);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4830,7 +4830,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{h: nodeList, e: (len / $elm$core$Array$branchFactor) | 0, g: tail});
+					{f: nodeList, b: (len / $elm$core$Array$branchFactor) | 0, d: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -4897,7 +4897,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {aw: fragment, az: host, aG: path, aI: port_, aL: protocol, aM: query};
+		return {ap: fragment, as: host, aA: path, aC: port_, aG: protocol, aH: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5176,515 +5176,144 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
-var $author$project$Asteroids$Model = F5(
-	function (spaceship, asteroids, missiles, score, alive) {
-		return {a_: alive, z: asteroids, w: missiles, K: score, S: spaceship};
+var $author$project$Box$Box = F2(
+	function (height, width) {
+		return {p: height, o: width};
 	});
-var $author$project$Asteroids$SpaceShip = F2(
-	function (position, dimension) {
-		return {ac: dimension, a: position};
+var $author$project$About$Model = F3(
+	function (box, particles, g) {
+		return {e: box, W: g, w: particles};
 	});
-var $author$project$Asteroids$Vector = F2(
-	function (x, y) {
-		return {c: x, d: y};
-	});
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $author$project$About$initModel = A3(
+	$author$project$About$Model,
+	A2(
+		$author$project$Box$Box,
+		_Utils_Tuple2(0, 100),
+		_Utils_Tuple2(0, 100)),
+	_List_Nil,
+	-0.005);
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Asteroids$init = function (_v0) {
-	var spaceship = A2(
-		$author$project$Asteroids$SpaceShip,
-		A2($author$project$Asteroids$Vector, 0, 0),
-		A2($author$project$Asteroids$Vector, 50, 50));
-	var score = 0;
-	var missiles = _List_Nil;
-	var asteroids = _List_Nil;
-	var alive = true;
-	return _Utils_Tuple2(
-		A5($author$project$Asteroids$Model, spaceship, asteroids, missiles, score, alive),
-		$elm$core$Platform$Cmd$none);
+var $author$project$About$init = function (_v0) {
+	return _Utils_Tuple2($author$project$About$initModel, $elm$core$Platform$Cmd$none);
 };
-var $author$project$Asteroids$NewMissile = function (a) {
+var $author$project$About$NewParticles = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$About$NewWindowSize = function (a) {
 	return {$: 3, a: a};
 };
-var $author$project$Asteroids$NewPose = function (a) {
-	return {$: 2, a: a};
-};
-var $author$project$Asteroids$OnAnimate = function (a) {
-	return {$: 4, a: a};
-};
-var $author$project$Asteroids$Tock = function (a) {
+var $author$project$About$OnAnimate = function (a) {
 	return {$: 0, a: a};
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
-var $elm$time$Time$Every = F2(
-	function (a, b) {
-		return {$: 0, a: a, b: b};
-	});
-var $elm$time$Time$State = F2(
-	function (taggers, processes) {
-		return {aK: processes, aW: taggers};
-	});
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $elm$time$Time$init = $elm$core$Task$succeed(
-	A2($elm$time$Time$State, $elm$core$Dict$empty, $elm$core$Dict$empty));
-var $elm$core$Basics$compare = _Utils_compare;
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === -2) {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1) {
-					case 0:
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 1:
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
-var $elm$core$Dict$Black = 1;
-var $elm$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {$: -1, a: a, b: b, c: c, d: d, e: e};
-	});
-var $elm$core$Dict$Red = 0;
-var $elm$core$Dict$balance = F5(
-	function (color, key, value, left, right) {
-		if ((right.$ === -1) && (!right.a)) {
-			var _v1 = right.a;
-			var rK = right.b;
-			var rV = right.c;
-			var rLeft = right.d;
-			var rRight = right.e;
-			if ((left.$ === -1) && (!left.a)) {
-				var _v3 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var lLeft = left.d;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					0,
-					key,
-					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					color,
-					rK,
-					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
-					rRight);
-			}
-		} else {
-			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
-				var _v5 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var _v6 = left.d;
-				var _v7 = _v6.a;
-				var llK = _v6.b;
-				var llV = _v6.c;
-				var llLeft = _v6.d;
-				var llRight = _v6.e;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					0,
-					lK,
-					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
-			} else {
-				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
-			}
-		}
-	});
-var $elm$core$Dict$insertHelp = F3(
-	function (key, value, dict) {
-		if (dict.$ === -2) {
-			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
-		} else {
-			var nColor = dict.a;
-			var nKey = dict.b;
-			var nValue = dict.c;
-			var nLeft = dict.d;
-			var nRight = dict.e;
-			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1) {
-				case 0:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						A3($elm$core$Dict$insertHelp, key, value, nLeft),
-						nRight);
-				case 1:
-					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
-				default:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						nLeft,
-						A3($elm$core$Dict$insertHelp, key, value, nRight));
-			}
-		}
-	});
-var $elm$core$Dict$insert = F3(
-	function (key, value, dict) {
-		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === -1) && (!_v0.a)) {
-			var _v1 = _v0.a;
-			var k = _v0.b;
-			var v = _v0.c;
-			var l = _v0.d;
-			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
-		} else {
-			var x = _v0;
-			return x;
-		}
-	});
-var $elm$time$Time$addMySub = F2(
-	function (_v0, state) {
-		var interval = _v0.a;
-		var tagger = _v0.b;
-		var _v1 = A2($elm$core$Dict$get, interval, state);
-		if (_v1.$ === 1) {
-			return A3(
-				$elm$core$Dict$insert,
-				interval,
-				_List_fromArray(
-					[tagger]),
-				state);
-		} else {
-			var taggers = _v1.a;
-			return A3(
-				$elm$core$Dict$insert,
-				interval,
-				A2($elm$core$List$cons, tagger, taggers),
-				state);
-		}
-	});
-var $elm$core$Process$kill = _Scheduler_kill;
-var $elm$core$Dict$foldl = F3(
-	function (func, acc, dict) {
-		foldl:
-		while (true) {
-			if (dict.$ === -2) {
-				return acc;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var $temp$func = func,
-					$temp$acc = A3(
-					func,
-					key,
-					value,
-					A3($elm$core$Dict$foldl, func, acc, left)),
-					$temp$dict = right;
-				func = $temp$func;
-				acc = $temp$acc;
-				dict = $temp$dict;
-				continue foldl;
-			}
-		}
-	});
-var $elm$core$Dict$merge = F6(
-	function (leftStep, bothStep, rightStep, leftDict, rightDict, initialResult) {
-		var stepState = F3(
-			function (rKey, rValue, _v0) {
-				stepState:
-				while (true) {
-					var list = _v0.a;
-					var result = _v0.b;
-					if (!list.b) {
-						return _Utils_Tuple2(
-							list,
-							A3(rightStep, rKey, rValue, result));
-					} else {
-						var _v2 = list.a;
-						var lKey = _v2.a;
-						var lValue = _v2.b;
-						var rest = list.b;
-						if (_Utils_cmp(lKey, rKey) < 0) {
-							var $temp$rKey = rKey,
-								$temp$rValue = rValue,
-								$temp$_v0 = _Utils_Tuple2(
-								rest,
-								A3(leftStep, lKey, lValue, result));
-							rKey = $temp$rKey;
-							rValue = $temp$rValue;
-							_v0 = $temp$_v0;
-							continue stepState;
-						} else {
-							if (_Utils_cmp(lKey, rKey) > 0) {
-								return _Utils_Tuple2(
-									list,
-									A3(rightStep, rKey, rValue, result));
-							} else {
-								return _Utils_Tuple2(
-									rest,
-									A4(bothStep, lKey, lValue, rValue, result));
-							}
-						}
-					}
-				}
-			});
-		var _v3 = A3(
-			$elm$core$Dict$foldl,
-			stepState,
-			_Utils_Tuple2(
-				$elm$core$Dict$toList(leftDict),
-				initialResult),
-			rightDict);
-		var leftovers = _v3.a;
-		var intermediateResult = _v3.b;
-		return A3(
-			$elm$core$List$foldl,
-			F2(
-				function (_v4, result) {
-					var k = _v4.a;
-					var v = _v4.b;
-					return A3(leftStep, k, v, result);
-				}),
-			intermediateResult,
-			leftovers);
-	});
-var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
-var $elm$time$Time$Name = function (a) {
-	return {$: 0, a: a};
-};
-var $elm$time$Time$Offset = function (a) {
-	return {$: 1, a: a};
-};
-var $elm$time$Time$Zone = F2(
-	function (a, b) {
-		return {$: 0, a: a, b: b};
-	});
-var $elm$time$Time$customZone = $elm$time$Time$Zone;
-var $elm$time$Time$setInterval = _Time_setInterval;
-var $elm$core$Process$spawn = _Scheduler_spawn;
-var $elm$time$Time$spawnHelp = F3(
-	function (router, intervals, processes) {
-		if (!intervals.b) {
-			return $elm$core$Task$succeed(processes);
-		} else {
-			var interval = intervals.a;
-			var rest = intervals.b;
-			var spawnTimer = $elm$core$Process$spawn(
-				A2(
-					$elm$time$Time$setInterval,
-					interval,
-					A2($elm$core$Platform$sendToSelf, router, interval)));
-			var spawnRest = function (id) {
-				return A3(
-					$elm$time$Time$spawnHelp,
-					router,
-					rest,
-					A3($elm$core$Dict$insert, interval, id, processes));
-			};
-			return A2($elm$core$Task$andThen, spawnRest, spawnTimer);
-		}
-	});
-var $elm$time$Time$onEffects = F3(
-	function (router, subs, _v0) {
-		var processes = _v0.aK;
-		var rightStep = F3(
-			function (_v6, id, _v7) {
-				var spawns = _v7.a;
-				var existing = _v7.b;
-				var kills = _v7.c;
-				return _Utils_Tuple3(
-					spawns,
-					existing,
-					A2(
-						$elm$core$Task$andThen,
-						function (_v5) {
-							return kills;
-						},
-						$elm$core$Process$kill(id)));
-			});
-		var newTaggers = A3($elm$core$List$foldl, $elm$time$Time$addMySub, $elm$core$Dict$empty, subs);
-		var leftStep = F3(
-			function (interval, taggers, _v4) {
-				var spawns = _v4.a;
-				var existing = _v4.b;
-				var kills = _v4.c;
-				return _Utils_Tuple3(
-					A2($elm$core$List$cons, interval, spawns),
-					existing,
-					kills);
-			});
-		var bothStep = F4(
-			function (interval, taggers, id, _v3) {
-				var spawns = _v3.a;
-				var existing = _v3.b;
-				var kills = _v3.c;
-				return _Utils_Tuple3(
-					spawns,
-					A3($elm$core$Dict$insert, interval, id, existing),
-					kills);
-			});
-		var _v1 = A6(
-			$elm$core$Dict$merge,
-			leftStep,
-			bothStep,
-			rightStep,
-			newTaggers,
-			processes,
-			_Utils_Tuple3(
-				_List_Nil,
-				$elm$core$Dict$empty,
-				$elm$core$Task$succeed(0)));
-		var spawnList = _v1.a;
-		var existingDict = _v1.b;
-		var killTask = _v1.c;
-		return A2(
-			$elm$core$Task$andThen,
-			function (newProcesses) {
-				return $elm$core$Task$succeed(
-					A2($elm$time$Time$State, newTaggers, newProcesses));
-			},
-			A2(
-				$elm$core$Task$andThen,
-				function (_v2) {
-					return A3($elm$time$Time$spawnHelp, router, spawnList, existingDict);
-				},
-				killTask));
-	});
-var $elm$time$Time$Posix = $elm$core$Basics$identity;
-var $elm$time$Time$millisToPosix = $elm$core$Basics$identity;
-var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
-var $elm$time$Time$onSelfMsg = F3(
-	function (router, interval, state) {
-		var _v0 = A2($elm$core$Dict$get, interval, state.aW);
-		if (_v0.$ === 1) {
-			return $elm$core$Task$succeed(state);
-		} else {
-			var taggers = _v0.a;
-			var tellTaggers = function (time) {
-				return $elm$core$Task$sequence(
-					A2(
-						$elm$core$List$map,
-						function (tagger) {
-							return A2(
-								$elm$core$Platform$sendToApp,
-								router,
-								tagger(time));
-						},
-						taggers));
-			};
-			return A2(
-				$elm$core$Task$andThen,
-				function (_v1) {
-					return $elm$core$Task$succeed(state);
-				},
-				A2($elm$core$Task$andThen, tellTaggers, $elm$time$Time$now));
-		}
-	});
-var $elm$core$Basics$composeL = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
-var $elm$time$Time$subMap = F2(
-	function (f, _v0) {
-		var interval = _v0.a;
-		var tagger = _v0.b;
-		return A2(
-			$elm$time$Time$Every,
-			interval,
-			A2($elm$core$Basics$composeL, f, tagger));
-	});
-_Platform_effectManagers['Time'] = _Platform_createManager($elm$time$Time$init, $elm$time$Time$onEffects, $elm$time$Time$onSelfMsg, 0, $elm$time$Time$subMap);
-var $elm$time$Time$subscription = _Platform_leaf('Time');
-var $elm$time$Time$every = F2(
-	function (interval, tagger) {
-		return $elm$time$Time$subscription(
-			A2($elm$time$Time$Every, interval, tagger));
-	});
-var $elm$json$Json$Decode$bool = _Json_decodeBool;
-var $author$project$Asteroids$newMissile = _Platform_incomingPort('newMissile', $elm$json$Json$Decode$bool);
 var $elm$json$Json$Decode$andThen = _Json_andThen;
 var $elm$json$Json$Decode$field = _Json_decodeField;
 var $elm$json$Json$Decode$float = _Json_decodeFloat;
+var $elm$json$Json$Decode$index = _Json_decodeIndex;
 var $elm$json$Json$Decode$list = _Json_decodeList;
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Asteroids$newPose = _Platform_incomingPort(
-	'newPose',
+var $author$project$About$loadParticles = _Platform_incomingPort(
+	'loadParticles',
 	$elm$json$Json$Decode$list(
 		A2(
 			$elm$json$Json$Decode$andThen,
-			function (score) {
+			function (velocity) {
 				return A2(
 					$elm$json$Json$Decode$andThen,
 					function (position) {
 						return A2(
 							$elm$json$Json$Decode$andThen,
-							function (part) {
-								return $elm$json$Json$Decode$succeed(
-									{ah: part, a: position, K: score});
+							function (mass) {
+								return A2(
+									$elm$json$Json$Decode$andThen,
+									function (acceleration) {
+										return $elm$json$Json$Decode$succeed(
+											{ag: acceleration, aw: mass, aD: position, aS: velocity});
+									},
+									A2(
+										$elm$json$Json$Decode$field,
+										'acceleration',
+										A2(
+											$elm$json$Json$Decode$andThen,
+											function (_v0) {
+												return A2(
+													$elm$json$Json$Decode$andThen,
+													function (_v1) {
+														return $elm$json$Json$Decode$succeed(
+															_Utils_Tuple2(_v0, _v1));
+													},
+													A2($elm$json$Json$Decode$index, 1, $elm$json$Json$Decode$float));
+											},
+											A2($elm$json$Json$Decode$index, 0, $elm$json$Json$Decode$float))));
 							},
-							A2($elm$json$Json$Decode$field, 'part', $elm$json$Json$Decode$string));
+							A2($elm$json$Json$Decode$field, 'mass', $elm$json$Json$Decode$float));
 					},
 					A2(
 						$elm$json$Json$Decode$field,
 						'position',
 						A2(
 							$elm$json$Json$Decode$andThen,
-							function (y) {
+							function (_v0) {
 								return A2(
 									$elm$json$Json$Decode$andThen,
-									function (x) {
+									function (_v1) {
 										return $elm$json$Json$Decode$succeed(
-											{c: x, d: y});
+											_Utils_Tuple2(_v0, _v1));
 									},
-									A2($elm$json$Json$Decode$field, 'x', $elm$json$Json$Decode$float));
+									A2($elm$json$Json$Decode$index, 1, $elm$json$Json$Decode$float));
 							},
-							A2($elm$json$Json$Decode$field, 'y', $elm$json$Json$Decode$float))));
+							A2($elm$json$Json$Decode$index, 0, $elm$json$Json$Decode$float))));
 			},
-			A2($elm$json$Json$Decode$field, 'score', $elm$json$Json$Decode$float))));
+			A2(
+				$elm$json$Json$Decode$field,
+				'velocity',
+				A2(
+					$elm$json$Json$Decode$andThen,
+					function (_v0) {
+						return A2(
+							$elm$json$Json$Decode$andThen,
+							function (_v1) {
+								return $elm$json$Json$Decode$succeed(
+									_Utils_Tuple2(_v0, _v1));
+							},
+							A2($elm$json$Json$Decode$index, 1, $elm$json$Json$Decode$float));
+					},
+					A2($elm$json$Json$Decode$index, 0, $elm$json$Json$Decode$float))))));
+var $author$project$About$newWindowSize = _Platform_incomingPort(
+	'newWindowSize',
+	A2(
+		$elm$json$Json$Decode$andThen,
+		function (width) {
+			return A2(
+				$elm$json$Json$Decode$andThen,
+				function (height) {
+					return $elm$json$Json$Decode$succeed(
+						{p: height, o: width});
+				},
+				A2($elm$json$Json$Decode$field, 'height', $elm$json$Json$Decode$float));
+		},
+		A2($elm$json$Json$Decode$field, 'width', $elm$json$Json$Decode$float)));
 var $elm$browser$Browser$AnimationManager$Delta = function (a) {
 	return {$: 1, a: a};
 };
 var $elm$browser$Browser$AnimationManager$State = F3(
 	function (subs, request, oldTime) {
-		return {ag: oldTime, aO: request, aV: subs};
+		return {_: oldTime, aJ: request, aQ: subs};
 	});
 var $elm$browser$Browser$AnimationManager$init = $elm$core$Task$succeed(
 	A3($elm$browser$Browser$AnimationManager$State, _List_Nil, $elm$core$Maybe$Nothing, 0));
+var $elm$core$Process$kill = _Scheduler_kill;
 var $elm$browser$Browser$AnimationManager$now = _Browser_now(0);
 var $elm$browser$Browser$AnimationManager$rAF = _Browser_rAF(0);
+var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
+var $elm$core$Process$spawn = _Scheduler_spawn;
 var $elm$browser$Browser$AnimationManager$onEffects = F3(
 	function (router, subs, _v0) {
-		var request = _v0.aO;
-		var oldTime = _v0.ag;
+		var request = _v0.aJ;
+		var oldTime = _v0._;
 		var _v1 = _Utils_Tuple2(request, subs);
 		if (_v1.a.$ === 1) {
 			if (!_v1.b.b) {
@@ -5728,10 +5357,12 @@ var $elm$browser$Browser$AnimationManager$onEffects = F3(
 			}
 		}
 	});
+var $elm$time$Time$Posix = $elm$core$Basics$identity;
+var $elm$time$Time$millisToPosix = $elm$core$Basics$identity;
 var $elm$browser$Browser$AnimationManager$onSelfMsg = F3(
 	function (router, newTime, _v0) {
-		var subs = _v0.aV;
-		var oldTime = _v0.ag;
+		var subs = _v0.aQ;
+		var oldTime = _v0._;
 		var send = function (sub) {
 			if (!sub.$) {
 				var tagger = sub.a;
@@ -5773,6 +5404,11 @@ var $elm$browser$Browser$AnimationManager$onSelfMsg = F3(
 var $elm$browser$Browser$AnimationManager$Time = function (a) {
 	return {$: 0, a: a};
 };
+var $elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
 var $elm$browser$Browser$AnimationManager$subMap = F2(
 	function (func, sub) {
 		if (!sub.$) {
@@ -5792,159 +5428,105 @@ var $elm$browser$Browser$AnimationManager$onAnimationFrameDelta = function (tagg
 		$elm$browser$Browser$AnimationManager$Delta(tagger));
 };
 var $elm$browser$Browser$Events$onAnimationFrameDelta = $elm$browser$Browser$AnimationManager$onAnimationFrameDelta;
-var $author$project$Asteroids$subscriptions = function (model) {
+var $author$project$About$subscriptions = function (model) {
 	return $elm$core$Platform$Sub$batch(
 		_List_fromArray(
 			[
-				A2($elm$time$Time$every, 1000, $author$project$Asteroids$Tock),
-				$author$project$Asteroids$newPose($author$project$Asteroids$NewPose),
-				$author$project$Asteroids$newMissile($author$project$Asteroids$NewMissile),
-				$elm$browser$Browser$Events$onAnimationFrameDelta($author$project$Asteroids$OnAnimate)
+				$elm$browser$Browser$Events$onAnimationFrameDelta($author$project$About$OnAnimate),
+				$author$project$About$newWindowSize($author$project$About$NewWindowSize),
+				$author$project$About$loadParticles($author$project$About$NewParticles)
 			]));
 };
-var $author$project$Asteroids$NewAsteroid = function (a) {
-	return {$: 1, a: a};
+var $elm$core$Basics$abs = function (n) {
+	return (n < 0) ? (-n) : n;
 };
-var $elm$core$Basics$pow = _Basics_pow;
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Box$max = $elm$core$Tuple$second;
+var $author$project$Box$min = $elm$core$Tuple$first;
 var $elm$core$Basics$sqrt = _Basics_sqrt;
-var $author$project$Asteroids$isCollision = F2(
-	function (a, b) {
-		var d = A2($elm$core$Basics$pow, a.a.c - b.a.c, 2) + A2($elm$core$Basics$pow, a.a.d - b.a.d, 2);
-		return _Utils_cmp(
-			$elm$core$Basics$sqrt(d),
-			a.E + b.E) < 0;
-	});
-var $elm$core$List$sum = function (numbers) {
-	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
+var $author$project$Particle$radius = function (p) {
+	return $elm$core$Basics$sqrt(p.aw);
 };
-var $author$project$Asteroids$collideAsteroid = F2(
-	function (missiles, asteroid) {
-		var counts = $elm$core$List$sum(
-			A2(
-				$elm$core$List$map,
-				function (x) {
-					return x ? 1 : 0;
-				},
-				A2(
-					$elm$core$List$map,
-					$author$project$Asteroids$isCollision(asteroid),
-					missiles)));
-		var newRadius = asteroid.E / A2($elm$core$Basics$pow, 2, counts);
-		return (newRadius > 0.75) ? $elm$core$Maybe$Just(
-			_Utils_update(
-				asteroid,
-				{E: newRadius})) : $elm$core$Maybe$Nothing;
-	});
-var $elm$core$List$filter = F2(
-	function (isGood, list) {
-		return A3(
-			$elm$core$List$foldr,
-			F2(
-				function (x, xs) {
-					return isGood(x) ? A2($elm$core$List$cons, x, xs) : xs;
-				}),
-			_List_Nil,
-			list);
-	});
-var $elm$core$List$maybeCons = F3(
-	function (f, mx, xs) {
-		var _v0 = f(mx);
-		if (!_v0.$) {
-			var x = _v0.a;
-			return A2($elm$core$List$cons, x, xs);
+var $author$project$Vector$x = $elm$core$Tuple$first;
+var $author$project$Vector$y = $elm$core$Tuple$second;
+var $author$project$Box$bounceX = F2(
+	function (box, particle) {
+		if (_Utils_cmp(
+			$author$project$Vector$x(particle.aD) + $author$project$Particle$radius(particle),
+			$author$project$Box$max(box.o)) > 0) {
+			var newVelocity = _Utils_Tuple2(
+				-$elm$core$Basics$abs(
+					$author$project$Vector$x(particle.aS)),
+				$author$project$Vector$y(particle.aS));
+			var newPosition = _Utils_Tuple2(
+				$author$project$Box$max(box.o) - $author$project$Particle$radius(particle),
+				$author$project$Vector$y(particle.aD));
+			return _Utils_update(
+				particle,
+				{aD: newPosition, aS: newVelocity});
 		} else {
-			return xs;
-		}
-	});
-var $elm$core$List$filterMap = F2(
-	function (f, xs) {
-		return A3(
-			$elm$core$List$foldr,
-			$elm$core$List$maybeCons(f),
-			_List_Nil,
-			xs);
-	});
-var $author$project$Asteroids$collideAsteroids = F2(
-	function (missiles, asteroids) {
-		var newAsteroids = A2(
-			$elm$core$List$filterMap,
-			$author$project$Asteroids$collideAsteroid(missiles),
-			asteroids);
-		var collisions = A2(
-			$elm$core$List$map,
-			function (missile) {
-				return A2(
-					$elm$core$List$map,
-					function (asteroid) {
-						return A2($author$project$Asteroids$isCollision, missile, asteroid);
-					},
-					asteroids);
-			},
-			missiles);
-		var trueCollisions = A2(
-			$elm$core$List$map,
-			function (a) {
-				return A2(
-					$elm$core$List$filter,
-					function (x) {
-						return x;
-					},
-					a);
-			},
-			collisions);
-		var nCollisions = $elm$core$List$sum(
-			A2($elm$core$List$map, $elm$core$List$length, trueCollisions));
-		return _Utils_Tuple2(newAsteroids, nCollisions);
-	});
-var $elm$core$List$any = F2(
-	function (isOkay, list) {
-		any:
-		while (true) {
-			if (!list.b) {
-				return false;
+			if (_Utils_cmp(
+				$author$project$Vector$x(particle.aD) - $author$project$Particle$radius(particle),
+				$author$project$Box$min(box.o)) < 0) {
+				var newVelocity = _Utils_Tuple2(
+					$elm$core$Basics$abs(
+						$author$project$Vector$x(particle.aS)),
+					$author$project$Vector$y(particle.aS));
+				var newPosition = _Utils_Tuple2(
+					$author$project$Box$min(box.o) + $author$project$Particle$radius(particle),
+					$author$project$Vector$y(particle.aD));
+				return _Utils_update(
+					particle,
+					{aD: newPosition, aS: newVelocity});
 			} else {
-				var x = list.a;
-				var xs = list.b;
-				if (isOkay(x)) {
-					return true;
-				} else {
-					var $temp$isOkay = isOkay,
-						$temp$list = xs;
-					isOkay = $temp$isOkay;
-					list = $temp$list;
-					continue any;
-				}
+				return particle;
 			}
 		}
 	});
-var $author$project$Asteroids$collideMissile = F2(
-	function (asteroids, missile) {
-		var collisions = A2(
-			$elm$core$List$map,
-			$author$project$Asteroids$isCollision(missile),
-			asteroids);
-		return A2($elm$core$List$any, $elm$core$Basics$identity, collisions) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(missile);
+var $author$project$Box$bounceY = F2(
+	function (box, particle) {
+		if (_Utils_cmp(
+			$author$project$Vector$y(particle.aD) + $author$project$Particle$radius(particle),
+			$author$project$Box$max(box.p)) > 0) {
+			var newVelocity = _Utils_Tuple2(
+				$author$project$Vector$x(particle.aS),
+				-$elm$core$Basics$abs(
+					$author$project$Vector$y(particle.aS)));
+			var newPosition = _Utils_Tuple2(
+				$author$project$Vector$x(particle.aD),
+				$author$project$Box$max(box.p) - $author$project$Particle$radius(particle));
+			return _Utils_update(
+				particle,
+				{aD: newPosition, aS: newVelocity});
+		} else {
+			if (_Utils_cmp(
+				$author$project$Vector$y(particle.aD) - $author$project$Particle$radius(particle),
+				$author$project$Box$min(box.p)) < 0) {
+				var newVelocity = _Utils_Tuple2(
+					$author$project$Vector$x(particle.aS),
+					$elm$core$Basics$abs(
+						$author$project$Vector$y(particle.aS)));
+				var newPosition = _Utils_Tuple2(
+					$author$project$Vector$x(particle.aD),
+					$author$project$Box$min(box.p) + $author$project$Particle$radius(particle));
+				return _Utils_update(
+					particle,
+					{aD: newPosition, aS: newVelocity});
+			} else {
+				return particle;
+			}
+		}
 	});
-var $author$project$Asteroids$collideMissiles = F2(
-	function (missiles, asteroids) {
+var $author$project$Box$bounce = F2(
+	function (box, particle) {
 		return A2(
-			$elm$core$List$filterMap,
-			$author$project$Asteroids$collideMissile(asteroids),
-			missiles);
+			$author$project$Box$bounceY,
+			box,
+			A2($author$project$Box$bounceX, box, particle));
 	});
-var $author$project$Asteroids$Particle = F3(
-	function (position, velocity, radius) {
-		return {a: position, E: radius, aa: velocity};
-	});
-var $elm$core$Basics$negate = function (n) {
-	return -n;
-};
-var $author$project$Asteroids$createMissile = function (spaceship) {
-	var velocity = A2($author$project$Asteroids$Vector, 0, -0.05);
-	var radius = 0.75;
-	var position = A2($author$project$Asteroids$Vector, spaceship.a.c + 10, spaceship.a.d);
-	return A3($author$project$Asteroids$Particle, position, velocity, radius);
-};
 var $elm$random$Random$Generate = $elm$core$Basics$identity;
 var $elm$random$Random$Seed = F2(
 	function (a, b) {
@@ -5965,6 +5547,18 @@ var $elm$random$Random$initialSeed = function (x) {
 	return $elm$random$Random$next(
 		A2($elm$random$Random$Seed, state2, incr));
 };
+var $elm$time$Time$Name = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$time$Time$Offset = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$time$Time$Zone = F2(
+	function (a, b) {
+		return {$: 0, a: a, b: b};
+	});
+var $elm$time$Time$customZone = $elm$time$Time$Zone;
+var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
 var $elm$time$Time$posixToMillis = function (_v0) {
 	var millis = _v0;
 	return millis;
@@ -6029,74 +5623,211 @@ var $elm$random$Random$generate = F2(
 		return $elm$random$Random$command(
 			A2($elm$random$Random$map, tagger, generator));
 	});
-var $author$project$Asteroids$moveParticle = F2(
-	function (dt, particle) {
-		var newPosition = A2($author$project$Asteroids$Vector, particle.a.c + (dt * particle.aa.c), particle.a.d + (dt * particle.aa.d));
-		return _Utils_update(
-			particle,
-			{a: newPosition});
+var $author$project$Particle$collisionEpsilon = 0.000001;
+var $elm$core$Basics$pow = _Basics_pow;
+var $author$project$Vector$magnitude = function (p) {
+	return $elm$core$Basics$sqrt(
+		A2(
+			$elm$core$Basics$pow,
+			$author$project$Vector$x(p),
+			2) + A2(
+			$elm$core$Basics$pow,
+			$author$project$Vector$y(p),
+			2));
+};
+var $author$project$Vector$vector = F2(
+	function (a, b) {
+		return _Utils_Tuple2(a, b);
 	});
-var $elm$core$List$head = function (list) {
-	if (list.b) {
-		var x = list.a;
-		var xs = list.b;
-		return $elm$core$Maybe$Just(x);
+var $author$project$Vector$subtract = F2(
+	function (p, q) {
+		return A2(
+			$author$project$Vector$vector,
+			$author$project$Vector$x(p) - $author$project$Vector$x(q),
+			$author$project$Vector$y(p) - $author$project$Vector$y(q));
+	});
+var $author$project$Vector$distance = F2(
+	function (p, q) {
+		return $author$project$Vector$magnitude(
+			A2($author$project$Vector$subtract, p, q));
+	});
+var $author$project$Particle$distance = F2(
+	function (p, q) {
+		return A2($author$project$Vector$distance, p.aD, q.aD);
+	});
+var $author$project$Particle$isCollision = F2(
+	function (p, q) {
+		return _Utils_cmp(
+			A2($author$project$Particle$distance, p, q),
+			($author$project$Particle$radius(p) + $author$project$Particle$radius(q)) - $author$project$Particle$collisionEpsilon) < 0;
+	});
+var $author$project$Vector$add = F2(
+	function (p, q) {
+		return A2(
+			$author$project$Vector$vector,
+			$author$project$Vector$x(p) + $author$project$Vector$x(q),
+			$author$project$Vector$y(p) + $author$project$Vector$y(q));
+	});
+var $author$project$Particle$cr = 0;
+var $author$project$Vector$divide = F2(
+	function (k, p) {
+		return A2(
+			$author$project$Vector$vector,
+			$author$project$Vector$x(p) / k,
+			$author$project$Vector$y(p) / k);
+	});
+var $author$project$Vector$multiply = F2(
+	function (k, p) {
+		return A2(
+			$author$project$Vector$vector,
+			$author$project$Vector$x(p) * k,
+			$author$project$Vector$y(p) * k);
+	});
+var $author$project$Particle$momentum = function (p) {
+	return A2($author$project$Vector$multiply, p.aw, p.aS);
+};
+var $author$project$Particle$collide_ = F2(
+	function (p, q) {
+		var totalMomentum = A2(
+			$author$project$Vector$add,
+			$author$project$Particle$momentum(p),
+			$author$project$Particle$momentum(q));
+		var qElasticity = A2(
+			$author$project$Vector$multiply,
+			$author$project$Particle$cr,
+			A2(
+				$author$project$Vector$multiply,
+				p.aw,
+				A2($author$project$Vector$subtract, p.aS, q.aS)));
+		var qVelocity = A2(
+			$author$project$Vector$divide,
+			p.aw + q.aw,
+			A2($author$project$Vector$add, qElasticity, totalMomentum));
+		var pElasticity = A2(
+			$author$project$Vector$multiply,
+			$author$project$Particle$cr,
+			A2(
+				$author$project$Vector$multiply,
+				q.aw,
+				A2($author$project$Vector$subtract, q.aS, p.aS)));
+		var pVelocity = A2(
+			$author$project$Vector$divide,
+			p.aw + q.aw,
+			A2($author$project$Vector$add, pElasticity, totalMomentum));
+		return _Utils_Tuple2(
+			_Utils_update(
+				p,
+				{aS: pVelocity}),
+			_Utils_update(
+				q,
+				{aS: qVelocity}));
+	});
+var $author$project$Vector$equivalentErr = 1.0e-6;
+var $author$project$Vector$equivalent = F2(
+	function (p, q) {
+		return _Utils_cmp(
+			$author$project$Vector$magnitude(
+				A2($author$project$Vector$subtract, p, q)),
+			$author$project$Vector$equivalentErr) < 0;
+	});
+var $author$project$Particle$sigCollision = F2(
+	function (p, q) {
+		var _v0 = A2($author$project$Particle$collide_, p, q);
+		var newP = _v0.a;
+		var newQ = _v0.b;
+		return A2($author$project$Vector$equivalent, p.aS, newP.aS) ? false : true;
+	});
+var $author$project$Particle$collisionFilter = F2(
+	function (p, qs) {
+		var reducer = F2(
+			function (q, _v0) {
+				var collisions = _v0.a;
+				var notCollisions = _v0.b;
+				return A2($author$project$Particle$isCollision, p, q) ? (A2($author$project$Particle$sigCollision, p, q) ? _Utils_Tuple2(
+					A2($elm$core$List$cons, q, collisions),
+					notCollisions) : _Utils_Tuple2(
+					collisions,
+					A2($elm$core$List$cons, q, notCollisions))) : _Utils_Tuple2(
+					collisions,
+					A2($elm$core$List$cons, q, notCollisions));
+			});
+		return A3(
+			$elm$core$List$foldl,
+			reducer,
+			_Utils_Tuple2(_List_Nil, _List_Nil),
+			qs);
+	});
+var $author$project$Particle$Particle = F4(
+	function (position, velocity, acceleration, mass) {
+		return {ag: acceleration, aw: mass, aD: position, aS: velocity};
+	});
+var $author$project$Particle$merge = F2(
+	function (p, q) {
+		var newMass = p.aw + q.aw;
+		var newPosition = A2(
+			$author$project$Vector$divide,
+			newMass,
+			A2(
+				$author$project$Vector$add,
+				A2($author$project$Vector$multiply, p.aw, p.aD),
+				A2($author$project$Vector$multiply, q.aw, q.aD)));
+		var newVelocity = A2(
+			$author$project$Vector$divide,
+			newMass,
+			A2(
+				$author$project$Vector$add,
+				$author$project$Particle$momentum(p),
+				$author$project$Particle$momentum(q)));
+		return A4(
+			$author$project$Particle$Particle,
+			newPosition,
+			newVelocity,
+			A2($author$project$Vector$vector, 0, 0),
+			newMass);
+	});
+var $author$project$Particle$mergeCollisions = function (particles) {
+	if (particles.b) {
+		var p = particles.a;
+		var ps = particles.b;
+		var newParticles = $author$project$Particle$mergeCollisions(ps);
+		var _v1 = A2($author$project$Particle$collisionFilter, p, newParticles);
+		var collisions = _v1.a;
+		var notCollisions = _v1.b;
+		var newP = A3($elm$core$List$foldl, $author$project$Particle$merge, p, collisions);
+		return A2($elm$core$List$cons, newP, notCollisions);
 	} else {
-		return $elm$core$Maybe$Nothing;
+		return _List_Nil;
 	}
 };
-var $author$project$Asteroids$Space = F2(
-	function (x, y) {
-		return {c: x, d: y};
-	});
-var $author$project$Asteroids$Span = F2(
-	function (min, max) {
-		return {B: max, s: min};
-	});
-var $author$project$Asteroids$canvasSpace = A2(
-	$author$project$Asteroids$Space,
-	A2($author$project$Asteroids$Span, 0, 300),
-	A2($author$project$Asteroids$Span, 0, 300));
-var $author$project$Asteroids$gameSpace = A2(
-	$author$project$Asteroids$Space,
-	A2($author$project$Asteroids$Span, -100, 100),
-	A2($author$project$Asteroids$Span, -100, 100));
-var $author$project$Asteroids$scalarScale = F3(
-	function (domain, range, input) {
-		var rangeLength = range.B - range.s;
-		var domainLength = domain.B - domain.s;
-		return (((input - domain.s) / domainLength) * rangeLength) + range.s;
-	});
-var $author$project$Asteroids$vectorScale = F3(
-	function (domain, range, input) {
-		var yOut = A3($author$project$Asteroids$scalarScale, domain.d, range.d, input.d);
-		var xOut = A3($author$project$Asteroids$scalarScale, domain.c, range.c, input.c);
-		return A2($author$project$Asteroids$Vector, xOut, yOut);
-	});
-var $author$project$Asteroids$scaleCanvasToGameVector = A2($author$project$Asteroids$vectorScale, $author$project$Asteroids$canvasSpace, $author$project$Asteroids$gameSpace);
-var $author$project$Asteroids$moveSpaceship = F2(
-	function (spaceship, pose) {
-		var nose = $elm$core$List$head(
-			A2(
-				$elm$core$List$filter,
-				function (x) {
-					return x.ah === 'nose';
-				},
-				pose));
-		if (!nose.$) {
-			var keypoint = nose.a;
-			var newPosition = $author$project$Asteroids$scaleCanvasToGameVector(
-				A2($author$project$Asteroids$Vector, keypoint.a.c, keypoint.a.d));
-			return _Utils_update(
-				spaceship,
-				{a: newPosition});
-		} else {
-			return spaceship;
+var $elm$random$Random$listHelp = F4(
+	function (revList, n, gen, seed) {
+		listHelp:
+		while (true) {
+			if (n < 1) {
+				return _Utils_Tuple2(revList, seed);
+			} else {
+				var _v0 = gen(seed);
+				var value = _v0.a;
+				var newSeed = _v0.b;
+				var $temp$revList = A2($elm$core$List$cons, value, revList),
+					$temp$n = n - 1,
+					$temp$gen = gen,
+					$temp$seed = newSeed;
+				revList = $temp$revList;
+				n = $temp$n;
+				gen = $temp$gen;
+				seed = $temp$seed;
+				continue listHelp;
+			}
 		}
 	});
-var $elm$core$Basics$abs = function (n) {
-	return (n < 0) ? (-n) : n;
-};
+var $elm$random$Random$list = F2(
+	function (n, _v0) {
+		var gen = _v0;
+		return function (seed) {
+			return A4($elm$random$Random$listHelp, _List_Nil, n, gen, seed);
+		};
+	});
 var $elm$core$Bitwise$and = _Bitwise_and;
 var $elm$core$Bitwise$xor = _Bitwise_xor;
 var $elm$random$Random$peel = function (_v0) {
@@ -6136,141 +5867,503 @@ var $elm$random$Random$map2 = F3(
 				seed2);
 		};
 	});
-var $author$project$Asteroids$randomPosition = A2(
-	$elm$random$Random$map,
-	function (x) {
-		return A2($author$project$Asteroids$Vector, x, -100);
-	},
-	A2($elm$random$Random$float, -100, 100));
-var $author$project$Asteroids$randomAsteroid = function () {
-	var velocity = A2($author$project$Asteroids$Vector, 0, 0.01);
-	var radius = A2($elm$random$Random$float, 2, 7);
-	var position = $author$project$Asteroids$randomPosition;
+var $author$project$About$randomAcceleration = A3(
+	$elm$random$Random$map2,
+	$author$project$Vector$vector,
+	A2($elm$random$Random$float, 0, 0),
+	A2($elm$random$Random$float, 0, 0));
+var $author$project$About$randomMass = function (box) {
+	return A2(
+		$elm$random$Random$map,
+		function (x) {
+			return A2($elm$core$Basics$pow, x, 2);
+		},
+		A2(
+			$elm$random$Random$float,
+			2,
+			$author$project$Box$max(box.o) / 100));
+};
+var $elm$random$Random$map4 = F5(
+	function (func, _v0, _v1, _v2, _v3) {
+		var genA = _v0;
+		var genB = _v1;
+		var genC = _v2;
+		var genD = _v3;
+		return function (seed0) {
+			var _v4 = genA(seed0);
+			var a = _v4.a;
+			var seed1 = _v4.b;
+			var _v5 = genB(seed1);
+			var b = _v5.a;
+			var seed2 = _v5.b;
+			var _v6 = genC(seed2);
+			var c = _v6.a;
+			var seed3 = _v6.b;
+			var _v7 = genD(seed3);
+			var d = _v7.a;
+			var seed4 = _v7.b;
+			return _Utils_Tuple2(
+				A4(func, a, b, c, d),
+				seed4);
+		};
+	});
+var $author$project$Particle$randomParticle = F4(
+	function (position, velocity, acceleration, mass) {
+		return A5($elm$random$Random$map4, $author$project$Particle$Particle, position, velocity, acceleration, mass);
+	});
+var $author$project$About$randomPosition = function (model) {
 	return A3(
 		$elm$random$Random$map2,
-		F2(
-			function (p, r) {
-				return A3($author$project$Asteroids$Particle, p, velocity, r);
-			}),
-		position,
-		radius);
-}();
-var $author$project$Asteroids$update = F2(
-	function (msg, model) {
-		switch (msg.$) {
-			case 4:
-				var dt = msg.a;
-				var newMissiles = A2($author$project$Asteroids$collideMissiles, model.w, model.z);
-				var _v1 = A2($author$project$Asteroids$collideAsteroids, model.w, model.z);
-				var newAsteroids = _v1.a;
-				var nCollisions = _v1.b;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							z: A2(
-								$elm$core$List$map,
-								$author$project$Asteroids$moveParticle(dt),
-								newAsteroids),
-							w: A2(
-								$elm$core$List$map,
-								$author$project$Asteroids$moveParticle(dt),
-								model.w),
-							K: model.K + nCollisions
-						}),
-					$elm$core$Platform$Cmd$none);
-			case 0:
-				var time = msg.a;
-				return _Utils_Tuple2(
-					model,
-					A2($elm$random$Random$generate, $author$project$Asteroids$NewAsteroid, $author$project$Asteroids$randomAsteroid));
-			case 1:
-				var asteroid = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							z: A2($elm$core$List$cons, asteroid, model.z)
-						}),
-					$elm$core$Platform$Cmd$none);
-			case 2:
-				var pose = msg.a;
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							S: A2($author$project$Asteroids$moveSpaceship, model.S, pose)
-						}),
-					$elm$core$Platform$Cmd$none);
-			default:
-				var bool = msg.a;
-				var missile = $author$project$Asteroids$createMissile(model.S);
-				return _Utils_Tuple2(
-					_Utils_update(
-						model,
-						{
-							w: A2($elm$core$List$cons, missile, model.w)
-						}),
-					$elm$core$Platform$Cmd$none);
+		$author$project$Vector$vector,
+		A2(
+			$elm$random$Random$float,
+			$author$project$Box$max(model.e.o) * 0,
+			$author$project$Box$max(model.e.o) * 1),
+		A2(
+			$elm$random$Random$float,
+			$author$project$Box$max(model.e.p) * 0,
+			$author$project$Box$max(model.e.p) * 1));
+};
+var $author$project$About$randomVelocity = function (model) {
+	var vy = 2.0e-5 * $author$project$Box$max(model.e.p);
+	var vx = 2.0e-5 * $author$project$Box$max(model.e.o);
+	return A3(
+		$elm$random$Random$map2,
+		$author$project$Vector$vector,
+		A2($elm$random$Random$float, -vx, vx),
+		A2($elm$random$Random$float, -vy, vy));
+};
+var $author$project$About$newParticle = function (model) {
+	return A4(
+		$author$project$Particle$randomParticle,
+		$author$project$About$randomPosition(model),
+		$author$project$About$randomVelocity(model),
+		$author$project$About$randomAcceleration,
+		$author$project$About$randomMass(model.e));
+};
+var $author$project$About$newParticles = F2(
+	function (model, n) {
+		return A2(
+			$elm$random$Random$list,
+			n,
+			$author$project$About$newParticle(model));
+	});
+var $author$project$Opt$absTolerance = 1.0e-15;
+var $author$project$Opt$maxIter = 1.0e3;
+var $author$project$Opt$relTolerance = 1.0e-15;
+var $author$project$Opt$minimize_ = F5(
+	function (f, x, dx, yi, iter) {
+		minimize_:
+		while (true) {
+			var yo = f(x + dx);
+			var xo = x + dx;
+			var absDiff = $elm$core$Basics$abs(yi - yo);
+			var relDiff = absDiff / $elm$core$Basics$abs(yi);
+			var minimized = (_Utils_cmp(absDiff, $author$project$Opt$absTolerance) < 0) || (_Utils_cmp(relDiff, $author$project$Opt$relTolerance) < 0);
+			if (x > 0) {
+				var $temp$f = f,
+					$temp$x = 0,
+					$temp$dx = (-$elm$core$Basics$abs(dx)) / 3,
+					$temp$yi = yo,
+					$temp$iter = iter + 1;
+				f = $temp$f;
+				x = $temp$x;
+				dx = $temp$dx;
+				yi = $temp$yi;
+				iter = $temp$iter;
+				continue minimize_;
+			} else {
+				if (minimized) {
+					return x + dx;
+				} else {
+					if (_Utils_cmp(iter, $author$project$Opt$maxIter) > 0) {
+						return x + dx;
+					} else {
+						if (_Utils_cmp(yo, yi) > 0) {
+							var $temp$f = f,
+								$temp$x = x + dx,
+								$temp$dx = (-dx) / 3,
+								$temp$yi = yo,
+								$temp$iter = iter + 1;
+							f = $temp$f;
+							x = $temp$x;
+							dx = $temp$dx;
+							yi = $temp$yi;
+							iter = $temp$iter;
+							continue minimize_;
+						} else {
+							var $temp$f = f,
+								$temp$x = x + dx,
+								$temp$dx = dx,
+								$temp$yi = yo,
+								$temp$iter = iter + 1;
+							f = $temp$f;
+							x = $temp$x;
+							dx = $temp$dx;
+							yi = $temp$yi;
+							iter = $temp$iter;
+							continue minimize_;
+						}
+					}
+				}
+			}
 		}
 	});
-var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
-var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
-var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
-var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
-var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
-var $elm$core$String$fromFloat = _String_fromNumber;
-var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
-var $author$project$Asteroids$diagonal = function (space) {
-	var y = space.d.B - space.d.s;
-	var x = space.c.B - space.c.s;
-	return $elm$core$Basics$sqrt(
-		A2($elm$core$Basics$pow, x, 2) + A2($elm$core$Basics$pow, y, 2));
-};
-var $author$project$Asteroids$particleScale = F3(
-	function (domain, range, input) {
-		var velocityOut = A3($author$project$Asteroids$vectorScale, domain, range, input.aa);
-		var radiusOut = A3(
-			$author$project$Asteroids$scalarScale,
-			A2(
-				$author$project$Asteroids$Span,
-				0,
-				$author$project$Asteroids$diagonal(domain)),
-			A2(
-				$author$project$Asteroids$Span,
-				0,
-				$author$project$Asteroids$diagonal(range)),
-			input.E);
-		var positionOut = A3($author$project$Asteroids$vectorScale, domain, range, input.a);
-		return A3($author$project$Asteroids$Particle, positionOut, velocityOut, radiusOut);
+var $author$project$Opt$minimize = F3(
+	function (f, x, dx) {
+		return A5(
+			$author$project$Opt$minimize_,
+			f,
+			x,
+			dx,
+			f(x),
+			0);
 	});
-var $author$project$Asteroids$svgHeight = 600.0;
-var $author$project$Asteroids$svgWidth = 600.0;
-var $author$project$Asteroids$svgSpace = A2(
-	$author$project$Asteroids$Space,
-	A2($author$project$Asteroids$Span, 0, $author$project$Asteroids$svgWidth),
-	A2($author$project$Asteroids$Span, 0, $author$project$Asteroids$svgHeight));
-var $author$project$Asteroids$scaleGameToSvgParticle = A2($author$project$Asteroids$particleScale, $author$project$Asteroids$gameSpace, $author$project$Asteroids$svgSpace);
-var $author$project$Asteroids$toCircle = F2(
-	function (particle, fillColor) {
-		var newParticle = $author$project$Asteroids$scaleGameToSvgParticle(particle);
+var $author$project$Particle$updatePosition = F2(
+	function (dt, p) {
+		return _Utils_update(
+			p,
+			{
+				aD: A2(
+					$author$project$Vector$add,
+					p.aD,
+					A2($author$project$Vector$multiply, dt, p.aS))
+			});
+	});
+var $author$project$Particle$collisionDeltaTime = F2(
+	function (p, q) {
+		var f = function (dt) {
+			var qo = A2($author$project$Particle$updatePosition, dt, q);
+			var po = A2($author$project$Particle$updatePosition, dt, p);
+			var d = A2($author$project$Particle$distance, po, qo);
+			return $elm$core$Basics$abs(
+				(d - $author$project$Particle$radius(po)) - $author$project$Particle$radius(qo));
+		};
+		return A3($author$project$Opt$minimize, f, -0.5, 0.1);
+	});
+var $author$project$Particle$collide = F2(
+	function (p, q) {
+		if (A2($author$project$Particle$isCollision, p, q)) {
+			var dt = A2($author$project$Particle$collisionDeltaTime, p, q);
+			var po = A2($author$project$Particle$updatePosition, dt, p);
+			var qo = A2($author$project$Particle$updatePosition, dt, q);
+			var _v0 = A2($author$project$Particle$collide_, po, qo);
+			var pc = _v0.a;
+			var qc = _v0.b;
+			var pf = A2($author$project$Particle$updatePosition, -dt, pc);
+			var qf = A2($author$project$Particle$updatePosition, -dt, qc);
+			return _Utils_Tuple2(pf, qf);
+		} else {
+			return _Utils_Tuple2(p, q);
+		}
+	});
+var $elm$core$Basics$not = _Basics_not;
+var $author$project$Particle$isSignificantCollision = F2(
+	function (p, qs) {
+		var collideOne = F2(
+			function (b, a) {
+				var _v0 = A2($author$project$Particle$collide_, a, b);
+				var newA = _v0.a;
+				var newB = _v0.b;
+				return newA;
+			});
+		var pFinal = A3($elm$core$List$foldr, collideOne, p, qs);
+		return !A2($author$project$Vector$equivalent, p.aS, pFinal.aS);
+	});
+var $elm$core$List$sortBy = _List_sortBy;
+var $author$project$Particle$resolveCollisions = function (particles) {
+	if (particles.b) {
+		var p = particles.a;
+		var ps = particles.b;
+		var newParticles = $author$project$Particle$resolveCollisions(ps);
+		var _v1 = A2($author$project$Particle$collisionFilter, p, newParticles);
+		var collisions = _v1.a;
+		var notCollisions = _v1.b;
+		var collisionsSorted = A2(
+			$elm$core$List$sortBy,
+			$author$project$Particle$collisionDeltaTime(p),
+			collisions);
+		if (A2($author$project$Particle$isSignificantCollision, p, collisionsSorted)) {
+			if (collisionsSorted.b) {
+				var q = collisionsSorted.a;
+				var qs = collisionsSorted.b;
+				var _v3 = A2($author$project$Particle$collide, p, q);
+				var newP = _v3.a;
+				var newQ = _v3.b;
+				return _Utils_ap(
+					$author$project$Particle$resolveCollisions(
+						_List_fromArray(
+							[newP, newQ])),
+					_Utils_ap(qs, notCollisions));
+			} else {
+				return A2($elm$core$List$cons, p, notCollisions);
+			}
+		} else {
+			return A2(
+				$elm$core$List$cons,
+				p,
+				_Utils_ap(collisionsSorted, notCollisions));
+		}
+	} else {
+		return _List_Nil;
+	}
+};
+var $elm$json$Json$Encode$float = _Json_wrap;
+var $elm$json$Json$Encode$list = F2(
+	function (func, entries) {
+		return _Json_wrap(
+			A3(
+				$elm$core$List$foldl,
+				_Json_addEntry(func),
+				_Json_emptyArray(0),
+				entries));
+	});
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(0),
+			pairs));
+};
+var $author$project$About$storeParticles = _Platform_outgoingPort(
+	'storeParticles',
+	$elm$json$Json$Encode$list(
+		function ($) {
+			return $elm$json$Json$Encode$object(
+				_List_fromArray(
+					[
+						_Utils_Tuple2(
+						'acceleration',
+						function ($) {
+							var a = $.a;
+							var b = $.b;
+							return A2(
+								$elm$json$Json$Encode$list,
+								$elm$core$Basics$identity,
+								_List_fromArray(
+									[
+										$elm$json$Json$Encode$float(a),
+										$elm$json$Json$Encode$float(b)
+									]));
+						}($.ag)),
+						_Utils_Tuple2(
+						'mass',
+						$elm$json$Json$Encode$float($.aw)),
+						_Utils_Tuple2(
+						'position',
+						function ($) {
+							var a = $.a;
+							var b = $.b;
+							return A2(
+								$elm$json$Json$Encode$list,
+								$elm$core$Basics$identity,
+								_List_fromArray(
+									[
+										$elm$json$Json$Encode$float(a),
+										$elm$json$Json$Encode$float(b)
+									]));
+						}($.aD)),
+						_Utils_Tuple2(
+						'velocity',
+						function ($) {
+							var a = $.a;
+							var b = $.b;
+							return A2(
+								$elm$json$Json$Encode$list,
+								$elm$core$Basics$identity,
+								_List_fromArray(
+									[
+										$elm$json$Json$Encode$float(a),
+										$elm$json$Json$Encode$float(b)
+									]));
+						}($.aS))
+					]));
+		}));
+var $elm$core$List$maybeCons = F3(
+	function (f, mx, xs) {
+		var _v0 = f(mx);
+		if (!_v0.$) {
+			var x = _v0.a;
+			return A2($elm$core$List$cons, x, xs);
+		} else {
+			return xs;
+		}
+	});
+var $elm$core$List$filterMap = F2(
+	function (f, xs) {
+		return A3(
+			$elm$core$List$foldr,
+			$elm$core$List$maybeCons(f),
+			_List_Nil,
+			xs);
+	});
+var $author$project$Vector$normalize = function (p) {
+	return A2(
+		$author$project$Vector$divide,
+		$author$project$Vector$magnitude(p),
+		p);
+};
+var $author$project$Particle$updateAcceleration = F2(
+	function (g, particles) {
+		var acceleration = F2(
+			function (p, q) {
+				var r = $author$project$Vector$normalize(
+					A2($author$project$Vector$subtract, q.aD, p.aD));
+				var dist = A2(
+					$elm$core$Basics$max,
+					A2($author$project$Particle$distance, p, q),
+					$author$project$Particle$radius(p) + $author$project$Particle$radius(q));
+				var k = (g * q.aw) / A2($elm$core$Basics$pow, dist, 2);
+				return (A2($author$project$Particle$distance, p, q) < 1.0e-4) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
+					A2($author$project$Vector$multiply, k, r));
+			});
+		var totalAcceleration = function (particle) {
+			return A3(
+				$elm$core$List$foldl,
+				$author$project$Vector$add,
+				A2($author$project$Vector$vector, 0, 0),
+				A2(
+					$elm$core$List$filterMap,
+					acceleration(particle),
+					particles));
+		};
 		return A2(
-			$elm$svg$Svg$circle,
-			_List_fromArray(
-				[
-					$elm$svg$Svg$Attributes$cx(
-					$elm$core$String$fromFloat(newParticle.a.c)),
-					$elm$svg$Svg$Attributes$cy(
-					$elm$core$String$fromFloat(newParticle.a.d)),
-					$elm$svg$Svg$Attributes$r(
-					$elm$core$String$fromFloat(newParticle.E)),
-					$elm$svg$Svg$Attributes$fill(fillColor)
-				]),
-			_List_Nil);
+			$elm$core$List$map,
+			function (p) {
+				return _Utils_update(
+					p,
+					{
+						ag: totalAcceleration(p)
+					});
+			},
+			particles);
 	});
-var $author$project$Asteroids$asteroidToCircle = function (particle) {
-	return A2($author$project$Asteroids$toCircle, particle, 'black');
+var $author$project$Box$updateBox = F2(
+	function (box, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return A2(
+			$author$project$Box$Box,
+			_Utils_Tuple2(
+				$author$project$Box$min(box.o),
+				x),
+			_Utils_Tuple2(
+				$author$project$Box$min(box.p),
+				y));
+	});
+var $author$project$Particle$updateVelocity = F2(
+	function (dt, p) {
+		return _Utils_update(
+			p,
+			{
+				aS: A2(
+					$author$project$Vector$add,
+					p.aS,
+					A2($author$project$Vector$multiply, dt, p.ag))
+			});
+	});
+var $author$project$About$update = F2(
+	function (msg, model) {
+		switch (msg.$) {
+			case 0:
+				var dt = msg.a;
+				var collisionHandler = (model.W > 0) ? $author$project$Particle$mergeCollisions : $author$project$Particle$resolveCollisions;
+				var particles = (dt < 150) ? A2(
+					$elm$core$List$map,
+					$author$project$Particle$updateVelocity(dt),
+					A2(
+						$author$project$Particle$updateAcceleration,
+						model.W,
+						collisionHandler(
+							A2(
+								$elm$core$List$map,
+								$author$project$Box$bounce(model.e),
+								A2(
+									$elm$core$List$map,
+									$author$project$Particle$updatePosition(dt),
+									model.w))))) : model.w;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{w: particles}),
+					$author$project$About$storeParticles(particles));
+			case 2:
+				var n = msg.a;
+				return _Utils_Tuple2(
+					model,
+					A2(
+						$elm$random$Random$generate,
+						$author$project$About$NewParticles,
+						A2($author$project$About$newParticles, model, n)));
+			case 1:
+				var particles = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{w: particles}),
+					$author$project$About$storeParticles(particles));
+			default:
+				var windowSize = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						model,
+						{
+							e: A2(
+								$author$project$Box$updateBox,
+								model.e,
+								_Utils_Tuple2(windowSize.p, windowSize.o)),
+							w: _List_Nil
+						}),
+					A2(
+						$elm$random$Random$generate,
+						$author$project$About$NewParticles,
+						A2(
+							$author$project$About$newParticles,
+							_Utils_update(
+								model,
+								{
+									e: A2(
+										$author$project$Box$updateBox,
+										model.e,
+										_Utils_Tuple2(windowSize.p, windowSize.o)),
+									w: _List_Nil
+								}),
+							40)));
+		}
+	});
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
+var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
+var $elm$core$String$fromFloat = _String_fromNumber;
+var $elm$svg$Svg$Attributes$id = _VirtualDom_attribute('id');
+var $elm$svg$Svg$Attributes$pointerEvents = _VirtualDom_attribute('pointer-events');
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $author$project$About$svgAttributes = function (model) {
+	return _List_fromArray(
+		[
+			$elm$svg$Svg$Attributes$id('mysvg'),
+			$elm$svg$Svg$Attributes$pointerEvents('all'),
+			A2(
+			$elm$html$Html$Attributes$style,
+			'width',
+			$elm$core$String$fromFloat(
+				$author$project$Box$max(model.e.o))),
+			A2(
+			$elm$html$Html$Attributes$style,
+			'height',
+			$elm$core$String$fromFloat(
+				$author$project$Box$max(model.e.p))),
+			A2($elm$html$Html$Attributes$style, 'background', 'white')
+		]);
 };
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6280,52 +6373,59 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
+var $elm$svg$Svg$foreignObject = $elm$svg$Svg$trustedNode('foreignObject');
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
-var $author$project$Asteroids$missileToCircle = function (particle) {
-	return A2($author$project$Asteroids$toCircle, particle, 'red');
-};
-var $elm$svg$Svg$image = $elm$svg$Svg$trustedNode('image');
-var $author$project$Asteroids$scaleGameToSvgVector = A2($author$project$Asteroids$vectorScale, $author$project$Asteroids$gameSpace, $author$project$Asteroids$svgSpace);
-var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
-var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
-var $elm$svg$Svg$Attributes$xlinkHref = function (value) {
-	return A3(
-		_VirtualDom_attributeNS,
-		'http://www.w3.org/1999/xlink',
-		'xlink:href',
-		_VirtualDom_noJavaScriptUri(value));
-};
-var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
-var $author$project$Asteroids$spaceShipToImg = function (spaceship) {
-	var position = $author$project$Asteroids$scaleGameToSvgVector(spaceship.a);
+var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
-		$elm$svg$Svg$image,
-		_List_fromArray(
-			[
-				$elm$svg$Svg$Attributes$width(
-				$elm$core$String$fromFloat(spaceship.ac.c)),
-				$elm$svg$Svg$Attributes$height(
-				$elm$core$String$fromFloat(spaceship.ac.d)),
-				$elm$svg$Svg$Attributes$x(
-				$elm$core$String$fromFloat(position.c)),
-				$elm$svg$Svg$Attributes$y(
-				$elm$core$String$fromFloat(position.d)),
-				$elm$svg$Svg$Attributes$xlinkHref('/static/images/spaceship.svg')
-			]),
-		_List_Nil);
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
 };
-var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
-var $author$project$Asteroids$view = function (model) {
-	return A2(
-		$elm$html$Html$div,
+var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
+var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
+var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
+var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
+var $author$project$Particle$toCircle = F2(
+	function (fillColor, particle) {
+		return A2(
+			$elm$svg$Svg$circle,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$cx(
+					$elm$core$String$fromFloat(
+						$author$project$Vector$x(particle.aD))),
+					$elm$svg$Svg$Attributes$cy(
+					$elm$core$String$fromFloat(
+						$author$project$Vector$y(particle.aD))),
+					$elm$svg$Svg$Attributes$r(
+					$elm$core$String$fromFloat(
+						$author$project$Particle$radius(particle))),
+					$elm$svg$Svg$Attributes$fill(fillColor)
+				]),
+			_List_Nil);
+	});
+var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
+var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
+var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
+var $author$project$About$svgElements = function (model) {
+	var fillColor = 'black';
+	var aboutText = A2(
+		$elm$svg$Svg$foreignObject,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('container')
+				$elm$svg$Svg$Attributes$x('0'),
+				$elm$svg$Svg$Attributes$y('0'),
+				$elm$svg$Svg$Attributes$width(
+				$elm$core$String$fromFloat(
+					$author$project$Box$max(model.e.o))),
+				$elm$svg$Svg$Attributes$height(
+				$elm$core$String$fromFloat(
+					$author$project$Box$max(model.e.p)))
 			]),
 		_List_fromArray(
 			[
@@ -6333,44 +6433,138 @@ var $author$project$Asteroids$view = function (model) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('row')
+						$elm$html$Html$Attributes$class('container')
 					]),
 				_List_fromArray(
 					[
 						A2(
-						$elm$html$Html$h3,
-						_List_Nil,
+						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$text(
-								'Score: ' + $elm$core$String$fromInt(model.K))
-							]))
-					])),
-				A2(
-				$elm$html$Html$div,
-				_List_Nil,
-				_List_fromArray(
-					[
-						A2(
-						$elm$svg$Svg$svg,
-						_List_fromArray(
-							[
-								$elm$svg$Svg$Attributes$width(
-								$elm$core$String$fromFloat($author$project$Asteroids$svgWidth)),
-								$elm$svg$Svg$Attributes$height(
-								$elm$core$String$fromFloat($author$project$Asteroids$svgHeight)),
-								$elm$svg$Svg$Attributes$viewBox('0 0 600 600')
+								$elm$html$Html$Attributes$class('row'),
+								A2($elm$html$Html$Attributes$style, 'margin-top', '15%')
 							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('one-half column')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$h2,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('About')
+											]))
+									]))
+							])),
 						A2(
-							$elm$core$List$cons,
-							$author$project$Asteroids$spaceShipToImg(model.S),
-							_Utils_ap(
-								A2($elm$core$List$map, $author$project$Asteroids$asteroidToCircle, model.z),
-								A2($elm$core$List$map, $author$project$Asteroids$missileToCircle, model.w))))
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('row')
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('one-half column')
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$p,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('I\'m Eric Kramer. I currently work at '),
+												A2(
+												$elm$html$Html$a,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$href('https://openai.com')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('OpenAI')
+													])),
+												$elm$html$Html$text(', and I used to work at '),
+												A2(
+												$elm$html$Html$a,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$href('https://stripe.com')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Stripe')
+													])),
+												$elm$html$Html$text(' and '),
+												A2(
+												$elm$html$Html$a,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$href('https://dataiku.com')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Dataiku')
+													])),
+												$elm$html$Html$text('. A long time ago, I was an MD/PhD student at UC San Diego.')
+											])),
+										A2(
+										$elm$html$Html$p,
+										_List_Nil,
+										_List_fromArray(
+											[
+												$elm$html$Html$text('I live in Noe Valley, San Francisco, CA with my wife '),
+												A2(
+												$elm$html$Html$a,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$href('https://pagepiccinini.com')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Page Piccinini')
+													])),
+												$elm$html$Html$text(', our two cats and two sons. Get in touch if you want to talk more about data science or medicine.')
+											]))
+									]))
+							]))
 					]))
 			]));
+	return _Utils_ap(
+		A2(
+			$elm$core$List$map,
+			$author$project$Particle$toCircle(fillColor),
+			model.w),
+		_List_fromArray(
+			[aboutText]));
 };
-var $author$project$Asteroids$main = $elm$browser$Browser$element(
-	{bd: $author$project$Asteroids$init, bu: $author$project$Asteroids$subscriptions, by: $author$project$Asteroids$update, bz: $author$project$Asteroids$view});
-_Platform_export({'Asteroids':{'init':$author$project$Asteroids$main(
+var $author$project$About$svg = function (model) {
+	return A2(
+		$elm$svg$Svg$svg,
+		$author$project$About$svgAttributes(model),
+		$author$project$About$svgElements(model));
+};
+var $author$project$About$view = function (model) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$author$project$About$svg(model)
+			]));
+};
+var $author$project$About$main = $elm$browser$Browser$element(
+	{a8: $author$project$About$init, bp: $author$project$About$subscriptions, bt: $author$project$About$update, bu: $author$project$About$view});
+_Platform_export({'About':{'init':$author$project$About$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

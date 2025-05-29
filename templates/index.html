@@ -12,8 +12,16 @@
   <div id="elm"></div>
 
   <script>
+    var stored = localStorage.getItem('particles');
     app = Elm.Home.init({
         node: document.getElementById('elm')
+    });
+
+    if (stored) {
+      app.ports.loadParticles.send(JSON.parse(stored));
+    }
+    app.ports.storeParticles.subscribe(function(ps){
+      localStorage.setItem('particles', JSON.stringify(ps));
     });
 
     var newWS = {"width": window.innerWidth, "height": window.innerHeight}

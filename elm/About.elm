@@ -1,20 +1,15 @@
-port module Home exposing (Model, Msg(..), SvgSize, init, initModel, main, newParticle, newParticles, randomAcceleration, randomMass, randomPosition, randomVelocity, subscriptions, svg, svgAttributes, svgElements, update, view)
+port module About exposing (Model, Msg(..), SvgSize, init, initModel, main, newParticle, newParticles, randomAcceleration, randomMass, randomPosition, randomVelocity, subscriptions, svg, svgAttributes, svgElements, update, view)
 
 import Box exposing (Box, updateBox)
 import Browser
-import Browser.Dom exposing (Viewport)
 import Browser.Events
-import Html exposing (Html, button, div, h1, text)
-import Html.Attributes exposing (style)
-import Html.Events exposing (onClick)
+import Html exposing (Html, div, h2, p, a, text)
+import Html.Attributes exposing (style, class, href)
 import Particle exposing (Particle)
 import Random
 import Svg
 import Svg.Attributes
-import Task
-import Time
 import Vector
-import Link
 
 port storeParticles : List Particle -> Cmd msg
 port loadParticles : (List Particle -> msg) -> Sub msg
@@ -39,7 +34,6 @@ type Msg
     | ResetParticles Int
     | NewWindowSize WindowSize
 
-links = ["about", "demos", "resume", "contact"]
 
 main =
     Browser.element
@@ -137,9 +131,40 @@ svgAttributes model =
 svgElements model =
     let
         fillColor = "black"
+        aboutText =
+            Svg.foreignObject
+                [ Svg.Attributes.x "0"
+                , Svg.Attributes.y "0"
+                , Svg.Attributes.width (String.fromFloat (Box.max model.box.width))
+                , Svg.Attributes.height (String.fromFloat (Box.max model.box.height))
+                ]
+                [ div [ class "container" ]
+                    [ div [ class "row", style "margin-top" "15%" ]
+                        [ div [ class "one-half column" ]
+                            [ h2 [] [ text "About" ] ]
+                        ]
+                    , div [ class "row" ]
+                        [ div [ class "one-half column" ]
+                            [ p []
+                                [ text "I'm Eric Kramer. I currently work at "
+                                , a [ href "https://openai.com" ] [ text "OpenAI" ]
+                                , text ", and I used to work at "
+                                , a [ href "https://stripe.com" ] [ text "Stripe" ]
+                                , text " and "
+                                , a [ href "https://dataiku.com" ] [ text "Dataiku" ]
+                                , text ". A long time ago, I was an MD/PhD student at UC San Diego."
+                                ]
+                            , p []
+                                [ text "I live in Noe Valley, San Francisco, CA with my wife "
+                                , a [ href "https://pagepiccinini.com" ] [ text "Page Piccinini" ]
+                                , text ", our two cats and two sons. Get in touch if you want to talk more about data science or medicine."
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
     in
-    ( List.map (Particle.toCircle fillColor) model.particles ) ++
-    Link.toTexts model.box links
+    ( List.map (Particle.toCircle fillColor) model.particles ) ++ [ aboutText ]
 
 
 randomVelocity model =

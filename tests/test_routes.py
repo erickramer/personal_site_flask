@@ -22,6 +22,7 @@ def test_index_svg_links(client):
     # Find the Elm script which loads the page
     elm_script = soup.find('script', text=lambda t: t and 'Elm.Home.init' in t)
     assert elm_script is not None, "Elm initialization script not found"
+    assert 'localStorage' in elm_script.text
     
     # Test the routes that the links should point to
     expected_routes = ['/about', '/demos', '/resume', '/contact']
@@ -35,6 +36,14 @@ def test_about_route(client):
     response = client.get('/about')
     assert response.status_code == 200
     assert b'html' in response.data
+
+    soup = BeautifulSoup(response.data, 'html.parser')
+    # Ensure Elm.About initialization script is present
+    elm_script = soup.find('script', text=lambda t: t and 'Elm.About.init' in t)
+    assert elm_script is not None, "Elm initialization script not found on about page"
+    assert 'localStorage' in elm_script.text
+    script_src = soup.find('script', src=lambda s: s and 'about.js' in s)
+    assert script_src is not None, "about.js script not referenced"
 
 def test_contact_route(client):
     """Test that the contact route returns 200 and contains expected content."""
