@@ -5,6 +5,7 @@ import Random
 import Svg exposing (circle)
 import Svg.Attributes exposing (cx, cy, fill, r)
 import Vector exposing (Vector, x, y)
+import Array exposing (Array)
 
 
 type alias Particle =
@@ -141,21 +142,21 @@ collide p q =
         ( p, q )
 
 
-collisionFilter : Particle -> List Particle -> ( List Particle, List Particle )
+collisionFilter : Particle -> Array Particle -> ( Array Particle, Array Particle )
 collisionFilter p qs =
     let
         reducer q ( collisions, notCollisions ) =
             if isCollision p q then
                 if sigCollision p q then
-                    ( q :: collisions, notCollisions )
+                    ( Array.push q collisions, notCollisions )
 
                 else
-                    ( collisions, q :: notCollisions )
+                    ( collisions, Array.push q notCollisions )
 
             else
-                ( collisions, q :: notCollisions )
+                ( collisions, Array.push q notCollisions )
     in
-    List.foldl reducer ( [], [] ) qs
+    Array.foldl reducer ( Array.empty, Array.empty ) qs
 
 
 mergeCollisions : List Particle -> List Particle
@@ -167,7 +168,8 @@ mergeCollisions particles =
                     mergeCollisions ps
 
                 ( collisions, notCollisions ) =
-                    collisionFilter p newParticles
+                    collisionFilter p (Array.fromList newParticles)
+                        |> \( c, n ) -> ( Array.toList c, Array.toList n )
 
                 newP =
                     List.foldl merge p collisions
@@ -178,40 +180,44 @@ mergeCollisions particles =
             []
 
 
-resolveCollisions : List Particle -> List Particle
+resolveCollisions : Array Particle -> Array Particle
 resolveCollisions particles =
-    case particles of
-        p :: ps ->
+    let
+        step p acc =
             let
-                newParticles =
-                    resolveCollisions ps
-
                 ( collisions, notCollisions ) =
-                    collisionFilter p newParticles
+                    collisionFilter p acc
 
                 collisionsSorted =
-                    List.sortBy (collisionDeltaTime p) collisions
+                    collisions
+                        |> Array.toList
+                        |> List.sortBy (collisionDeltaTime p)
+                        |> Array.fromList
             in
-            if isSignificantCollision p collisionsSorted then
-                case collisionsSorted of
-                    q :: qs ->
+            if isSignificantCollision p (Array.toList collisionsSorted) then
+                case Array.get 0 collisionsSorted of
+                    Just q ->
                         let
-                            -- y =
-                            --     Debug.log "Collisions of size" (2 + List.length qs)
-
                             ( newP, newQ ) =
                                 collide p q
-                        in
-                        resolveCollisions [ newP, newQ ] ++ qs ++ notCollisions
 
-                    [] ->
-                        p :: notCollisions
+                            resolvedPair =
+                                resolveCollisions (Array.fromList [ newP, newQ ])
+
+                            rest =
+                                Array.append
+                                    (Array.slice 1 (Array.length collisionsSorted) collisionsSorted)
+                                    notCollisions
+                        in
+                        Array.append resolvedPair rest
+
+                    Nothing ->
+                        Array.push p notCollisions
 
             else
-                p :: collisionsSorted ++ notCollisions
-
-        [] ->
-            []
+                Array.push p (Array.append collisionsSorted notCollisions)
+    in
+    Array.foldr step Array.empty particles
 
 
 areTouching : Particle -> Particle -> Bool

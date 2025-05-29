@@ -30,7 +30,7 @@ The application includes comprehensive test suites for both backend and frontend
 ### Running All Tests
 
 ```bash
-# Run all tests (both backend and frontend)
+# Run all tests (backend, frontend, and Elm)
 make test-all
 
 # Generate coverage reports for all tests
@@ -182,6 +182,15 @@ make dev-elm
 ```
 
 Note: Elm and `elm-test` must be installed globally for the build and test commands to work. `make setup` will install them automatically if they are missing.
+
+### Elm Testing
+
+```bash
+# Run Elm tests
+make test-elm
+```
+
+The `test-all` target also runs Elm tests along with the backend and frontend suites.
 
 ### Frontend Testing
 
