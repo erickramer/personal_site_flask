@@ -16,6 +16,11 @@ make setup
 make run-app
 ```
 
+`make setup` detects if a virtual environment is active. When `VIRTUAL_ENV`
+is set (e.g. after running `source venv/bin/activate`), dependencies are
+installed into that environment. Otherwise packages are installed system wide,
+which is useful in the cloud workspace.
+
 Then visit http://localhost:5000 in your browser.
 
 ## Testing
