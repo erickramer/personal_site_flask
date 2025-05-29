@@ -3,7 +3,7 @@
 # Frontend Build Commands
 install-elm:
 	@which elm >/dev/null || npm install -g elm
-	@which elm-test >/dev/null || npm install -g elm-test
+	@which elm-test >/dev/null || npm install -g elm-test@0.19.1-revision9
 
 install-frontend: install-elm
 	cd frontend && npm install
