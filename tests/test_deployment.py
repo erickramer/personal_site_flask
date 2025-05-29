@@ -109,3 +109,16 @@ def test_github_workflow_uses_make_deploy():
     steps = workflow['jobs']['test-and-deploy']['steps']
     assert any('make deploy' in (step.get('run') or '') for step in steps), (
         "deploy.yml should run 'make deploy'")
+
+
+def test_app_yaml_min_idle_instances():
+    """Ensure app.yaml keeps at least one idle instance warm."""
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    yaml_path = os.path.join(base_dir, 'app.yaml')
+
+    with open(yaml_path, 'r') as f:
+        config = yaml.safe_load(f)
+
+    scaling = config.get('automatic_scaling', {})
+    min_idle = scaling.get('min_idle_instances', 0)
+    assert min_idle >= 1, "app.yaml should set min_idle_instances >= 1"
