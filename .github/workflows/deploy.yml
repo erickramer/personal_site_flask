@@ -27,6 +27,21 @@ jobs:
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
     
+    - name: Set up Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+        cache-dependency-path: frontend/package.json
+
+    - name: Install frontend dependencies
+      run: |
+        cd frontend
+        npm install
+
+    - name: Build frontend assets
+      run: make build-frontend
+
     - name: Install backend dependencies
       run: |
         # Create virtual environment
@@ -35,30 +50,18 @@ jobs:
         uv pip install tensorflow-cpu>=2.12.0 --system
         # Install the package with dev dependencies
         uv pip install -e ".[dev]" --system
-    
+
     - name: Create Mock ML Model
       run: |
         mkdir -p data
         # Create a dummy model file for testing
         uv pip install h5py --system
         python -c "import h5py; f = h5py.File('data/model.h5', 'w'); f.close()"
-    
+
     - name: Run backend tests
       run: |
         pytest
-    
-    - name: Set up Node.js 16.x
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.x
-        cache: 'npm'
-        cache-dependency-path: frontend/package.json
-    
-    - name: Install frontend dependencies
-      run: |
-        cd frontend
-        npm install
-    
+
     - name: Run frontend tests
       run: |
         cd frontend
