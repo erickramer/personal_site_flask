@@ -16,6 +16,15 @@
         node: document.getElementById('elm')
     });
 
+    app.ports.storeParticles.subscribe(function(ps){
+      localStorage.setItem('particles', JSON.stringify(ps));
+    });
+
+    var stored = localStorage.getItem('particles');
+    if (stored) {
+      app.ports.loadParticles.send(JSON.parse(stored));
+    }
+
     var newWS = {"width": window.innerWidth, "height": window.innerHeight}
     app.ports.newWindowSize.send(newWS)
 

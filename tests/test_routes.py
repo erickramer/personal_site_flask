@@ -36,6 +36,25 @@ def test_about_route(client):
     assert response.status_code == 200
     assert b'html' in response.data
 
+    soup = BeautifulSoup(response.data, 'html.parser')
+    # Ensure Elm.About initialization script is present
+    elm_script = soup.find('script', text=lambda t: t and 'Elm.About.init' in t)
+    assert elm_script is not None, "Elm initialization script not found on about page"
+    script_src = soup.find('script', src=lambda s: s and 'about.js' in s)
+    assert script_src is not None, "about.js script not referenced"
+
+def test_particle_port_scripts(client):
+    """Ensure pages include localStorage particle persistence scripts."""
+    response = client.get('/')
+    soup = BeautifulSoup(response.data, 'html.parser')
+    script = soup.find('script', text=lambda t: t and 'storeParticles' in t)
+    assert script is not None, 'storeParticles script missing from index'
+
+    response = client.get('/about')
+    soup = BeautifulSoup(response.data, 'html.parser')
+    script = soup.find('script', text=lambda t: t and 'storeParticles' in t)
+    assert script is not None, 'storeParticles script missing from about'
+
 def test_contact_route(client):
     """Test that the contact route returns 200 and contains expected content."""
     response = client.get('/contact')
