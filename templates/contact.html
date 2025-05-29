@@ -3,35 +3,24 @@
 
 {% block head %}
     {{ super() }}
+    <script src="{{ url_for('static', filename='js/contact.js') }}"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row" style="margin-top: 15%">
-            <div class="one-half column" style="text-align: center">
-                <a href="phone">
-                    <i class="fas fa-phone fa-8x" style="color: black"></i>
-                </a>
-            </div>
-            <div class="one-half column" style="text-align: center">
-                <a href="email">
-                    <i class="fas fa-envelope fa-8x" style="color: black"></i>
-                </a>
-            </div>
-        </div>
+  <div id="elm"></div>
 
-        <div class="row" style="margin-top: 10%">
-            <div class="one-half column" style="text-align: center">
-                <a href="https://twitter.com/eransomk">
-                    <i class="fab fa-twitter fa-8x" style="color: black"></i>
-                </a>
-            </div>
-            <div class="one-half column" style="text-align: center">
-                <a href="https://github.com/erickramer">
-                    <i class="fab fa-github fa-8x" style="color: black"></i>
-                </a>
-            </div>
-        </div>
-    </div>
+  <script>
+    app = Elm.Contact.init({
+        node: document.getElementById('elm')
+    });
+
+    var newWS = {"width": window.innerWidth, "height": window.innerHeight};
+    app.ports.newWindowSize.send(newWS);
+
+    window.onresize = function(event){
+      var newWS = {"width": window.innerWidth, "height": window.innerHeight};
+      app.ports.newWindowSize.send(newWS);
+    };
+  </script>
 {% endblock %}

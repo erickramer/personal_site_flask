@@ -2,28 +2,25 @@
 {% block title %}About{% endblock %}
 
 
-{% block content %}
-<div class="container">
-    <div class="row" style="margin-top: 15%">
-        <div class="one-half column">
-            <h2>About</h2>
-        </div>
-    </div>
+{% block head %}
+  {{ super() }}
+  <script src="{{ url_for('static', filename='js/about.js') }}"></script>
+{% endblock %}
 
-    <div class="row">
-        <div class="one-half column">
-            <p>
-                I'm Eric Kramer. I currently work at <a href="https://openai.com">OpenAI</a>, and I used to work at
-                <a href="https://stripe.com">Stripe</a> and <a href="https://dataiku.com">Dataiku</a>. A long time ago,
-                I was an MD/PhD student at UC San Diego.
-            </p>
-            <p>
-                I live in Noe Valley, San Francisco, CA with my wife <a href="https://pagepiccinini.com">Page
-                    Piccinini</a>, our two cats
-                and two sons. Get in touch
-                if you want to talk more about data science or medicine.
-            </p>
-        </div>
-    </div>
-</div>
+{% block content %}
+  <div id="elm"></div>
+
+  <script>
+    app = Elm.About.init({
+        node: document.getElementById('elm')
+    });
+
+    var newWS = {"width": window.innerWidth, "height": window.innerHeight}
+    app.ports.newWindowSize.send(newWS)
+
+    window.onresize = function(event){
+      var newWS = {"width": window.innerWidth, "height": window.innerHeight}
+      app.ports.newWindowSize.send(newWS)
+    }
+  </script>
 {% endblock %}

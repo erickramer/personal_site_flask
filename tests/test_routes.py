@@ -36,17 +36,36 @@ def test_about_route(client):
     assert response.status_code == 200
     assert b'html' in response.data
 
+    soup = BeautifulSoup(response.data, 'html.parser')
+    # Ensure Elm.About initialization script is present
+    elm_script = soup.find('script', text=lambda t: t and 'Elm.About.init' in t)
+    assert elm_script is not None, "Elm initialization script not found on about page"
+    script_src = soup.find('script', src=lambda s: s and 'about.js' in s)
+    assert script_src is not None, "about.js script not referenced"
+
 def test_contact_route(client):
     """Test that the contact route returns 200 and contains expected content."""
     response = client.get('/contact')
     assert response.status_code == 200
     assert b'html' in response.data
 
+    soup = BeautifulSoup(response.data, 'html.parser')
+    elm_script = soup.find('script', text=lambda t: t and 'Elm.Contact.init' in t)
+    assert elm_script is not None, "Elm initialization script not found on contact page"
+    script_src = soup.find('script', src=lambda s: s and 'contact.js' in s)
+    assert script_src is not None, "contact.js script not referenced"
+
 def test_demos_route(client):
     """Test that the demos route returns 200 and contains expected content."""
     response = client.get('/demos')
     assert response.status_code == 200
     assert b'html' in response.data
+
+    soup = BeautifulSoup(response.data, 'html.parser')
+    elm_script = soup.find('script', text=lambda t: t and 'Elm.Demos.init' in t)
+    assert elm_script is not None, "Elm initialization script not found on demos page"
+    script_src = soup.find('script', src=lambda s: s and 'demos.js' in s)
+    assert script_src is not None, "demos.js script not referenced"
 
 def test_asteroids_route(client):
     """Test that the asteroids route returns 200 and contains expected content."""

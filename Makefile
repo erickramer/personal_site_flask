@@ -18,6 +18,12 @@ build-frontend:
 build-elm:
 	# Compile Home.elm
 	elm make elm/Home.elm --output=static/js/home.js --optimize
+	# Compile About.elm
+	elm make elm/About.elm --output=static/js/about.js --optimize
+	# Compile Contact.elm
+	elm make elm/Contact.elm --output=static/js/contact.js --optimize
+	# Compile Demos.elm
+	elm make elm/Demos.elm --output=static/js/demos.js --optimize
 	# Compile Asteroids.elm
 	elm make elm/Asteroids.elm --output=static/js/asteroids.js --optimize
 
