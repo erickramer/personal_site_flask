@@ -176,7 +176,7 @@ make build-elm
 make dev-elm
 ```
 
-Note: Elm must be installed globally (`npm install -g elm`) for the build commands to work.
+Note: Elm and `elm-test` must be installed globally for the build and test commands to work. `make setup` will install them automatically if they are missing.
 
 ### Frontend Testing
 
