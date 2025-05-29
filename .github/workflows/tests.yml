@@ -106,3 +106,23 @@ jobs:
         directory: ./frontend/coverage
         flags: frontend
         fail_ci_if_error: false
+
+  elm-test:
+    name: Elm Tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+
+    - name: Install Elm tooling
+      run: |
+        npm install -g elm
+        npm install -g elm-test@0.19.1-revision9
+
+    - name: Run Elm tests
+      run: make test-elm

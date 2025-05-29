@@ -8,6 +8,7 @@ import Html exposing (Html, button, div, h1, text)
 import Html.Attributes exposing (style)
 import Html.Events exposing (onClick)
 import Particle exposing (Particle)
+import Array
 import Random
 import Svg
 import Svg.Attributes
@@ -72,7 +73,7 @@ update msg model =
                         Particle.mergeCollisions
 
                     else
-                        Particle.resolveCollisions
+                        (Array.fromList >> Particle.resolveCollisions >> Array.toList)
 
                 particles =
                     if dt < 150 then

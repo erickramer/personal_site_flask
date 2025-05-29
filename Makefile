@@ -27,6 +27,9 @@ dev-frontend:
 dev-elm:
 	# Start elm reactor for development
 	elm reactor
+test-elm:
+	elm-test elm/Tests
+
 
 clean-frontend:
 	rm -rf frontend/node_modules
@@ -56,7 +59,7 @@ test-backend:
 	python -m pytest
 
 # Combined Test Commands
-test-all: test-backend test-frontend
+test-all: test-backend test-frontend test-elm
 	@echo "All tests completed!"
 
 # Application Commands
