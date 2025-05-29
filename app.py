@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, jsonify, request, url_for
+from flask import Flask, render_template, redirect, jsonify, request, url_for, send_from_directory
 import os
 import logging
 
@@ -125,6 +125,15 @@ def register_routes(app):
     @app.route("/")
     def index():
         return render_template("index.html")
+
+    # Serve the favicon for browsers that request /favicon.ico
+    @app.route("/favicon.ico")
+    def favicon():
+        return send_from_directory(
+            os.path.join(app.static_folder, "dist", "images"),
+            "favicon.png",
+            mimetype="image/png",
+        )
 
     @app.route("/contact")
     def contact():

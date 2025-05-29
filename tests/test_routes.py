@@ -126,3 +126,9 @@ def test_debug_static_endpoint(client):
     for file_entry in data['files']:
         assert 'path' in file_entry
         assert 'url' in file_entry
+
+def test_favicon_route(client):
+    """Ensure the favicon route returns the icon"""
+    response = client.get('/favicon.ico')
+    assert response.status_code == 200
+    assert 'image' in response.headers['Content-Type']
