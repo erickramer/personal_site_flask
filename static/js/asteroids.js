@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.V.I === region._.I)
+	if (region.ak.P === region.au.P)
 	{
-		return 'on line ' + region.V.I;
+		return 'on line ' + region.ak.P;
 	}
-	return 'on lines ' + region.V.I + ' through ' + region._.I;
+	return 'on lines ' + region.ak.P + ' through ' + region.au.P;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aC,
-		impl.aK,
-		impl.aI,
+		impl.bd,
+		impl.by,
+		impl.bu,
 		function() { return function() {} }
 	);
 });
@@ -2659,9 +2659,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		o: func(record.o),
-		W: record.W,
-		T: record.T
+		v: func(record.v),
+		al: record.al,
+		ai: record.ai
 	}
 });
 
@@ -2929,11 +2929,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.o;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.W;
+		var message = !tag ? value : tag < 3 ? value.a : value.v;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.al;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.T) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.ai) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3883,11 +3883,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aC,
-		impl.aK,
-		impl.aI,
+		impl.bd,
+		impl.by,
+		impl.bu,
 		function(sendToApp, initialModel) {
-			var view = impl.aL;
+			var view = impl.bz;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3919,12 +3919,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.aC,
-		impl.aK,
-		impl.aI,
+		impl.bd,
+		impl.by,
+		impl.bu,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.U && impl.U(sendToApp)
-			var view = impl.aL;
+			var divertHrefToApp = impl.aj && impl.aj(sendToApp)
+			var view = impl.bz;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3932,12 +3932,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.aw);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.a0);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aJ) && (_VirtualDom_doc.title = title = doc.aJ);
+				(title !== doc.bx) && (_VirtualDom_doc.title = title = doc.bx);
 			});
 		}
 	);
@@ -3993,12 +3993,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.aE;
-	var onUrlRequest = impl.aF;
+	var onUrlChange = impl.bo;
+	var onUrlRequest = impl.bp;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		U: function(sendToApp)
+		aj: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4014,9 +4014,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.al === next.al
-							&& curr.ac === next.ac
-							&& curr.ai.a === next.ai.a
+							&& curr.aL === next.aL
+							&& curr.az === next.az
+							&& curr.aI.a === next.aI.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4024,13 +4024,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		aC: function(flags)
+		bd: function(flags)
 		{
-			return A3(impl.aC, flags, _Browser_getUrl(), key);
+			return A3(impl.bd, flags, _Browser_getUrl(), key);
 		},
-		aL: impl.aL,
-		aK: impl.aK,
-		aI: impl.aI
+		bz: impl.bz,
+		by: impl.by,
+		bu: impl.bu
 	});
 }
 
@@ -4096,17 +4096,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { aA: 'hidden', ax: 'visibilitychange' }
+		? { bb: 'hidden', a2: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { aA: 'mozHidden', ax: 'mozvisibilitychange' }
+		? { bb: 'mozHidden', a2: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { aA: 'msHidden', ax: 'msvisibilitychange' }
+		? { bb: 'msHidden', a2: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { aA: 'webkitHidden', ax: 'webkitvisibilitychange' }
-		: { aA: 'hidden', ax: 'visibilitychange' };
+		? { bb: 'webkitHidden', a2: 'webkitvisibilitychange' }
+		: { bb: 'hidden', a2: 'visibilitychange' };
 }
 
 
@@ -4187,12 +4187,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		ap: _Browser_getScene(),
-		as: {
-			b: _Browser_window.pageXOffset,
-			c: _Browser_window.pageYOffset,
-			G: _Browser_doc.documentElement.clientWidth,
-			A: _Browser_doc.documentElement.clientHeight
+		aR: _Browser_getScene(),
+		aX: {
+			c: _Browser_window.pageXOffset,
+			d: _Browser_window.pageYOffset,
+			N: _Browser_doc.documentElement.clientWidth,
+			H: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4202,8 +4202,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		G: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		A: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		N: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		H: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4226,15 +4226,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			ap: {
-				G: node.scrollWidth,
-				A: node.scrollHeight
+			aR: {
+				N: node.scrollWidth,
+				H: node.scrollHeight
 			},
-			as: {
-				b: node.scrollLeft,
-				c: node.scrollTop,
-				G: node.clientWidth,
-				A: node.clientHeight
+			aX: {
+				c: node.scrollLeft,
+				d: node.scrollTop,
+				N: node.clientWidth,
+				H: node.clientHeight
 			}
 		};
 	});
@@ -4264,18 +4264,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			ap: _Browser_getScene(),
-			as: {
-				b: x,
-				c: y,
-				G: _Browser_doc.documentElement.clientWidth,
-				A: _Browser_doc.documentElement.clientHeight
+			aR: _Browser_getScene(),
+			aX: {
+				c: x,
+				d: y,
+				N: _Browser_doc.documentElement.clientWidth,
+				H: _Browser_doc.documentElement.clientHeight
 			},
-			ay: {
-				b: x + rect.left,
-				c: y + rect.top,
-				G: rect.width,
-				A: rect.height
+			a5: {
+				c: x + rect.left,
+				d: y + rect.top,
+				N: rect.width,
+				H: rect.height
 			}
 		};
 	});
@@ -4799,25 +4799,25 @@ var $elm$core$Array$treeFromBuilder = F2(
 	});
 var $elm$core$Array$builderToArray = F2(
 	function (reverseNodeList, builder) {
-		if (!builder.d) {
+		if (!builder.e) {
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.f),
+				$elm$core$Elm$JsArray$length(builder.g),
 				$elm$core$Array$shiftStep,
 				$elm$core$Elm$JsArray$empty,
-				builder.f);
+				builder.g);
 		} else {
-			var treeLen = builder.d * $elm$core$Array$branchFactor;
+			var treeLen = builder.e * $elm$core$Array$branchFactor;
 			var depth = $elm$core$Basics$floor(
 				A2($elm$core$Basics$logBase, $elm$core$Array$branchFactor, treeLen - 1));
-			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.g) : builder.g;
-			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.d);
+			var correctNodeList = reverseNodeList ? $elm$core$List$reverse(builder.h) : builder.h;
+			var tree = A2($elm$core$Array$treeFromBuilder, correctNodeList, builder.e);
 			return A4(
 				$elm$core$Array$Array_elm_builtin,
-				$elm$core$Elm$JsArray$length(builder.f) + treeLen,
+				$elm$core$Elm$JsArray$length(builder.g) + treeLen,
 				A2($elm$core$Basics$max, 5, depth * $elm$core$Array$shiftStep),
 				tree,
-				builder.f);
+				builder.g);
 		}
 	});
 var $elm$core$Basics$idiv = _Basics_idiv;
@@ -4830,7 +4830,7 @@ var $elm$core$Array$initializeHelp = F5(
 				return A2(
 					$elm$core$Array$builderToArray,
 					false,
-					{g: nodeList, d: (len / $elm$core$Array$branchFactor) | 0, f: tail});
+					{h: nodeList, e: (len / $elm$core$Array$branchFactor) | 0, g: tail});
 			} else {
 				var leaf = $elm$core$Array$Leaf(
 					A3($elm$core$Elm$JsArray$initialize, $elm$core$Array$branchFactor, fromIndex, fn));
@@ -4897,7 +4897,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {ab: fragment, ac: host, ag: path, ai: port_, al: protocol, am: query};
+		return {aw: fragment, az: host, aG: path, aI: port_, aL: protocol, aM: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5178,15 +5178,15 @@ var $elm$core$Task$perform = F2(
 var $elm$browser$Browser$element = _Browser_element;
 var $author$project$Asteroids$Model = F5(
 	function (spaceship, asteroids, missiles, score, alive) {
-		return {au: alive, s: asteroids, p: missiles, D: score, J: spaceship};
+		return {a_: alive, z: asteroids, w: missiles, K: score, S: spaceship};
 	});
 var $author$project$Asteroids$SpaceShip = F2(
 	function (position, dimension) {
-		return {P: dimension, a: position};
+		return {ac: dimension, a: position};
 	});
 var $author$project$Asteroids$Vector = F2(
 	function (x, y) {
-		return {b: x, c: y};
+		return {c: x, d: y};
 	});
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -5222,7 +5222,7 @@ var $elm$time$Time$Every = F2(
 	});
 var $elm$time$Time$State = F2(
 	function (taggers, processes) {
-		return {ak: processes, ar: taggers};
+		return {aK: processes, aW: taggers};
 	});
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
@@ -5514,7 +5514,7 @@ var $elm$time$Time$spawnHelp = F3(
 	});
 var $elm$time$Time$onEffects = F3(
 	function (router, subs, _v0) {
-		var processes = _v0.ak;
+		var processes = _v0.aK;
 		var rightStep = F3(
 			function (_v6, id, _v7) {
 				var spawns = _v7.a;
@@ -5583,7 +5583,7 @@ var $elm$time$Time$millisToPosix = $elm$core$Basics$identity;
 var $elm$time$Time$now = _Time_now($elm$time$Time$millisToPosix);
 var $elm$time$Time$onSelfMsg = F3(
 	function (router, interval, state) {
-		var _v0 = A2($elm$core$Dict$get, interval, state.ar);
+		var _v0 = A2($elm$core$Dict$get, interval, state.aW);
 		if (_v0.$ === 1) {
 			return $elm$core$Task$succeed(state);
 		} else {
@@ -5649,7 +5649,7 @@ var $author$project$Asteroids$newPose = _Platform_incomingPort(
 							$elm$json$Json$Decode$andThen,
 							function (part) {
 								return $elm$json$Json$Decode$succeed(
-									{S: part, a: position, D: score});
+									{ah: part, a: position, K: score});
 							},
 							A2($elm$json$Json$Decode$field, 'part', $elm$json$Json$Decode$string));
 					},
@@ -5663,7 +5663,7 @@ var $author$project$Asteroids$newPose = _Platform_incomingPort(
 									$elm$json$Json$Decode$andThen,
 									function (x) {
 										return $elm$json$Json$Decode$succeed(
-											{b: x, c: y});
+											{c: x, d: y});
 									},
 									A2($elm$json$Json$Decode$field, 'x', $elm$json$Json$Decode$float));
 							},
@@ -5675,7 +5675,7 @@ var $elm$browser$Browser$AnimationManager$Delta = function (a) {
 };
 var $elm$browser$Browser$AnimationManager$State = F3(
 	function (subs, request, oldTime) {
-		return {R: oldTime, ao: request, aq: subs};
+		return {ag: oldTime, aO: request, aV: subs};
 	});
 var $elm$browser$Browser$AnimationManager$init = $elm$core$Task$succeed(
 	A3($elm$browser$Browser$AnimationManager$State, _List_Nil, $elm$core$Maybe$Nothing, 0));
@@ -5683,8 +5683,8 @@ var $elm$browser$Browser$AnimationManager$now = _Browser_now(0);
 var $elm$browser$Browser$AnimationManager$rAF = _Browser_rAF(0);
 var $elm$browser$Browser$AnimationManager$onEffects = F3(
 	function (router, subs, _v0) {
-		var request = _v0.ao;
-		var oldTime = _v0.R;
+		var request = _v0.aO;
+		var oldTime = _v0.ag;
 		var _v1 = _Utils_Tuple2(request, subs);
 		if (_v1.a.$ === 1) {
 			if (!_v1.b.b) {
@@ -5730,8 +5730,8 @@ var $elm$browser$Browser$AnimationManager$onEffects = F3(
 	});
 var $elm$browser$Browser$AnimationManager$onSelfMsg = F3(
 	function (router, newTime, _v0) {
-		var subs = _v0.aq;
-		var oldTime = _v0.R;
+		var subs = _v0.aV;
+		var oldTime = _v0.ag;
 		var send = function (sub) {
 			if (!sub.$) {
 				var tagger = sub.a;
@@ -5809,10 +5809,10 @@ var $elm$core$Basics$pow = _Basics_pow;
 var $elm$core$Basics$sqrt = _Basics_sqrt;
 var $author$project$Asteroids$isCollision = F2(
 	function (a, b) {
-		var d = A2($elm$core$Basics$pow, a.a.b - b.a.b, 2) + A2($elm$core$Basics$pow, a.a.c - b.a.c, 2);
+		var d = A2($elm$core$Basics$pow, a.a.c - b.a.c, 2) + A2($elm$core$Basics$pow, a.a.d - b.a.d, 2);
 		return _Utils_cmp(
 			$elm$core$Basics$sqrt(d),
-			a.x + b.x) < 0;
+			a.E + b.E) < 0;
 	});
 var $elm$core$List$sum = function (numbers) {
 	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
@@ -5829,11 +5829,11 @@ var $author$project$Asteroids$collideAsteroid = F2(
 					$elm$core$List$map,
 					$author$project$Asteroids$isCollision(asteroid),
 					missiles)));
-		var newRadius = asteroid.x / A2($elm$core$Basics$pow, 2, counts);
+		var newRadius = asteroid.E / A2($elm$core$Basics$pow, 2, counts);
 		return (newRadius > 0.75) ? $elm$core$Maybe$Just(
 			_Utils_update(
 				asteroid,
-				{x: newRadius})) : $elm$core$Maybe$Nothing;
+				{E: newRadius})) : $elm$core$Maybe$Nothing;
 	});
 var $elm$core$List$filter = F2(
 	function (isGood, list) {
@@ -5934,7 +5934,7 @@ var $author$project$Asteroids$collideMissiles = F2(
 	});
 var $author$project$Asteroids$Particle = F3(
 	function (position, velocity, radius) {
-		return {a: position, x: radius, O: velocity};
+		return {a: position, E: radius, aa: velocity};
 	});
 var $elm$core$Basics$negate = function (n) {
 	return -n;
@@ -5942,7 +5942,7 @@ var $elm$core$Basics$negate = function (n) {
 var $author$project$Asteroids$createMissile = function (spaceship) {
 	var velocity = A2($author$project$Asteroids$Vector, 0, -0.05);
 	var radius = 0.75;
-	var position = A2($author$project$Asteroids$Vector, spaceship.a.b + 10, spaceship.a.c);
+	var position = A2($author$project$Asteroids$Vector, spaceship.a.c + 10, spaceship.a.d);
 	return A3($author$project$Asteroids$Particle, position, velocity, radius);
 };
 var $elm$random$Random$Generate = $elm$core$Basics$identity;
@@ -6031,7 +6031,7 @@ var $elm$random$Random$generate = F2(
 	});
 var $author$project$Asteroids$moveParticle = F2(
 	function (dt, particle) {
-		var newPosition = A2($author$project$Asteroids$Vector, particle.a.b + (dt * particle.O.b), particle.a.c + (dt * particle.O.c));
+		var newPosition = A2($author$project$Asteroids$Vector, particle.a.c + (dt * particle.aa.c), particle.a.d + (dt * particle.aa.d));
 		return _Utils_update(
 			particle,
 			{a: newPosition});
@@ -6047,11 +6047,11 @@ var $elm$core$List$head = function (list) {
 };
 var $author$project$Asteroids$Space = F2(
 	function (x, y) {
-		return {b: x, c: y};
+		return {c: x, d: y};
 	});
 var $author$project$Asteroids$Span = F2(
 	function (min, max) {
-		return {u: max, l: min};
+		return {B: max, s: min};
 	});
 var $author$project$Asteroids$canvasSpace = A2(
 	$author$project$Asteroids$Space,
@@ -6063,14 +6063,14 @@ var $author$project$Asteroids$gameSpace = A2(
 	A2($author$project$Asteroids$Span, -100, 100));
 var $author$project$Asteroids$scalarScale = F3(
 	function (domain, range, input) {
-		var rangeLength = range.u - range.l;
-		var domainLength = domain.u - domain.l;
-		return (((input - domain.l) / domainLength) * rangeLength) + range.l;
+		var rangeLength = range.B - range.s;
+		var domainLength = domain.B - domain.s;
+		return (((input - domain.s) / domainLength) * rangeLength) + range.s;
 	});
 var $author$project$Asteroids$vectorScale = F3(
 	function (domain, range, input) {
-		var yOut = A3($author$project$Asteroids$scalarScale, domain.c, range.c, input.c);
-		var xOut = A3($author$project$Asteroids$scalarScale, domain.b, range.b, input.b);
+		var yOut = A3($author$project$Asteroids$scalarScale, domain.d, range.d, input.d);
+		var xOut = A3($author$project$Asteroids$scalarScale, domain.c, range.c, input.c);
 		return A2($author$project$Asteroids$Vector, xOut, yOut);
 	});
 var $author$project$Asteroids$scaleCanvasToGameVector = A2($author$project$Asteroids$vectorScale, $author$project$Asteroids$canvasSpace, $author$project$Asteroids$gameSpace);
@@ -6080,13 +6080,13 @@ var $author$project$Asteroids$moveSpaceship = F2(
 			A2(
 				$elm$core$List$filter,
 				function (x) {
-					return x.S === 'nose';
+					return x.ah === 'nose';
 				},
 				pose));
 		if (!nose.$) {
 			var keypoint = nose.a;
 			var newPosition = $author$project$Asteroids$scaleCanvasToGameVector(
-				A2($author$project$Asteroids$Vector, keypoint.a.b, keypoint.a.c));
+				A2($author$project$Asteroids$Vector, keypoint.a.c, keypoint.a.d));
 			return _Utils_update(
 				spaceship,
 				{a: newPosition});
@@ -6160,23 +6160,23 @@ var $author$project$Asteroids$update = F2(
 		switch (msg.$) {
 			case 4:
 				var dt = msg.a;
-				var newMissiles = A2($author$project$Asteroids$collideMissiles, model.p, model.s);
-				var _v1 = A2($author$project$Asteroids$collideAsteroids, model.p, model.s);
+				var newMissiles = A2($author$project$Asteroids$collideMissiles, model.w, model.z);
+				var _v1 = A2($author$project$Asteroids$collideAsteroids, model.w, model.z);
 				var newAsteroids = _v1.a;
 				var nCollisions = _v1.b;
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							s: A2(
+							z: A2(
 								$elm$core$List$map,
 								$author$project$Asteroids$moveParticle(dt),
 								newAsteroids),
-							p: A2(
+							w: A2(
 								$elm$core$List$map,
 								$author$project$Asteroids$moveParticle(dt),
-								model.p),
-							D: model.D + nCollisions
+								model.w),
+							K: model.K + nCollisions
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 0:
@@ -6190,7 +6190,7 @@ var $author$project$Asteroids$update = F2(
 					_Utils_update(
 						model,
 						{
-							s: A2($elm$core$List$cons, asteroid, model.s)
+							z: A2($elm$core$List$cons, asteroid, model.z)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 2:
@@ -6199,17 +6199,17 @@ var $author$project$Asteroids$update = F2(
 					_Utils_update(
 						model,
 						{
-							J: A2($author$project$Asteroids$moveSpaceship, model.J, pose)
+							S: A2($author$project$Asteroids$moveSpaceship, model.S, pose)
 						}),
 					$elm$core$Platform$Cmd$none);
 			default:
 				var bool = msg.a;
-				var missile = $author$project$Asteroids$createMissile(model.J);
+				var missile = $author$project$Asteroids$createMissile(model.S);
 				return _Utils_Tuple2(
 					_Utils_update(
 						model,
 						{
-							p: A2($elm$core$List$cons, missile, model.p)
+							w: A2($elm$core$List$cons, missile, model.w)
 						}),
 					$elm$core$Platform$Cmd$none);
 		}
@@ -6222,14 +6222,14 @@ var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
 var $elm$core$String$fromFloat = _String_fromNumber;
 var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
 var $author$project$Asteroids$diagonal = function (space) {
-	var y = space.c.u - space.c.l;
-	var x = space.b.u - space.b.l;
+	var y = space.d.B - space.d.s;
+	var x = space.c.B - space.c.s;
 	return $elm$core$Basics$sqrt(
 		A2($elm$core$Basics$pow, x, 2) + A2($elm$core$Basics$pow, y, 2));
 };
 var $author$project$Asteroids$particleScale = F3(
 	function (domain, range, input) {
-		var velocityOut = A3($author$project$Asteroids$vectorScale, domain, range, input.O);
+		var velocityOut = A3($author$project$Asteroids$vectorScale, domain, range, input.aa);
 		var radiusOut = A3(
 			$author$project$Asteroids$scalarScale,
 			A2(
@@ -6240,7 +6240,7 @@ var $author$project$Asteroids$particleScale = F3(
 				$author$project$Asteroids$Span,
 				0,
 				$author$project$Asteroids$diagonal(range)),
-			input.x);
+			input.E);
 		var positionOut = A3($author$project$Asteroids$vectorScale, domain, range, input.a);
 		return A3($author$project$Asteroids$Particle, positionOut, velocityOut, radiusOut);
 	});
@@ -6259,11 +6259,11 @@ var $author$project$Asteroids$toCircle = F2(
 			_List_fromArray(
 				[
 					$elm$svg$Svg$Attributes$cx(
-					$elm$core$String$fromFloat(newParticle.a.b)),
-					$elm$svg$Svg$Attributes$cy(
 					$elm$core$String$fromFloat(newParticle.a.c)),
+					$elm$svg$Svg$Attributes$cy(
+					$elm$core$String$fromFloat(newParticle.a.d)),
 					$elm$svg$Svg$Attributes$r(
-					$elm$core$String$fromFloat(newParticle.x)),
+					$elm$core$String$fromFloat(newParticle.E)),
 					$elm$svg$Svg$Attributes$fill(fillColor)
 				]),
 			_List_Nil);
@@ -6305,13 +6305,13 @@ var $author$project$Asteroids$spaceShipToImg = function (spaceship) {
 		_List_fromArray(
 			[
 				$elm$svg$Svg$Attributes$width(
-				$elm$core$String$fromFloat(spaceship.P.b)),
+				$elm$core$String$fromFloat(spaceship.ac.c)),
 				$elm$svg$Svg$Attributes$height(
-				$elm$core$String$fromFloat(spaceship.P.c)),
+				$elm$core$String$fromFloat(spaceship.ac.d)),
 				$elm$svg$Svg$Attributes$x(
-				$elm$core$String$fromFloat(position.b)),
-				$elm$svg$Svg$Attributes$y(
 				$elm$core$String$fromFloat(position.c)),
+				$elm$svg$Svg$Attributes$y(
+				$elm$core$String$fromFloat(position.d)),
 				$elm$svg$Svg$Attributes$xlinkHref('/static/images/spaceship.svg')
 			]),
 		_List_Nil);
@@ -6343,7 +6343,7 @@ var $author$project$Asteroids$view = function (model) {
 						_List_fromArray(
 							[
 								$elm$html$Html$text(
-								'Score: ' + $elm$core$String$fromInt(model.D))
+								'Score: ' + $elm$core$String$fromInt(model.K))
 							]))
 					])),
 				A2(
@@ -6363,14 +6363,14 @@ var $author$project$Asteroids$view = function (model) {
 							]),
 						A2(
 							$elm$core$List$cons,
-							$author$project$Asteroids$spaceShipToImg(model.J),
+							$author$project$Asteroids$spaceShipToImg(model.S),
 							_Utils_ap(
-								A2($elm$core$List$map, $author$project$Asteroids$asteroidToCircle, model.s),
-								A2($elm$core$List$map, $author$project$Asteroids$missileToCircle, model.p))))
+								A2($elm$core$List$map, $author$project$Asteroids$asteroidToCircle, model.z),
+								A2($elm$core$List$map, $author$project$Asteroids$missileToCircle, model.w))))
 					]))
 			]));
 };
 var $author$project$Asteroids$main = $elm$browser$Browser$element(
-	{aC: $author$project$Asteroids$init, aI: $author$project$Asteroids$subscriptions, aK: $author$project$Asteroids$update, aL: $author$project$Asteroids$view});
+	{bd: $author$project$Asteroids$init, bu: $author$project$Asteroids$subscriptions, by: $author$project$Asteroids$update, bz: $author$project$Asteroids$view});
 _Platform_export({'Asteroids':{'init':$author$project$Asteroids$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

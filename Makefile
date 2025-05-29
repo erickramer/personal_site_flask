@@ -1,4 +1,4 @@
-.PHONY: install-frontend build-frontend build-elm dev-frontend dev-elm clean-frontend test-frontend test-frontend-watch test-frontend-coverage test-backend test-all run-app install-elm install-python-deps
+.PHONY: install-frontend build-frontend build-elm dev-frontend dev-elm clean-frontend test-frontend test-frontend-watch test-frontend-coverage test-backend test-elm test-all run-app install-elm install-python-deps
 
 # Frontend Build Commands
 install-elm:
@@ -45,6 +45,11 @@ test-frontend-watch:
 test-frontend-coverage:
 	cd frontend && npm run test:coverage
 
+# Elm Test Commands
+
+test-elm:
+	elm-test elm/Tests
+
 # Backend Setup Commands
 install-python-deps:
 	@which uv >/dev/null || pip install uv
@@ -56,7 +61,7 @@ test-backend:
 	python -m pytest
 
 # Combined Test Commands
-test-all: test-backend test-frontend
+test-all: test-backend test-frontend test-elm
 	@echo "All tests completed!"
 
 # Application Commands
