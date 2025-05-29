@@ -132,3 +132,4 @@ def test_favicon_route(client):
     response = client.get('/favicon.ico')
     assert response.status_code == 200
     assert 'image' in response.headers['Content-Type']
+
