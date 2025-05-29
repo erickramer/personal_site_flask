@@ -133,3 +133,25 @@ def test_favicon_route(client):
     assert response.status_code == 200
     assert 'image' in response.headers['Content-Type']
 
+
+def test_favicon_fallback(client, monkeypatch):
+    """Ensure the favicon route falls back when dist icon is missing."""
+    dist_path = os.path.join(current_app.static_folder, 'dist', 'images', 'favicon.png')
+    fallback_path = os.path.join(current_app.static_folder, 'images', 'favicon.png')
+
+    real_exists = os.path.exists
+
+    def fake_exists(path):
+        if path == dist_path:
+            return False
+        return real_exists(path)
+
+    monkeypatch.setattr(os.path, 'exists', fake_exists)
+
+    with open(fallback_path, 'rb') as f:
+        expected_data = f.read()
+
+    response = client.get('/favicon.ico')
+    assert response.status_code == 200
+    assert response.data == expected_data
+
