@@ -66,57 +66,6 @@ jobs:
     
     - name: Install Elm
       run: npm install -g elm
-    
-    - name: Build and optimize frontend assets
-      run: |
-        # Make sure build is clean
-        cd frontend
-        npm run build
-        
-        # Create static directories with proper permissions
-        rm -rf ../static/dist
-        mkdir -p ../static/dist/css ../static/dist/js ../static/dist/images
-        chmod -R 755 ../static/dist
-        
-        # Copy CSS files and set proper permissions
-        echo "Copying CSS files..."
-        cp -rv dist/css/* ../static/dist/css/
-        find ../static/dist/css -type f -name "*.css" -exec chmod 644 {} \;
-        
-        # Copy JS files and set proper permissions
-        echo "Copying JS files..."
-        cp -rv dist/js/* ../static/dist/js/
-        find ../static/dist/js -type f -name "*.js" -exec chmod 644 {} \;
-        
-        # Copy images and set proper permissions
-        echo "Copying image files..."
-        if [ -d "dist/images" ]; then
-          cp -rv dist/images/* ../static/dist/images/ 2>/dev/null || true
-        fi
-        if [ -d "src/images" ]; then
-          cp -rv src/images/* ../static/dist/images/ 2>/dev/null || true
-        fi
-        find ../static/dist/images -type f -exec chmod 644 {} \; 2>/dev/null || true
-        
-        # Copy any other files at the root level
-        cp -v dist/*.html ../static/dist/ 2>/dev/null || true
-        cp -v dist/*.ico ../static/dist/ 2>/dev/null || true
-        
-        # Print out information about the static files for debugging
-        echo "Static files in ../static/dist:"
-        find ../static/dist -type f | sort
-        
-        # Print out the sizes to ensure files were copied correctly
-        echo "CSS file sizes:"
-        ls -la ../static/dist/css/
-        echo "JS file sizes:"
-        ls -la ../static/dist/js/
-    
-    - name: Build Elm assets
-      run: |
-        elm make elm/Home.elm --output=static/js/home.js --optimize
-        elm make elm/Asteroids.elm --output=static/js/asteroids.js --optimize
-    
     - name: Install production dependencies
       run: |
         uv pip install -r requirements.txt --system
@@ -169,14 +118,8 @@ jobs:
         fi
         cat app.yaml
     
-    - name: Deploy to App Engine
-      id: deploy
-      run: |
-        # Print current auth info for debugging
-        echo "Current auth account: $(gcloud auth list --filter=status:ACTIVE --format='value(account)')"
-        
-        # Deploy without trying to impersonate the service account
-        gcloud app deploy app.yaml --project ${{ secrets.GCP_PROJECT_ID }} --quiet
+    - name: Deploy via Makefile
+      run: make deploy
     
     - name: Print deployment URL
       run: |
