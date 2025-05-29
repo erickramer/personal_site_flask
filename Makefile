@@ -54,8 +54,8 @@ test-elm:
 install-python-deps:
 	@which uv >/dev/null || pip install uv
 	@if [ -n "$$VIRTUAL_ENV" ]; then \
-	uv pip install -r requirements.txt; \
-	uv pip install -e .[dev]; \
+	pip install -r requirements.txt; \
+	pip install -e .[dev]; \
 	else \
 	uv pip install --system -r requirements.txt; \
 	uv pip install --system -e .[dev]; \
