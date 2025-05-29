@@ -48,8 +48,13 @@ test-frontend-coverage:
 # Backend Setup Commands
 install-python-deps:
 	@which uv >/dev/null || pip install uv
-	uv pip install --system -r requirements.txt 
-	uv pip install --system -e .[dev]
+	@if [ -n "$$VIRTUAL_ENV" ]; then \
+	uv pip install -r requirements.txt; \
+	uv pip install -e .[dev]; \
+	else \
+	uv pip install --system -r requirements.txt; \
+	uv pip install --system -e .[dev]; \
+	fi
 
 # Backend Test Commands
 test-backend:
