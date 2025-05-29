@@ -129,8 +129,17 @@ def register_routes(app):
     # Serve the favicon for browsers that request /favicon.ico
     @app.route("/favicon.ico")
     def favicon():
+        """Serve favicon from dist if available, else fall back to images."""
+        dist_path = os.path.join(app.static_folder, "dist", "images", "favicon.png")
+        if os.path.exists(dist_path):
+            return send_from_directory(
+                os.path.join(app.static_folder, "dist", "images"),
+                "favicon.png",
+                mimetype="image/png",
+            )
+        # Fall back to the non-dist image
         return send_from_directory(
-            os.path.join(app.static_folder, "dist", "images"),
+            os.path.join(app.static_folder, "images"),
             "favicon.png",
             mimetype="image/png",
         )
