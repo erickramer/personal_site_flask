@@ -9,7 +9,6 @@ from models import db
 from config import config
 
 # Import sentiment-related modules
-from sentiment.ml import SentimentModel
 from sentiment.emojis import emojis
 
 # Initialize sentiment model lazily when needed
