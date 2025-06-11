@@ -15,6 +15,17 @@ from sentiment.emojis import emojis
 # Initialize sentiment model lazily when needed
 _sentiment_model = None
 
+# Plain text used for curl requests on the about and index pages
+ABOUT_TEXT = """
+I'm Eric Kramer. I currently work at OpenAI helping build the developer platform.
+I used to work at Stripe and Dataiku. A long time ago, I was an MD/PhD student at
+UC San Diego.
+
+I live in Noe Valley, San Francisco with my wife, our two cats and two sons.
+Get in touch if you want to talk more about data science or medicine. You
+can reach me at 619.724.3800 or ericransomkramer@gmail.com.
+"""
+
 
 def get_sentiment_model():
     global _sentiment_model
@@ -124,6 +135,9 @@ def register_routes(app):
     # Main site routes
     @app.route("/")
     def index():
+        user_agent = request.headers.get("User-Agent", "").lower()
+        if "curl" in user_agent:
+            return ABOUT_TEXT
         return render_template("index.html")
 
     # Serve the favicon for browsers that request /favicon.ico
@@ -157,18 +171,7 @@ def register_routes(app):
         user_agent = request.headers.get("User-Agent", "").lower()
         if "curl" in user_agent:
             # Plain text version for curl requests
-            return """
-
-I'm Eric Kramer. I currently work at OpenAI helping build the developer platform. 
-I used to work at Stripe and Dataiku. A long time ago, I was an MD/PhD student at 
-UC San Diego.
-
-
-I live in Noe Valley, San Francisco with my wife, our two cats and two sons.
-Get in touch if you want to talk more about data science or medicine. You 
-can reach me at 619.724.3800 or ericransomkramer@gmail.com.
-
-"""
+            return ABOUT_TEXT
         else:
             return render_template("about.html")
 

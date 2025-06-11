@@ -2,6 +2,7 @@ import pytest
 import os
 from flask import url_for, current_app
 from bs4 import BeautifulSoup
+from app import ABOUT_TEXT
 
 pytestmark = pytest.mark.routes
 
@@ -10,6 +11,14 @@ def test_index_route(client):
     response = client.get('/')
     assert response.status_code == 200
     assert b'html' in response.data
+
+def test_index_route_curl(client):
+    """Index route should return about text when accessed via curl."""
+    response = client.get('/', headers={'User-Agent': 'curl/7.79.1'})
+    assert response.status_code == 200
+    text = response.get_data(as_text=True)
+    assert ABOUT_TEXT.strip() in text
+    assert '<' not in text
     
 def test_index_svg_links(client):
     """Test that the SVG links in index.html are properly formatted and link to the right routes."""
