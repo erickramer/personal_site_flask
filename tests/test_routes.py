@@ -18,6 +18,13 @@ def test_index_route_curl(client):
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert ABOUT_TEXT.strip() in text
+    for line in [
+        "- home: /",
+        "- about: /about",
+        "- demos: /demos",
+        "- contact: /contact",
+    ]:
+        assert line in text
     assert '<' not in text
     
 def test_index_svg_links(client):
