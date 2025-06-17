@@ -18,13 +18,18 @@ def test_index_route_curl(client):
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert ABOUT_TEXT.strip() in text
-    for line in [
-        "- home: /",
-        "- about: /about",
-        "- demos: /demos",
-        "- contact: /contact",
+    def osc8(label, path):
+        url = f"https://erickramer.xyz{path}"
+        return f"- \x1b]8;;{url}\x1b\\{label}\x1b]8;;\x1b\\"
+
+    for label, path in [
+        ("home", "/"),
+        ("about", "/about"),
+        ("demos", "/demos"),
+        ("resume", "/resume"),
+        ("contact", "/contact"),
     ]:
-        assert line in text
+        assert osc8(label, path) in text
     assert '<' not in text
     
 def test_index_svg_links(client):
