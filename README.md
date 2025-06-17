@@ -23,19 +23,6 @@ which is useful in the cloud workspace.
 
 Then visit http://localhost:5000 in your browser.
 
-### Docker Image
-
-You can also run the application inside a container. Build the image using the
-provided `Dockerfile`:
-
-```bash
-docker build -t personal-site .
-docker run -p 8080:8080 -e PORT=8080 personal-site
-```
-
-This mirrors the image that GitHub Actions builds and pushes to Google Artifact
-Registry on every merge to `master`.
-
 ## Testing
 
 The application includes comprehensive test suites for both backend and frontend code.
@@ -122,14 +109,13 @@ To set up automatic deployment, you need to:
    - `GCP_PROJECT_ID`: Your Google Cloud Project ID
    - `GCP_SA_KEY`: The entire content of the downloaded Service Account JSON key file
 
-The GitHub Actions workflow in `.github/workflows/deploy.yml` handles deployment whenever changes are merged to the `master` branch.  It builds a Docker image from the provided `Dockerfile`, pushes that image to Google Artifact Registry, and then invokes the Makefile's `deploy` target.  The deploy target in turn calls `gcloud app deploy --image-url` so App Engine runs the freshly built container.
+The GitHub Actions workflow in `.github/workflows/deploy.yml` will handle the rest, automatically deploying your application when changes are merged to the master branch. The workflow invokes the Makefile's `deploy` target so your static assets are built before `gcloud` uploads the app.
 
 ### Manual Deployment
 
 If you want to deploy manually using the Google Cloud SDK, make sure the compiled
 static assets are available. The provided Makefile includes a `deploy` target that
-builds the frontend and Elm assets, builds the Docker image and pushes it to Artifact
-Registry, and then runs `gcloud app deploy --image-url`:
+builds the frontend and Elm assets and then runs `gcloud app deploy`:
 
 ```bash
 make deploy

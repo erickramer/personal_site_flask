@@ -87,9 +87,6 @@ jobs:
       with:
         version: ">= 363.0.0"
         project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-    - name: Configure Docker for Artifact Registry
-      run: gcloud auth configure-docker us-central1-docker.pkg.dev -q
       
     - name: Verify service account permissions
       run: |
