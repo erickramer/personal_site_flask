@@ -14,6 +14,9 @@ from sentiment.emojis import emojis
 # Initialize sentiment model lazily when needed
 _sentiment_model = None
 
+# Base URL used when generating hyperlinks for terminal output
+BASE_URL = "https://erickramer.xyz"
+
 # Plain text used for curl requests on the about and index pages
 ABOUT_TEXT = """
 I'm Eric Kramer. I currently work at OpenAI helping build the developer platform.
@@ -24,6 +27,11 @@ I live in Noe Valley, San Francisco with my wife, our two cats and two sons.
 Get in touch if you want to talk more about data science or medicine. You
 can reach me at 619.724.3800 or ericransomkramer@gmail.com.
 """
+
+
+def hyperlink(text: str, url: str) -> str:
+    """Return OSC-8 hyperlink escape sequence."""
+    return f"\x1b]8;;{url}\x1b\\{text}\x1b]8;;\x1b\\"
 
 
 def get_sentiment_model():
@@ -137,10 +145,11 @@ def register_routes(app):
         user_agent = request.headers.get("User-Agent", "").lower()
         if "curl" in user_agent:
             links = "\n".join([
-                f"- home: {url_for('index')}",
-                f"- about: {url_for('about')}",
-                f"- demos: {url_for('demos')}",
-                f"- contact: {url_for('contact')}",
+                f"- {hyperlink('home', BASE_URL + url_for('index'))}",
+                f"- {hyperlink('about', BASE_URL + url_for('about'))}",
+                f"- {hyperlink('demos', BASE_URL + url_for('demos'))}",
+                f"- {hyperlink('resume', BASE_URL + url_for('resume'))}",
+                f"- {hyperlink('contact', BASE_URL + url_for('contact'))}",
             ])
             return f"{ABOUT_TEXT.strip()}\n\n{links}\n"
         return render_template("index.html")
