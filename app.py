@@ -29,9 +29,25 @@ can reach me at 619.724.3800 or ericransomkramer@gmail.com.
 """
 
 
-def hyperlink(text: str, url: str) -> str:
-    """Return OSC-8 hyperlink escape sequence."""
-    return f"\x1b]8;;{url}\x1b\\{text}\x1b]8;;\x1b\\"
+def hyperlink(text: str, url: str, color: str = None) -> str:
+    """Return OSC-8 hyperlink escape sequence with optional ANSI color."""
+    colored_text = text
+    if color:
+        colors = {
+            "black": "30",
+            "red": "31",
+            "green": "32",
+            "yellow": "33",
+            "blue": "34",
+            "magenta": "35",
+            "cyan": "36",
+            "white": "37",
+        }
+        code = colors.get(color.lower())
+        if code:
+            colored_text = f"\x1b[{code}m{text}\x1b[0m"
+
+    return f"\x1b]8;;{url}\x1b\\{colored_text}\x1b]8;;\x1b\\"
 
 
 def get_sentiment_model():
@@ -145,13 +161,14 @@ def register_routes(app):
         user_agent = request.headers.get("User-Agent", "").lower()
         if "curl" in user_agent:
             links = "\n".join([
-                f"- {hyperlink('home', BASE_URL + url_for('index'))}",
-                f"- {hyperlink('about', BASE_URL + url_for('about'))}",
-                f"- {hyperlink('demos', BASE_URL + url_for('demos'))}",
-                f"- {hyperlink('resume', BASE_URL + url_for('resume'))}",
-                f"- {hyperlink('contact', BASE_URL + url_for('contact'))}",
+                f"- {hyperlink('home', BASE_URL + url_for('index'), color='blue')}",
+                f"- {hyperlink('about', BASE_URL + url_for('about'), color='blue')}",
+                f"- {hyperlink('demos', BASE_URL + url_for('demos'), color='blue')}",
+                f"- {hyperlink('resume', BASE_URL + url_for('resume'), color='blue')}",
+                f"- {hyperlink('contact', BASE_URL + url_for('contact'), color='blue')}",
             ])
-            return f"{ABOUT_TEXT.strip()}\n\n{links}\n"
+            intro = "For more information, follow the links below"
+            return f"{ABOUT_TEXT.strip()}\n\n{intro}\n{links}\n"
         return render_template("index.html")
 
     # Serve the favicon for browsers that request /favicon.ico

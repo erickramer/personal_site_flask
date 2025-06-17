@@ -18,9 +18,13 @@ def test_index_route_curl(client):
     assert response.status_code == 200
     text = response.get_data(as_text=True)
     assert ABOUT_TEXT.strip() in text
+    assert "For more information, follow the links below" in text
+
     def osc8(label, path):
         url = f"https://erickramer.xyz{path}"
-        return f"- \x1b]8;;{url}\x1b\\{label}\x1b]8;;\x1b\\"
+        blue = "\x1b[34m"
+        reset = "\x1b[0m"
+        return f"- \x1b]8;;{url}\x1b\\{blue}{label}{reset}\x1b]8;;\x1b\\"
 
     for label, path in [
         ("home", "/"),
