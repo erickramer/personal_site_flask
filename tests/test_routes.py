@@ -22,9 +22,9 @@ def test_index_route_curl(client):
 
     def osc8(label, path):
         url = f"https://erickramer.xyz{path}"
-        blue = "\x1b[34m"
+        cyan = "\x1b[36m"
         reset = "\x1b[0m"
-        return f"- \x1b]8;;{url}\x1b\\{blue}{label}{reset}\x1b]8;;\x1b\\"
+        return f"- \x1b]8;;{url}\x1b\\{cyan}{label}{reset}\x1b]8;;\x1b\\"
 
     for label, path in [
         ("home", "/"),

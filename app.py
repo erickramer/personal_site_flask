@@ -161,11 +161,11 @@ def register_routes(app):
         user_agent = request.headers.get("User-Agent", "").lower()
         if "curl" in user_agent:
             links = "\n".join([
-                f"- {hyperlink('home', BASE_URL + url_for('index'), color='blue')}",
-                f"- {hyperlink('about', BASE_URL + url_for('about'), color='blue')}",
-                f"- {hyperlink('demos', BASE_URL + url_for('demos'), color='blue')}",
-                f"- {hyperlink('resume', BASE_URL + url_for('resume'), color='blue')}",
-                f"- {hyperlink('contact', BASE_URL + url_for('contact'), color='blue')}",
+                f"- {hyperlink('home', BASE_URL + url_for('index'), color='cyan')}",
+                f"- {hyperlink('about', BASE_URL + url_for('about'), color='cyan')}",
+                f"- {hyperlink('demos', BASE_URL + url_for('demos'), color='cyan')}",
+                f"- {hyperlink('resume', BASE_URL + url_for('resume'), color='cyan')}",
+                f"- {hyperlink('contact', BASE_URL + url_for('contact'), color='cyan')}",
             ])
             intro = "For more information, follow the links below"
             return f"{ABOUT_TEXT.strip()}\n\n{intro}\n{links}\n"
