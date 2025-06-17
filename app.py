@@ -136,7 +136,13 @@ def register_routes(app):
     def index():
         user_agent = request.headers.get("User-Agent", "").lower()
         if "curl" in user_agent:
-            return ABOUT_TEXT
+            links = "\n".join([
+                f"- home: {url_for('index')}",
+                f"- about: {url_for('about')}",
+                f"- demos: {url_for('demos')}",
+                f"- contact: {url_for('contact')}",
+            ])
+            return f"{ABOUT_TEXT.strip()}\n\n{links}\n"
         return render_template("index.html")
 
     # Serve the favicon for browsers that request /favicon.ico
