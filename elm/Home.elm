@@ -134,11 +134,13 @@ svgElements model =
 
 randomVelocity model =
     let
+        factor = 2.0e-5 / 3
+
         vx =
-            2.0e-5 * Box.max model.box.width
+            factor * Box.max model.box.width
 
         vy =
-            2.0e-5 * Box.max model.box.height
+            factor * Box.max model.box.height
     in
     Random.map2
         Vector.vector
