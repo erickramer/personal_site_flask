@@ -68,6 +68,7 @@ update msg model =
     case msg of
         OnAnimate dt ->
             let
+                scaledDt = dt / 3
                 collisionHandler =
                     if model.g > 0 then
                         Particle.mergeCollisions
@@ -78,11 +79,11 @@ update msg model =
                 particles =
                     if dt < 150 then
                         model.particles
-                            |> List.map (Particle.updatePosition dt)
+                            |> List.map (Particle.updatePosition scaledDt)
                             |> List.map (Box.bounce model.box)
                             |> collisionHandler
                             |> Particle.updateAcceleration model.g
-                            |> List.map (Particle.updateVelocity dt)
+                            |> List.map (Particle.updateVelocity scaledDt)
                     else
                         model.particles
             in
