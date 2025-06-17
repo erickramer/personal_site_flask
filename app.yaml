@@ -21,9 +21,12 @@ handlers:
   static_dir: static/dist/images
   secure: always
   expiration: 7d
+- url: /
+  script: auto
+  secure: optional
 - url: /.*
   script: auto
-  secure: always
+  secure: redirect
 env_variables:
   FLASK_APP: app.py
   FLASK_CONFIG: production
