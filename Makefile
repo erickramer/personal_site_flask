@@ -85,5 +85,10 @@ coverage-all:
 all: setup
 
 # Deploy to Google App Engine
+IMAGE ?= us-central1-docker.pkg.dev/$(GCP_PROJECT_ID)/personal-site/personal-site
+TAG ?= latest
+
 deploy: build-frontend build-elm
-	gcloud app deploy app.yaml
+	docker build -t $(IMAGE):$(TAG) .
+	docker push $(IMAGE):$(TAG)
+	gcloud app deploy app.yaml --image-url=$(IMAGE):$(TAG)
