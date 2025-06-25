@@ -133,6 +133,20 @@ def test_static_js_files(client, is_ci_environment):
         assert response.status_code == 200, f"JS file {js_file} not accessible"
         assert 'javascript' in response.headers['Content-Type'].lower()
 
+def test_static_image_files(client, is_ci_environment):
+    """Test that critical image files can be accessed."""
+    if is_ci_environment:
+        pytest.skip("Skipping image files in CI environment")
+
+    image_files = [
+        '/static/dist/images/spaceship.svg'
+    ]
+
+    for image_file in image_files:
+        response = client.get(image_file)
+        assert response.status_code == 200, f"Image {image_file} not accessible"
+        assert 'image' in response.headers['Content-Type']
+
 def test_debug_static_endpoint(client):
     """Test the debug static endpoint lists files correctly."""
     response = client.get('/debug/static')
