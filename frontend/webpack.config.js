@@ -17,6 +17,7 @@ module.exports = (env, argv) => {
     output: {
       filename: 'js/[name].bundle.js',
       path: path.resolve(__dirname, 'dist'),
+      publicPath: '/static/dist/',
     },
     devtool: isDevelopment ? 'source-map' : false,
     module: {
