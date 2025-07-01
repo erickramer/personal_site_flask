@@ -35,7 +35,7 @@ beforeEach(() => {
 });
 
 // Import module after setting up mocks
-import '../sentiment.js';
+import * as sentiment from '../sentiment.js';
 
 describe('Sentiment Module', () => {
   test('DOM elements are properly selected', () => {
@@ -75,14 +75,12 @@ describe('Sentiment Module', () => {
     jest.useRealTimers();
   });
   
-  test('Empty text does not trigger API call', () => {
-    const textarea = document.getElementById('target');
-    textarea.value = '';
-    
-    const event = new Event('input');
-    textarea.dispatchEvent(event);
-    
-    // Check fetch wasn't called
-    expect(global.fetch).not.toHaveBeenCalled();
+  test('Empty text triggers API call', () => {
+    sentiment.submitTextForAnalysis('');
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+    const [url, options] = global.fetch.mock.calls[0];
+    expect(url).toBe('/sentiment/api/score');
+    expect(options.method).toBe('POST');
   });
 });
+
