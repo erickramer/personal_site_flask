@@ -79,6 +79,13 @@ def test_asteroids_route(client):
     assert response.status_code == 200
     assert b'html' in response.data
 
+    # Parse the HTML response
+    soup = BeautifulSoup(response.data, 'html.parser')
+
+    # Ensure the Elm Asteroids module is initialized
+    elm_script = soup.find('script', text=lambda t: t and 'Elm.Asteroids.init' in t)
+    assert elm_script is not None, "Elm initialization script not found"
+
 def test_resume_redirect(client):
     """Test that the resume route redirects."""
     response = client.get('/resume', follow_redirects=False)
