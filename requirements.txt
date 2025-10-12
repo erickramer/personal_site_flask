@@ -7,9 +7,13 @@ Werkzeug==3.0.6
 SQLAlchemy==2.0.27
 
 # ML/Data processing
-tensorflow>=2.12.0,<2.14.0
-numpy>=1.22.0,<1.25.0
-pandas>=1.5.0,<2.1.0
+# TensorFlow and numeric stack need newer wheels on Python 3.12.
+tensorflow==2.16.1 ; python_version >= "3.10"
+tensorflow>=2.12.0,<2.14.0 ; python_version < "3.10"
+numpy>=1.26.0,<2.0.0 ; python_version >= "3.10"
+numpy>=1.22.0,<1.25.0 ; python_version < "3.10"
+pandas>=2.1.0,<2.3.0 ; python_version >= "3.10"
+pandas>=1.5.0,<2.1.0 ; python_version < "3.10"
 
 # Development & Testing
 python-dotenv==1.0.0

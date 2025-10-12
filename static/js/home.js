@@ -6217,7 +6217,7 @@ var $author$project$Home$svgAttributes = function (model) {
 		]);
 };
 var $author$project$Home$links = _List_fromArray(
-	['about', 'demos', 'resume', 'contact']);
+	['about', 'resume', 'contact']);
 var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
 var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
 var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');

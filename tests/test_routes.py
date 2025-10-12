@@ -29,7 +29,6 @@ def test_index_route_curl(client):
     for label, path in [
         ("home", "/"),
         ("about", "/about"),
-        ("demos", "/demos"),
         ("resume", "/resume"),
         ("contact", "/contact"),
     ]:
@@ -49,7 +48,7 @@ def test_index_svg_links(client):
     assert elm_script is not None, "Elm initialization script not found"
     
     # Test the routes that the links should point to
-    expected_routes = ['/about', '/demos', '/resume', '/contact']
+    expected_routes = ['/about', '/resume', '/contact']
     for route in expected_routes:
         # Check if the route is valid
         test_response = client.get(route, follow_redirects=False)
@@ -64,12 +63,6 @@ def test_about_route(client):
 def test_contact_route(client):
     """Test that the contact route returns 200 and contains expected content."""
     response = client.get('/contact')
-    assert response.status_code == 200
-    assert b'html' in response.data
-
-def test_demos_route(client):
-    """Test that the demos route returns 200 and contains expected content."""
-    response = client.get('/demos')
     assert response.status_code == 200
     assert b'html' in response.data
 
@@ -200,4 +193,3 @@ def test_favicon_fallback(client, monkeypatch):
     response = client.get('/favicon.ico')
     assert response.status_code == 200
     assert response.data == expected_data
-

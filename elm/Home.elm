@@ -37,7 +37,7 @@ type Msg
     | ResetParticles Int
     | NewWindowSize WindowSize
 
-links = ["about", "demos", "resume", "contact"]
+links = ["about", "resume", "contact"]
 
 main =
     Browser.element
@@ -183,4 +183,3 @@ type alias WindowSize = {
     }
 
 port newWindowSize : ( WindowSize -> msg) -> Sub msg
-
