@@ -1,6 +1,6 @@
 # Personal Site Flask Application
 
-A personal portfolio website built with Flask, featuring interactive components and machine learning.
+A personal portfolio website built with Flask and Elm-powered interactivity.
 
 ## Quick Start
 
@@ -61,15 +61,12 @@ pytest --cov=./ --cov-report=html
 
 # Run specific test categories
 pytest -m routes  # Just route tests
-pytest -m sentiment  # Just sentiment module tests
 
 # Run tests in verbose mode
 pytest -v
 ```
 
 The backend test suite includes:
-- Unit tests for models and utility functions
-- Integration tests for API endpoints
 - Configuration tests
 - Route tests
 
@@ -126,26 +123,22 @@ application to App Engine.
 
 ## Project Overview
 
-This Flask-based personal site combines traditional web technologies with modern approaches like Elm and machine learning.
+This Flask-based personal site combines traditional web technologies with modern approaches like Elm.
 
 ### Key Features
 
 - Portfolio pages with contact information
 - Interactive Elm-based homepage with particle animations
-- Sentiment analysis module for analyzing tweet sentiment
 - Standalone interactive Asteroids game
-- Data visualizations using D3.js
+- Terminal-friendly landing page that outputs OSC-8 hyperlinks
 
 ## Technologies
 
-- **Backend**: Flask, SQLAlchemy, Python
+- **Backend**: Flask, Python
 - **Frontend**: HTML/CSS (Skeleton CSS framework), JavaScript
 - **UI Framework**: Elm for interactive components
 - **Build System**: Webpack, Babel, SASS
-- **Data Visualization**: D3.js
-- **Machine Learning**: Keras/TensorFlow for sentiment analysis
-- **Libraries**: jQuery, Underscore.js
-- **Database**: SQLite
+- **Libraries**: jQuery, Underscore.js, D3.js
 
 ## Frontend Development
 
@@ -215,30 +208,22 @@ The test suite includes:
 
 ## Project Structure
 
-- **app.py**: Main Flask application
-- **templates/**: HTML templates for different pages
-- **static/**: CSS, JS, images and other static assets
-  - **dist/**: Compiled and minified frontend assets
-- **frontend/**: Frontend source files
-  - **src/**: Source JavaScript and CSS
-  - **webpack.config.js**: Webpack configuration
-- **sentiment/**: Sentiment analysis module
-  - Machine learning model (ml.py)
-  - Tweet models (models.py)
-  - Emoji handling (emojis.py)
-  - Views and routes (views.py)
+- **app.py**: Main Flask application and route definitions
+- **templates/**: HTML templates for individual pages
+- **static/**: Compiled CSS/JS bundles and images served by Flask
+  - **dist/**: Output from the webpack build
+- **frontend/**: Source JavaScript, CSS, and webpack configuration
 - **elm/**: Elm source files for interactive UI components
-- **data/**: Database files and ML model storage
+- **tests/**: Pytest suites covering routes and configuration
+- **scripts/** and **Makefile**: Helper commands for development and deployment
 
 ## Notable Components
-
-### Sentiment Analysis Module
-- Uses Keras LSTM neural network for sentiment prediction
-- Analyzes text for emoji predictions
-- Interactive visualization of sentiment scores
-- Trained on tweet data stored in SQLite database
 
 ### Elm Integration
 - Home page uses Elm for interactive particle animations
 - Dynamic resizing based on window dimensions
 - Link visualization through particle effects
+
+### Asteroids Mini-Game
+- P5.js and Elm-powered gesture-controlled Asteroids experience
+- Served as a standalone page with minimal Flask involvement

@@ -11,8 +11,7 @@ module.exports = (env, argv) => {
     entry: {
       main: './src/js/main.js',
       home: './src/js/home.js',
-      asteroids: './src/js/asteroids.js',
-      sentiment: './src/js/sentiment.js'
+      asteroids: './src/js/asteroids.js'
     },
     output: {
       filename: 'js/[name].bundle.js',

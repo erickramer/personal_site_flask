@@ -1,18 +1,8 @@
-from flask import Flask, render_template, redirect, jsonify, request, url_for, send_from_directory, abort
+from flask import Flask, render_template, redirect, request, url_for, send_from_directory, abort
 import os
 import logging
 
-# Import db from models to avoid circular imports
-from models import db
-
-# Import configuration
 from config import config
-
-# Import sentiment-related modules
-from sentiment.emojis import emojis
-
-# Initialize sentiment model lazily when needed
-_sentiment_model = None
 
 # Base URL used when generating hyperlinks for terminal output
 BASE_URL = "https://erickramer.xyz"
@@ -48,25 +38,6 @@ def hyperlink(text: str, url: str, color: str = None) -> str:
             colored_text = f"\x1b[{code}m{text}\x1b[0m"
 
     return f"\x1b]8;;{url}\x1b\\{colored_text}\x1b]8;;\x1b\\"
-
-
-def get_sentiment_model():
-    global _sentiment_model
-    if _sentiment_model is None:
-        # Import here to avoid circular imports
-        from sentiment.ml import SentimentModel
-        try:
-            _sentiment_model = SentimentModel()
-        except Exception as e:
-            logging.warning(f"Error initializing sentiment model: {e}")
-            # Use a fallback dummy model in case of errors
-            try:
-                _sentiment_model = SentimentModel(model="dummy")
-            except TypeError:
-                # Handle case where the model has been mocked in tests
-                # and doesn't accept arguments
-                _sentiment_model = SentimentModel()
-    return _sentiment_model
 
 
 def create_app(config_name="default"):
@@ -132,19 +103,6 @@ def create_app(config_name="default"):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # Initialize extensions
-    db.init_app(app)
-
-    # Initialize SQLAlchemy within app context
-    with app.app_context():
-        # Only attempt to configure SQLite connection if not in production
-        if config_name != "production":
-            try:
-                # Set text_factory for SQLite connections
-                db.engine.raw_connection().text_factory = str
-            except Exception as e:
-                app.logger.warning(f"Could not set SQLite text_factory: {e}")
 
     # Register all routes
     register_routes(app)
@@ -219,18 +177,6 @@ def register_routes(app):
             "https://github.com/erickramer/resume/blob/master/EricKramer-resume.pdf"
         )
 
-    # Sentiment analysis routes
-    @app.route("/sentiment")
-    def sentiment_index():
-        return render_template("sentiment.html")
-
-    @app.route("/sentiment/api/score", methods=["POST"])
-    def sentiment_score():
-        text = request.form["text"]
-        model = get_sentiment_model()
-        res = model.score(text)
-        return jsonify(res)
-        
     # Debug route to directly serve static files
     @app.route("/debug/file/<path:filepath>")
     def debug_file(filepath):
