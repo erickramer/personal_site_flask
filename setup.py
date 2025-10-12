@@ -7,11 +7,6 @@ setup(
     include_package_data=True,
     install_requires=[
         "flask",
-        "flask-sqlalchemy",
-        'tensorflow==2.16.1; python_version >= "3.10"',
-        'tensorflow>=2.12.0,<2.14.0; python_version < "3.10"',
-        'numpy>=1.26.0,<2.0.0; python_version >= "3.10"',
-        'numpy>=1.22.0,<1.25.0; python_version < "3.10"',
         "python-dotenv",
     ],
     extras_require={
