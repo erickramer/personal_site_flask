@@ -163,7 +163,6 @@ def register_routes(app):
             links = "\n".join([
                 f"- {hyperlink('home', BASE_URL + url_for('index'), color='cyan')}",
                 f"- {hyperlink('about', BASE_URL + url_for('about'), color='cyan')}",
-                f"- {hyperlink('demos', BASE_URL + url_for('demos'), color='cyan')}",
                 f"- {hyperlink('resume', BASE_URL + url_for('resume'), color='cyan')}",
                 f"- {hyperlink('contact', BASE_URL + url_for('contact'), color='cyan')}",
             ])
@@ -192,10 +191,6 @@ def register_routes(app):
     @app.route("/contact")
     def contact():
         return render_template("contact.html")
-
-    @app.route("/demos")
-    def demos():
-        return render_template("demos.html")
 
     @app.route("/about")
     def about():

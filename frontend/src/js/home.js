@@ -6213,7 +6213,7 @@ var author$project$Home$svgAttributes = function (model) {
 		]);
 };
 var author$project$Home$links = _List_fromArray(
-	['about', 'demos', 'resume', 'contact']);
+	['about', 'resume', 'contact']);
 var elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var elm$svg$Svg$a = elm$svg$Svg$trustedNode('a');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;

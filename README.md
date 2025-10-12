@@ -1,6 +1,6 @@
 # Personal Site Flask Application
 
-A personal portfolio and demos website built with Flask, featuring interactive components and machine learning.
+A personal portfolio website built with Flask, featuring interactive components and machine learning.
 
 ## Quick Start
 
@@ -133,8 +133,8 @@ This Flask-based personal site combines traditional web technologies with modern
 - Portfolio pages with contact information
 - Interactive Elm-based homepage with particle animations
 - Sentiment analysis module for analyzing tweet sentiment
-- Multiple interactive demos including an Asteroids game
-- Data visualization using D3.js
+- Standalone interactive Asteroids game
+- Data visualizations using D3.js
 
 ## Technologies
 
@@ -242,7 +242,3 @@ The test suite includes:
 - Home page uses Elm for interactive particle animations
 - Dynamic resizing based on window dimensions
 - Link visualization through particle effects
-
-### Interactive Demos
-- Asteroids game implementation
-- Multiple visualization demos

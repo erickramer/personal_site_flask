@@ -1,6 +1,3 @@
-import tensorflow as tf
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, Dense, Dropout, Embedding, LSTM
 from flask import current_app
 
 # Import db from models module to avoid circular imports
@@ -11,6 +8,7 @@ from .models import Tweet
 import os
 import numpy as np
 import logging
+import importlib
 
 def data_gen(batch_size=100):
     # loading all tweets into memory for speed
@@ -37,6 +35,7 @@ def data_gen(batch_size=100):
 class SentimentModel(object):
 
     def __init__(self, model=None):
+        self._tf = None
         if model == "dummy":
             # Explicitly use dummy model
             self._model = self._build_dummy_model()
@@ -73,18 +72,33 @@ class SentimentModel(object):
         # Use BASE_DIR from config with consistent path handling
         return os.path.join(current_app.config['BASE_DIR'], 'data', 'model.h5')
 
+    def _get_tf(self):
+        """Import TensorFlow lazily so environments without it can still run."""
+        if self._tf is not None:
+            return self._tf
+
+        try:
+            tf = importlib.import_module("tensorflow")
+        except Exception as exc:
+            raise RuntimeError("TensorFlow is not available") from exc
+
+        self._tf = tf
+        return tf
+
     def _build_model(self):
         """Build a real LSTM model for sentiment analysis."""
-        text = Input(shape=(140,))
+        tf = self._get_tf()
 
-        x = Embedding(input_dim=5000, output_dim=64)(text)
-        x = LSTM(128)(x)
-        x = Dropout(0.5)(x)
+        text = tf.keras.Input(shape=(140,))
 
-        emoji = Dense(len(emojis), activation="sigmoid", name="emoji")(x)
-        sentiment = Dense(3, activation="sigmoid", name="sentiment")(x)
+        x = tf.keras.layers.Embedding(input_dim=5000, output_dim=64)(text)
+        x = tf.keras.layers.LSTM(128)(x)
+        x = tf.keras.layers.Dropout(0.5)(x)
 
-        model = Model(text, [emoji, sentiment])
+        emoji = tf.keras.layers.Dense(len(emojis), activation="sigmoid", name="emoji")(x)
+        sentiment = tf.keras.layers.Dense(3, activation="sigmoid", name="sentiment")(x)
+
+        model = tf.keras.Model(text, [emoji, sentiment])
 
         model.compile("RMSprop",
                   loss={'sentiment': "binary_crossentropy", "emoji": "binary_crossentropy"},
@@ -112,6 +126,7 @@ class SentimentModel(object):
         return DummyModel()
 
     def _load_model(self):
+        tf = self._get_tf()
         return tf.keras.models.load_model(self.model_path)
 
     def _set_baseline(self):

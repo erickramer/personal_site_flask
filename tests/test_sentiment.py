@@ -64,3 +64,15 @@ def test_tweet_model(session):
     # Test retrieval
     retrieved = session.query(Tweet).filter_by(raw_tweet="Hello world! 😊").first()
     assert retrieved.raw_tweet == "Hello world! 😊"
+
+def test_dummy_model_used_in_app_engine(monkeypatch, app):
+    """Ensure we fall back to the dummy sentiment model on App Engine."""
+    monkeypatch.setenv("GAE_ENV", "standard")
+
+    with app.app_context():
+        model = SentimentModel()
+        result = model.score("Test tweet")
+
+    monkeypatch.delenv("GAE_ENV", raising=False)
+
+    assert "emoji" in result and "sentiment" in result
