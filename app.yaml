@@ -7,20 +7,6 @@ handlers:
   expiration: 7d
   http_headers:
     Cache-Control: public, max-age=604800
-- url: /static/dist/css
-  static_dir: static/dist/css
-  mime_type: text/css
-  secure: always
-  expiration: 7d
-- url: /static/dist/js
-  static_dir: static/dist/js
-  mime_type: application/javascript
-  secure: always
-  expiration: 7d
-- url: /static/dist/images
-  static_dir: static/dist/images
-  secure: always
-  expiration: 7d
 - url: /
   script: auto
   secure: optional

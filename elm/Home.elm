@@ -37,7 +37,7 @@ type Msg
     | ResetParticles Int
     | NewWindowSize WindowSize
 
-links = ["about", "resume", "contact"]
+links = ["about", "demos", "resume", "contact"]
 
 main =
     Browser.element
