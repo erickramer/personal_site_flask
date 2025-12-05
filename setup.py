@@ -8,7 +8,7 @@ setup(
     install_requires=[
         "flask",
         "flask-sqlalchemy>=2.5,<3",
-        "tensorflow>=2.12.0,<2.14.0",
+        "tensorflow==2.16.1",
         "numpy>=1.22.0,<1.25.0",
         "python-dotenv",
     ],
