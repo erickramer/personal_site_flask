@@ -1,0 +1,7 @@
+/* Custom overrides for the site */
+
+svg a,
+svg text,
+svg tspan {
+  pointer-events: auto !important;
+}

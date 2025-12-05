@@ -48,9 +48,15 @@ tests =
                     v0 = Array.get 0 result |> Maybe.map .velocity
                     v1 = Array.get 1 result |> Maybe.map .velocity
                 in
-                Expect.true "velocities preserved"
-                    ((v0 == Just p.velocity && v1 == Just far.velocity)
-                        || (v0 == Just far.velocity && v1 == Just p.velocity))
+                let
+                    velocitiesPreserved =
+                        ((v0 == Just p.velocity && v1 == Just far.velocity)
+                            || (v0 == Just far.velocity && v1 == Just p.velocity))
+                in
+                if velocitiesPreserved then
+                    Expect.pass
+                else
+                    Expect.fail "velocities should be preserved"
         , test "resolveCollisions updates velocities on collision" <|
             \_ ->
                 let

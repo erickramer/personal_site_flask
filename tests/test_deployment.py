@@ -31,52 +31,18 @@ def test_app_yaml_static_handlers():
     handlers = config.get('handlers', [])
     assert len(handlers) >= 3, "app.yaml should have at least 3 handlers"
     
-    # Check static file handlers with the updated structure
-    static_handler = None
-    static_css_handler = None
-    static_js_handler = None
-    static_images_handler = None
-    
-    for handler in handlers:
-        # Check URL patterns
-        url = handler.get('url', '')
-        
-        if url == '/static':
-            static_handler = handler
-        elif url == '/static/dist/css':
-            static_css_handler = handler
-        elif url == '/static/dist/js':
-            static_js_handler = handler
-        elif url == '/static/dist/images':
-            static_images_handler = handler
-    
-    # Verify base static handler
+    # Check static file handler
+    static_handler = next((h for h in handlers if h.get('url') == '/static'), None)
     assert static_handler is not None, "No handler for /static found"
-    assert 'static_dir' in static_handler, "Base static handler should use static_dir"
+    assert static_handler.get('static_dir') == 'static', "Base static handler should point at the static directory"
     assert 'expiration' in static_handler, "Base static handler should have expiration"
-    assert 'secure' in static_handler, "Base static handler should have secure: always"
-    
-    # Verify CSS handler
-    assert static_css_handler is not None, "No handler for /static/dist/css found"
-    assert 'static_dir' in static_css_handler, "CSS handler should use static_dir"
-    assert 'mime_type' in static_css_handler, "CSS handler should specify mime_type"
-    assert static_css_handler['mime_type'] == 'text/css', "CSS handler should have text/css mime type"
-    assert 'expiration' in static_css_handler, "CSS handler should have expiration"
-    assert 'secure' in static_css_handler, "CSS handler should have secure: always"
-    
-    # Verify JS handler
-    assert static_js_handler is not None, "No handler for /static/dist/js found"
-    assert 'static_dir' in static_js_handler, "JS handler should use static_dir"
-    assert 'mime_type' in static_js_handler, "JS handler should specify mime_type"
-    assert static_js_handler['mime_type'] == 'application/javascript', "JS handler should have application/javascript mime type"
-    assert 'expiration' in static_js_handler, "JS handler should have expiration"
-    assert 'secure' in static_js_handler, "JS handler should have secure: always"
-    
-    # Verify Images handler
-    assert static_images_handler is not None, "No handler for /static/dist/images found"
-    assert 'static_dir' in static_images_handler, "Images handler should use static_dir"
-    assert 'expiration' in static_images_handler, "Images handler should have expiration"
-    assert 'secure' in static_images_handler, "Images handler should have secure: always"
+    assert static_handler.get('secure') == 'always', "Base static handler should have secure: always"
+    assert static_handler.get('http_headers', {}).get('Cache-Control') == 'public, max-age=604800'
+
+    # Ensure no legacy dist handlers remain
+    for handler in handlers:
+        url = handler.get('url', '')
+        assert not url.startswith('/static/dist'), f"Legacy dist handler still present: {url}"
 
 # Removed test_workflow_static_file_copying
     

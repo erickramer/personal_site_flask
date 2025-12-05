@@ -1,7 +1,8 @@
-from flask import Flask, render_template, redirect, request, url_for, send_from_directory, abort
+from flask import Flask, render_template, redirect, request, url_for, send_from_directory, abort, jsonify
 import os
 import logging
 
+from models import db
 from config import config
 
 # Base URL used when generating hyperlinks for terminal output
@@ -17,6 +18,10 @@ I live in Noe Valley, San Francisco with my wife, our two cats and two sons.
 Get in touch if you want to talk more about data science or medicine. You
 can reach me at 619.724.3800 or ericransomkramer@gmail.com.
 """
+
+
+# Lazily instantiated sentiment model
+_sentiment_model = None
 
 
 def hyperlink(text: str, url: str, color: str = None) -> str:
@@ -38,6 +43,20 @@ def hyperlink(text: str, url: str, color: str = None) -> str:
             colored_text = f"\x1b[{code}m{text}\x1b[0m"
 
     return f"\x1b]8;;{url}\x1b\\{colored_text}\x1b]8;;\x1b\\"
+
+
+def get_sentiment_model():
+    """Return a shared SentimentModel instance, falling back to a dummy if needed."""
+    global _sentiment_model
+    if _sentiment_model is None:
+        from sentiment.ml import SentimentModel
+
+        try:
+            _sentiment_model = SentimentModel()
+        except Exception as exc:
+            logging.warning("Falling back to dummy sentiment model: %s", exc)
+            _sentiment_model = SentimentModel(model="dummy")
+    return _sentiment_model
 
 
 def create_app(config_name="default"):
@@ -97,12 +116,23 @@ def create_app(config_name="default"):
 
     # Load the appropriate configuration
     app.config.from_object(config[config_name])
+    app.config.setdefault("BASE_DIR", os.path.abspath(os.path.dirname(__file__)))
 
     # Ensure the instance folder exists
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    # Initialize extensions
+    db.init_app(app)
+
+    with app.app_context():
+        if config_name != "production":
+            try:
+                db.engine.raw_connection().text_factory = str
+            except Exception as exc:
+                app.logger.warning("Could not set SQLite text_factory: %s", exc)
 
     # Register all routes
     register_routes(app)
@@ -121,6 +151,7 @@ def register_routes(app):
             links = "\n".join([
                 f"- {hyperlink('home', BASE_URL + url_for('index'), color='cyan')}",
                 f"- {hyperlink('about', BASE_URL + url_for('about'), color='cyan')}",
+                f"- {hyperlink('demos', BASE_URL + url_for('demos'), color='cyan')}",
                 f"- {hyperlink('resume', BASE_URL + url_for('resume'), color='cyan')}",
                 f"- {hyperlink('contact', BASE_URL + url_for('contact'), color='cyan')}",
             ])
@@ -150,6 +181,10 @@ def register_routes(app):
     def contact():
         return render_template("contact.html")
 
+    @app.route("/demos")
+    def demos():
+        return render_template("demos.html")
+
     @app.route("/about")
     def about():
         user_agent = request.headers.get("User-Agent", "").lower()
@@ -176,6 +211,20 @@ def register_routes(app):
         return redirect(
             "https://github.com/erickramer/resume/blob/master/EricKramer-resume.pdf"
         )
+
+    @app.route("/sentiment")
+    def sentiment_index():
+        return render_template("sentiment.html")
+
+    @app.route("/sentiment/api/score", methods=["POST"])
+    def sentiment_score():
+        if request.is_json:
+            text = (request.get_json() or {}).get("text", "")
+        else:
+            text = request.form.get("text", "")
+        model = get_sentiment_model()
+        result = model.score(text)
+        return jsonify(result)
 
     # Debug route to directly serve static files
     @app.route("/debug/file/<path:filepath>")
@@ -216,21 +265,19 @@ def register_routes(app):
         
         if not filename.endswith('.css'):
             return abort(400, "Only CSS files are allowed")
-            
-        # Determine if it's in dist or regular css folder
-        if filename.startswith('dist/'):
-            css_path = os.path.join(app.static_folder, filename)
-        else:
-            css_path = os.path.join(app.static_folder, 'dist/css', filename)
-            
-        # Check if file exists
-        if not os.path.exists(css_path):
-            return abort(404, f"CSS file not found: {css_path}")
-            
-        # Read file content and return directly
+
+        candidate_paths = [
+            os.path.join(app.static_folder, filename),
+            os.path.join(app.static_folder, 'css', filename),
+        ]
+
+        css_path = next((path for path in candidate_paths if os.path.exists(path)), None)
+        if css_path is None:
+            return abort(404, f"CSS file not found: {filename}")
+
         with open(css_path, 'r') as f:
             content = f.read()
-            
+        
         response = make_response(content)
         response.headers['Content-Type'] = 'text/css'
         return response

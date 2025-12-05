@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Tweet Sentiment Analyzer{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/sentiment.css') }}">
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 7%">
+        <h4>Tweet sentiment analyzer</h4>
+        <p>
+          Type a message or choose a sample to see which emoji the heuristic model suggests.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="one-half column">
+        <textarea id="target" class="u-full-width" placeholder="Start writing..."></textarea>
+      </div>
+
+      <div class="one-half column sentiment-buttons">
+        <button type="button">Everything is beautiful</button>
+        <button type="button">We have to talk</button>
+        <button type="button">I'm crying</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div id='visualization' class="u-full-width">
+        <svg width="1000" height="400"></svg>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.6/underscore-min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ url_for('static', filename='js/sentiment/viz.js') }}"></script>
+{% endblock %}

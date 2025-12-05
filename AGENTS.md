@@ -8,11 +8,11 @@
   # or
   python -m pytest
   ```
-- To run the full suite including frontend tests, use:
+- To run the full suite (backend + Elm), use:
   ```bash
   make test-all
   ```
-  (Requires Node.js and Elm.)
+  (Requires Elm tooling.)
 
 ## Code Change Policy
 
