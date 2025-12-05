@@ -1,10 +1,11 @@
 # Core web framework
 Flask==2.3.3
-Flask-SQLAlchemy==2.5.1
+# ORM integration (compatible with Flask 3.x)
+Flask-SQLAlchemy==3.1.1
 Werkzeug==3.0.6
 
 # Database
-SQLAlchemy==1.4.50
+SQLAlchemy==2.0.27
 
 # ML/Data processing
 tensorflow==2.16.1
