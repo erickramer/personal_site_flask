@@ -9,7 +9,7 @@ setup(
         "flask",
         "flask-sqlalchemy>=2.5,<3",
         "tensorflow==2.16.1",
-        "numpy>=1.22.0,<1.25.0",
+        "numpy>=1.23.5,<2.0.0",
         "python-dotenv",
     ],
     extras_require={
